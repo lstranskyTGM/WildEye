@@ -7,9 +7,12 @@
 </template>
 
 <script>
+import DashboardComponent from "@/components/DashboardComponent.vue";
+
 export default {
   name: 'DashboardView',
   components: {
+    DashboardComponent
   },
   data() {
     return {
@@ -57,7 +60,7 @@ export default {
     }
   },
   methods: {
-    latLng
+
   },
   mounted() {
   },
