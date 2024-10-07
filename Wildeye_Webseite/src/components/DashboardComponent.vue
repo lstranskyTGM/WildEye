@@ -1,8 +1,8 @@
 <template>
-  <div class="card h-25">
+  <div class="card h-25" style="width: 97%">
     <div class="row g-0 h-100" style="min-height: 100%">
       <div class="col-md-4 border-end border-3 " style="min-height: 100%">
-        <l-map ref="map" class="l-map" v-model:zoom="zoom" :center="[48.31561796122741, 16.58404319905392]">
+        <l-map ref="map" class="l-map" v-model:zoom="zoom" :center="[48.31561796122741, 16.58404319905392]" :options="mapOptions">
           <l-tile-layer
               :url="'https://tile.openstreetmap.org/{z}/{x}/{y}.png'"
               layer-type="base"
@@ -11,11 +11,34 @@
           <l-marker :lat-lng="latLng(lat, lng)"></l-marker>
         </l-map>
       </div>
-      <div class="col-md-8 h-100">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+      <div class="col-md-8 h-100" style="max-height: 100% !important;">
+        <div class="card-header row m-0" style="height: 30%;">
+          <h1 class="card-title">{{ this.camera.name }}</h1>
+          <p class="card-subtitle"> {{ this.camera.id }}</p>
+        </div>
+        <div class="card-body row overflow-y-auto" style="max-height: 70%">
+          <div class="ms-auto me-auto row col-12 list-group-grid overflow-y-auto" style="max-height: 100%">
+            <ul class="list-group list-group-horizontal   mb-2">
+              <li class="list-group-item flex-fill">An item</li>
+              <li class="list-group-item flex-fill">A second item</li>
+            </ul>
+            <ul class="list-group list-group-horizontal  mb-2">
+              <li class="list-group-item flex-fill">An item</li>
+              <li class="list-group-item flex-fill">A second item</li>
+            </ul>
+            <ul class="list-group list-group-horizontal  mb-2">
+              <li class="list-group-item flex-fill">An item</li>
+              <li class="list-group-item flex-fill">A second item</li>
+            </ul>
+            <ul class="list-group list-group-horizontal  mb-2">
+              <li class="list-group-item flex-fill">An item</li>
+              <li class="list-group-item flex-fill">A second item</li>
+            </ul>
+            <ul class="list-group list-group-horizontal  mb-2">
+              <li class="list-group-item flex-fill">An item</li>
+              <li class="list-group-item flex-fill">A second item</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -34,7 +57,6 @@ export default {
   * camera object looks like this:
   * {
           name: "Wildkamera 3",
-          notes: 'Notes über ie Wildkamera'
           id: 'dfjk43kb92022',
           battery: 100,
           signal: 100,
@@ -67,12 +89,25 @@ export default {
       map: null,
       lat: 48.31561796122741,
       lng: 16.58404319905392,
-      zoom: 17
+      zoom: 17,
+      mapOptions: {
+        zoomControl: false,
+        boxZoom: false,
+        doubleClickZoom: false,
+        dragging: false,
+        keyboard: false,
+        scrollWheelZoom: false,
+        touchZoom: false,
+      }
     }
   }
 }
 </script>
 
 <style>
-
+.list-group-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
 </style>
