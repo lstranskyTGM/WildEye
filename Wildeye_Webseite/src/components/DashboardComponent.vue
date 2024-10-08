@@ -11,10 +11,11 @@
           <l-marker :lat-lng="latLng(lat, lng)"></l-marker>
         </l-map>
       </div>
-      <div class="col-md-8 h-100" style="max-height: 100% !important;">
+      <div class="col-md-8 h-100 position-relative" style="max-height: 100% !important;">
         <div class="card-header row m-0" style="height: 30%;">
           <h1 class="card-title">{{ this.camera.name }}</h1>
           <p class="card-subtitle"> {{ this.camera.id }}</p>
+          <i class="bi bi-pencil-square position-absolute top-0 text-end pe-5 pt-3 fs-3" v-on:click="$emit('edit', this.camera.id)"></i>
         </div>
         <div class="card-body row overflow-y-auto" style="max-height: 70%">
           <div class="ms-auto me-auto row col-12 list-group-grid overflow-y-auto" style="max-height: 100%">

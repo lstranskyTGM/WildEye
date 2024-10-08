@@ -1,17 +1,25 @@
 <template>
-  <div class="h-100 w-100 col-xxl-12 col-xl-12 col-lg-12 col-md-11 col-sm-12 col-12 overflow-y-auto d-grid" style="max-height: 100%;">
-    <div v-for="camera in this.cameraObjects" class="py-2 ms-auto me-auto" style="height: 100%; min-height: 300px; width: 98%">
-      <DashboardComponent :camera="camera" class="w-100 h-100 shadow " ></DashboardComponent>
+  <div class="h-100 w-100 col-xxl-12 col-xl-12 col-lg-12 col-md-11 col-sm-12 col-12 overflow-y-auto d-grid overflow-x-hidden" style="max-height: 100%;">
+    <div v-for="camera in this.cameraObjects" :key="camera.id" class="py-2 ms-auto me-auto" style="height: 100%; min-height: 300px; width: 98%">
+      <DashboardComponent :camera="camera" class="w-100 h-100 shadow"></DashboardComponent>
     </div>
+
+    <div class="py-2">
+      <button class="btn btn-outline-primary" @click="showModal">Add new Camera</button>
+    </div>
+
+    <InputModal ref="inputModal" header="Add Camera" text="Enter the serial code of the new camera:" hint="Serial Code" @submit="handleModalSubmit"></InputModal>
   </div>
 </template>
 
 <script>
 import DashboardComponent from "@/components/DashboardComponent.vue";
+import InputModal from "@/components/InputModal.vue";
 
 export default {
   name: 'DashboardView',
   components: {
+    InputModal,
     DashboardComponent
   },
   data() {
@@ -60,7 +68,20 @@ export default {
     }
   },
   methods: {
-
+    showModal() {
+      this.$refs.inputModal.showModal();
+    },
+    handleModalSubmit(serialCode) {
+      console.log('Serial Code:', serialCode);
+      // Handle the serial code, e.g., send it to the backend
+    },
+    showEditModal() {
+      this.$refs.editModal.showModal();
+    },
+    handleEditModalSubmit(changes) {
+      console.log('Serial Code:', changes);
+      // Handle the serial code, e.g., send it to the backend
+    }
   },
   mounted() {
   },
