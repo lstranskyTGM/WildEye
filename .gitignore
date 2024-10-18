@@ -1,0 +1,32 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.venv/
+
+# VS Code settings and workspace files
+.vscode/
+
+# JetBrains IDEs (PyCharm, IntelliJ, etc)
+.idea/
+*.iml
+
+# Webstorm-specific
+/shelf/
+/workspace.xml
+/httpRequests/
+
+# Environment variables and Python secrets
+.env
+.env.*
+
+# Log files
+#*.log
+
+# Unit test / coverage reports
+.pytest_cache/
+.coverage
+.coverage.*
+.cache
