@@ -1,32 +1,41 @@
-# Byte-compiled / optimized / DLL files
+# Byte-compiled / optimized / DLL files (Python)
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Virtual environment
+# Virtual Environment (Python)
 .venv/
 
-# VS Code settings and workspace files
-.vscode/
-
-# JetBrains IDEs (PyCharm, IntelliJ, etc)
-.idea/
-*.iml
-
-# Webstorm-specific
-/shelf/
-/workspace.xml
-/httpRequests/
-
-# Environment variables and Python secrets
+# Environment Variables and Secrets (Python and Node.js)
 .env
 .env.*
 
-# Log files
-#*.log
+# Log Files (covers npm, yarn, pnpm, and others)
+*.log*
 
-# Unit test / coverage reports
+# Unit Test / Coverage Reports
 .pytest_cache/
-.coverage
-.coverage.*
+.coverage*
 .cache
+
+# Node.js Dependencies
+node_modules/
+
+# Build Directories
+dist/
+
+# IDE / Editor Settings
+.vscode/
+.idea/
+*.iml
+
+# OS and Generated Files
+.DS_Store
+*.sw?
+*.suo
+*.ntvs*
+*.njsproj
+*.sln 
+
+# Bootstrap Distribution
+bootstrap-*/
