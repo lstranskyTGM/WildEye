@@ -2,7 +2,9 @@ import subprocess
 
 
 def start_access_point():
-    """Start the access point using Network Manager."""
+    """
+    Start the access point using Network Manager.
+    """
     try:
         # Start the access point using the 'accesspoint' connection profile
         subprocess.run(["sudo", "nmcli", "connection", "up", "accesspoint"], check=True)
@@ -11,8 +13,11 @@ def start_access_point():
         print(f"Failed to start the Access Point: {e}")#
         print(e.stderr)
 
+
 def stop_access_point():
-    """Stop the access point using Network Manager."""
+    """
+    Stop the access point using Network Manager.
+    """
     try:
         # Stop the access point using the 'accesspoint' connection profile
         subprocess.run(["sudo", "nmcli", "connection", "down", "accesspoint"], check=True)
@@ -21,8 +26,11 @@ def stop_access_point():
         print(f"Failed to stop the Access Point: {e}")
         print(e.stderr)
 
+
 def check_access_point_status():
-    """Check the status of the access point."""
+    """
+    Check the status of the access point.
+    """
     try:
         result = subprocess.run(
             ["nmcli", "connection", "show", "--active"],

@@ -7,7 +7,7 @@ import time
 BME280_ADDRESS = 0x76
 
 
-def init_bme280(bus):
+def initialize_bme280(bus):
     """
     Initialize the BME280 sensor by loading the calibration parameters.
     """
@@ -43,20 +43,17 @@ if __name__ == "__main__":
         i2c_bus = smbus2.SMBus(1)
 
         # Initialize the BME280 sensor
-        calibration_params = init_bme280(i2c_bus)
+        calibration_params = initialize_bme280(i2c_bus)
 
         # Continuous data reading and printing
         while True:
             sensor_data = read_bme280(i2c_bus, BME280_ADDRESS, calibration_params)
             print_sensor_data(sensor_data)
             time.sleep(1)
-
     except KeyboardInterrupt:
         print("\nProgram interrupted. Exiting...")
-
     except Exception as e:
         print(f"An error occurred: {e}")
-
     finally:
         # Close the I2C bus if it was opened
         if i2c_bus: 
