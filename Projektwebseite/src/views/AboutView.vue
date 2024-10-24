@@ -23,7 +23,7 @@
               </p>
             </div>
             <div class="card-footer">
-              <small class="small">Last update: 2024-09-25</small>
+              <small class="small">Last update: 2024-10-24</small>
             </div>
           </div>
         </div>
@@ -37,11 +37,41 @@
             <div class="card-body overflow-y-auto">
               <div class="card m-3 shadow">
                 <div class="card-img-top img-fluid d-flex ">
+                  <img src="@/assets/qrcode_wildeye_tech.png" alt="logo" class="ms-auto me-auto mw-100 mh-100 rounded rounded-3">
+                </div>
+                <div class="card-header">
+                  <div>
+                    <p class="fs-5">Webseite jetzt gehostet! - 24.10.2024</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card m-3 shadow">
+                <div class="card-img-top img-fluid d-flex ">
+                  <img src="@/assets/website_v1.png" alt="logo" class="ms-auto me-auto mw-100 mh-100 rounded rounded-3">
+                </div>
+                <div class="card-header">
+                  <div>
+                    <p class="fs-5">V1 der Projektwebseite fertig - 24.10.2024</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card m-3 shadow">
+                <div class="card-img-top img-fluid d-flex ">
+                  <img src="@/assets/WIldEye_Poster.jpg" alt="logo" class="ms-auto me-auto mw-100 mh-100 rounded rounded-3">
+                </div>
+                <div class="card-header">
+                  <div>
+                    <p class="fs-5">Poster fertig - 24.10.2024</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card m-3 shadow">
+                <div class="card-img-top img-fluid d-flex ">
                   <img src="@/assets/wildeye1.png" alt="logo" class="ms-auto me-auto mw-100 mh-100 rounded rounded-3">
                 </div>
                 <div class="card-header">
                   <div>
-                    <p class="fs-5">Draft des Logos - 25.09.2025</p>
+                    <p class="fs-5">Draft des Logos - 25.09.2024</p>
                   </div>
                 </div>
               </div>
@@ -51,13 +81,14 @@
                 </div>
                 <div class="card-header">
                   <div>
-                    <p class="fs-5">Start Diplomprojekt mit Typst - 27.09.2025</p>
+                    <p class="fs-5">Start Diplomprojekt mit Typst - 27.09.2024</p>
                   </div>
                 </div>
               </div>
+
             </div>
             <div class="card-footer">
-              <small>last update: 2024-09-25</small>
+              <small>last update: 2024-10-24</small>
             </div>
           </div>
 
