@@ -1,0 +1,41 @@
+# Byte-compiled / optimized / DLL files (Python)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment (Python)
+.venv/
+
+# Environment Variables and Secrets (Python and Node.js)
+.env
+.env.*
+
+# Log Files (covers npm, yarn, pnpm, and others)
+*.log*
+
+# Unit Test / Coverage Reports
+.pytest_cache/
+.coverage*
+.cache
+
+# Node.js Dependencies
+node_modules/
+
+# Build Directories
+dist/
+
+# IDE / Editor Settings
+.vscode/
+.idea/
+*.iml
+
+# OS and Generated Files
+.DS_Store
+*.sw?
+*.suo
+*.ntvs*
+*.njsproj
+*.sln 
+
+# Bootstrap Distribution
+bootstrap-*/
