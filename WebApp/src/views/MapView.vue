@@ -1,7 +1,7 @@
 <template>
   <div class="h-100 card col-xxl-12 col-xl-12 col-lg-12 col-md-11 col-sm-12 col-12">
     <div class="card-img-top" style="height: 80vh;">
-      <l-map ref="map" class="l-map" v-model:zoom="zoom" :center="[48.31561796122741, 16.58404319905392]" :on-ready="addPOI" @click="addMarker">
+      <l-map ref="map" class="l-map" v-model:zoom="zoom" :center="this.centerStart" :on-ready="addPOI" @click="addMarker">
         <l-tile-layer
             :url="tiles[currentTileName]"
             layer-type="base"
@@ -93,6 +93,7 @@ export default {
     return {
       name: 'MapView',
       map: null,
+      centerStart: [48.4262157636489, 16.61251026756385],
       marker: [0,0],
       markerOptions: {opacity: 0, width:"1px", height:"1px"},
       zoom: 17,
@@ -108,8 +109,8 @@ export default {
       // Hier kann man noch viele andere Daten hinzufügen, wie zb der Akkustand, das letzte Update, usw...
       cameraPositions:[
         {
-          lat: 48.31561796122741,
-          lng: 16.58404319905392,
+          lat: 48.4262157636489,
+          lng: 16.61251026756385,
           type:[
             'camera',
             'thermal'
@@ -122,8 +123,8 @@ export default {
           totalSpecies: 5,
         },
         {
-          lat: 48.31661796122741,
-          lng: 16.58204319905392,
+          lat: 48.42558212563766,
+          lng: 16.61130863793849,
           type:[
             'camera',
           ],
@@ -213,12 +214,21 @@ export default {
   watch: {
   },
   mounted() {
+    // load data from server, if not already loaded. if loaded, save data to a json file.
+    // so that the data can be loaded faster next time the user visits the page.
+    // sometimes the data is not loaded from the server. also add intervall to reload the data every minute.
+    // Also add refresh button to reload the data from the server again.
+    // when loaded, set the center of the map so that all cameras are visible.
+
+    // here is just placeholder until i can get the data from the server:
+
     this.$nextTick(() => {
       console.log(this.$refs.map)
       console.log(this.$refs.map.mapObject)
       this.map = this.$refs.map
     })
     console.log(this.map)
+    // this.centerStart = [41.31661796122741, 16.59404319905392]
   },
   beforeDestroy() {
   },

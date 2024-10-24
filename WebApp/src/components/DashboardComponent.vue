@@ -2,13 +2,13 @@
   <div class="card h-25" style="width: 97%">
     <div class="row g-0 h-100" style="min-height: 100%">
       <div class="col-md-4 border-end border-3 " style="min-height: 100%">
-        <l-map ref="map" class="l-map" v-model:zoom="zoom" :center="[48.31561796122741, 16.58404319905392]" :options="mapOptions">
+        <l-map ref="map" class="l-map" v-model:zoom="zoom" :center="[camera.lat, camera.lng]" :options="mapOptions">
           <l-tile-layer
               :url="'https://tile.openstreetmap.org/{z}/{x}/{y}.png'"
               layer-type="base"
               name="OpenStreetMap"
           ></l-tile-layer>
-          <l-marker :lat-lng="latLng(lat, lng)"></l-marker>
+          <l-marker :lat-lng="latLng(camera.lat, camera.lng)"></l-marker>
         </l-map>
       </div>
       <div class="col-md-8 h-100 position-relative" style="max-height: 100% !important;">
@@ -19,25 +19,25 @@
         </div>
         <div class="card-body row overflow-y-auto" style="max-height: 70%">
           <div class="ms-auto me-auto row col-12 list-group-grid overflow-y-auto" style="max-height: 100%">
-            <ul class="list-group list-group-horizontal   mb-2">
-              <li class="list-group-item flex-fill">An item</li>
-              <li class="list-group-item flex-fill">A second item</li>
+            <ul class="list-group list-group-horizontal mb-2">
+              <li class="list-group-item flex-fill w-25">Latitude</li>
+              <li class="list-group-item flex-fill w-75">{{ camera.lat }}</li>
             </ul>
             <ul class="list-group list-group-horizontal  mb-2">
-              <li class="list-group-item flex-fill">An item</li>
-              <li class="list-group-item flex-fill">A second item</li>
+              <li class="list-group-item flex-fill w-25">Longitude</li>
+              <li class="list-group-item flex-fill w-75">{{ camera.lng }}</li>
             </ul>
             <ul class="list-group list-group-horizontal  mb-2">
-              <li class="list-group-item flex-fill">An item</li>
-              <li class="list-group-item flex-fill">A second item</li>
+              <li class="list-group-item flex-fill w-25">Battery</li>
+              <li class="list-group-item flex-fill w-75">87%</li>
             </ul>
             <ul class="list-group list-group-horizontal  mb-2">
-              <li class="list-group-item flex-fill">An item</li>
-              <li class="list-group-item flex-fill">A second item</li>
+              <li class="list-group-item flex-fill w-25">Last Sync</li>
+              <li class="list-group-item flex-fill w-75">5 Minutes Ago</li>
             </ul>
             <ul class="list-group list-group-horizontal  mb-2">
-              <li class="list-group-item flex-fill">An item</li>
-              <li class="list-group-item flex-fill">A second item</li>
+              <li class="list-group-item flex-fill w-25">Last Picture</li>
+              <li class="list-group-item flex-fill w-75">Yesterday, 12:26</li>
             </ul>
           </div>
         </div>

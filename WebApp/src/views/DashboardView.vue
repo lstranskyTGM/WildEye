@@ -35,8 +35,8 @@ export default {
           lastPictureLocation: 'Berlin',
           numPictures: 69,
           lastSync: '2021-08-06 12:34:56',
-          lat: 48.31561796122741,
-          lng: 16.58404319905392,
+          lat: 48.4262157636489,
+          lng: 16.61251026756385,
         },
         {
           name: "Wildkamera 2",
@@ -48,8 +48,8 @@ export default {
           lastPictureLocation: 'Deutsch-Wagram',
           numPictures: 69,
           lastSync: '2021-08-06 12:34:56',
-          lat: 48.31561796122741,
-          lng: 16.58404319905392,
+          lat: 48.42558212563766,
+          lng: 16.61130863793849,
         },
         {
           name: "Wildkamera 3",
@@ -61,8 +61,8 @@ export default {
           lastPictureLocation: 'Deutsch-Wagram',
           numPictures: 9,
           lastSync: '2021-08-06 12:34:56',
-          lat: 48.31561796122741,
-          lng: 16.58404319905392,
+          lat: 48.42568212563766,
+          lng: 16.61140863793849,
         }
       ]
     }

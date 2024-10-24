@@ -1,6 +1,6 @@
 <template>
   <div class="col-12 col-md-6 col-lg-3 mb-4 d-flex flex-grow-1">
-    <div class="card h-100 mh-100 w-100">
+    <div class="card h-100 mh-100 w-100 shadow">
       <div class="card-img-top w-100 ">
         <img :src="`${publicPath}${entry.pic}`" :alt="entry.title" class="img-fluid" style="width: 80%; height: 80%" id="color-tint">
       </div>

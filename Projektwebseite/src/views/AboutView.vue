@@ -1,7 +1,7 @@
 <template>
   <div class=" h-100 container-fluid ms-0 ps-0 overflow-x-scroll" style="width: 100%">
     <div class="row w-100 h-100" >
-      <div class="col-xl-8 col-md-7 col-sm-12 h-100 ">
+      <div class="col-xl-8 col-md-7 col-sm-12 col-12 h-100 ">
         <div class="w-100 h-100">
           <div class="card w-100 h-100 mh-100">
             <div class="card-header">
@@ -28,7 +28,7 @@
           </div>
         </div>
       </div>
-      <div class="col-4 col-md-4 col-sm-12 h-100">
+      <div class="col-4 col-md-4 col-sm-12 col-12 h-100">
         <div class="w-100 h-100 ">
           <div class="card w-100 h-100 mh-100 mw-100">
             <div class="card-header">
