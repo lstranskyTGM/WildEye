@@ -11,8 +11,8 @@ def read_light():
         # Read light intensity in lux
         lux = light_sensor.luminance(bh1750.BH1750.ONCE_HIRES_1)
         print(f"Light Intensity: {lux:.2f} lx")
-    except Exception as e:
-        print(f"Error reading BH1750 sensor: {e}")
+    except Exception as error:
+        print(f"Error reading BH1750 sensor: {error}")
 
 
 if __name__ == "__main__":
@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
     try:
         # Initialize I2C bus
-        bus = smbus2.SMBus(1)
+        bus = smbus2.SMBus(1)  # Use 1 for Raspberry Pi Zero 2
 
         # Initialize the BH1750 sensor
         light_sensor = bh1750.BH1750(bus)
@@ -31,6 +31,8 @@ if __name__ == "__main__":
             time.sleep(1)
     except KeyboardInterrupt:
         print("\nProgram interrupted. Exiting...")
+    except Exception as error:
+        print(f"An error occurred: {error}")
     finally:
         # Close the I2C bus if it was opened
         if i2c_bus: 

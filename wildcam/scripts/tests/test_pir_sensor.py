@@ -15,10 +15,8 @@ def setup_gpio(pin):
         GPIO.setup(pin, GPIO.IN)  # Set the pin as input
         GPIO.add_event_detect(pin, GPIO.BOTH, bouncetime=300)  # Detect both motion and no motion
         GPIO.add_event_callback(pin, motion_event_handler)  # Assign callback function
-    except RuntimeError as gpio_runtime_error:
-        print(f"Runtime error setting up GPIO: {gpio_runtime_error}")
-    except Exception as general_error:
-        print(f"Unexpected error in GPIO setup: {general_error}")
+    except Exception as error:
+        print(f"Error in GPIO setup: {error}")
 
 
 def motion_event_handler(channel):
@@ -30,10 +28,8 @@ def motion_event_handler(channel):
             print("Motion detected!")
         else:
             print("No motion detected.")
-    except RuntimeError as gpio_runtime_error:
-        print(f"Runtime error during motion event handling: {gpio_runtime_error}")
-    except Exception as general_error:
-        print(f"Unexpected error in motion event handling: {general_error}")
+    except Exception as error:
+        print(f"Error in motion event handling: {error}")
 
 
 def cleanup_gpio():
@@ -43,10 +39,8 @@ def cleanup_gpio():
     try:
         GPIO.remove_event_detect(PIR_PIN)  # Remove event detection
         GPIO.cleanup()  # Reset GPIO settings
-    except RuntimeError as gpio_runtime_error:
-        print(f"Runtime error during GPIO cleanup: {gpio_runtime_error}")
-    except Exception as general_error:
-        print(f"Unexpected error in GPIO cleanup: {general_error}")
+    except Exception as error:
+        print(f"Error in GPIO cleanup: {error}")
     
 
 if __name__ == '__main__':

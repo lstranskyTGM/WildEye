@@ -29,10 +29,11 @@ def capture_image():
         time.sleep(2)  # Wait for the camera to warm up
         picam2.capture_file("test.jpg")  # Capture and save the image
         print("Image captured successfully!")
-    except Exception as e:
-        print(f"An error occurred while capturing the image: {e}")
+    except Exception as error:
+        print(f"Error capturing image: {error}")
     finally:
-        picam2.stop()  # Ensure the camera is stopped
+        if picam2:
+            picam2.stop()  # Ensure the camera is stopped
 
 
 def capture_video(duration=5):
@@ -46,11 +47,12 @@ def capture_video(duration=5):
         picam2.start_recording("test.mp4")  # Start recording the video
         time.sleep(duration)  # Record video for the specified duration
         picam2.stop_recording()  # Stop recording the video
-        print(f"Video recorded for {duration} seconds!")
-    except Exception as e:
-        print(f"An error occurred while recording the video: {e}")
+        print(f"Video recorded for {duration} seconds.")
+    except Exception as error:
+        print(f"Error capturing video: {error}")
     finally:
-        picam2.stop()  # Ensure the camera is stopped
+        if picam2:
+            picam2.stop()  # Ensure the camera is stopped
 
 
 if __name__ == '__main__':

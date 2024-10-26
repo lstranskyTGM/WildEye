@@ -9,9 +9,8 @@ def start_access_point():
         # Start the access point using the 'accesspoint' connection profile
         subprocess.run(["sudo", "nmcli", "connection", "up", "accesspoint"], check=True)
         print("Access Point started successfully.")
-    except subprocess.CalledProcessError as e:
-        print(f"Failed to start the Access Point: {e}")#
-        print(e.stderr)
+    except subprocess.CalledProcessError as error:
+        print(f"Failed to start the Access Point: {error}")
 
 
 def stop_access_point():
@@ -22,9 +21,8 @@ def stop_access_point():
         # Stop the access point using the 'accesspoint' connection profile
         subprocess.run(["sudo", "nmcli", "connection", "down", "accesspoint"], check=True)
         print("Access Point stopped successfully.")
-    except subprocess.CalledProcessError as e:
-        print(f"Failed to stop the Access Point: {e}")
-        print(e.stderr)
+    except subprocess.CalledProcessError as error:
+        print(f"Failed to stop the Access Point: {error}")
 
 
 def check_access_point_status():
@@ -41,9 +39,8 @@ def check_access_point_status():
         else:
             status = "Inactive"
         print(f"Access Point status: {status}")
-    except subprocess.CalledProcessError as e:
-        print(f"Failed to check the status of the Access Point: {e}")
-        print(e.stderr)
+    except subprocess.CalledProcessError as error:
+        print(f"Failed to check the status of the Access Point: {error}")
 
 
 if __name__ == "__main__":
