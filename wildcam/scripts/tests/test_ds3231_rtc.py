@@ -20,18 +20,19 @@ def set_time(rtc, dt):
     """
     Set the time on the DS3231 RTC.
     """
-    # Set the RTC time
-    if isinstance(dt, time.struct_time):
-        # Set the RTC time to the provided struct_time
+    try:
+        if isinstance(dt, datetime):
+            # Convert datetime to struct_time
+            dt = dt.timetuple()
+        elif not isinstance(dt, time.struct_time):
+            print("Error: Provided time is not in a recognized format.")
+            return
+
+        # Set the RTC time
         rtc.datetime = dt
-    elif isinstance(dt, datetime):
-        # Convert datetime to struct_time
-        dt = time.struct_time((dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second, dt.weekday() + 1, -1, -1))
-        rtc.datetime = dt
-    else:
-        print("Error: Provided time is not in a recognized format.")
-        return  # Exit the function
-    print("Time set to:", dt)
+        print("Time set to:", dt)
+    except Exception as error:
+        print(f"Error setting time on DS3231: {error}")
 
 
 if __name__ == "__main__":
@@ -43,7 +44,7 @@ if __name__ == "__main__":
         i2c_bus = smbus2.SMBus(1)  # Use 1 for Raspberry Pi Zero 2
         rtc = adafruit_ds3231.DS3231(i2c_bus)  # Create DS3231 object once
         
-        # Optionally set the time (comment this line after setting time once)
+        # Uncomment to set the time once
         # now = datetime.now()
         # set_time(rtc, now)
         # Example: Year, Month, Day, Hour, Minute, Second, Day of Week, Day of Year, DST Offset (optional)
