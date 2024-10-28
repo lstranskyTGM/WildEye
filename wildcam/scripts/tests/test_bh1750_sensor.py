@@ -21,10 +21,10 @@ if __name__ == "__main__":
 
     try:
         # Initialize I2C bus
-        bus = smbus2.SMBus(1)  # Use 1 for Raspberry Pi Zero 2
+        i2c_bus = smbus2.SMBus(1)  # Use 1 for Raspberry Pi Zero 2
 
         # Initialize the BH1750 sensor
-        light_sensor = bh1750.BH1750(bus)
+        light_sensor = bh1750.BH1750(i2c_bus)
 
         while True:
             read_light()
@@ -37,3 +37,4 @@ if __name__ == "__main__":
         # Close the I2C bus if it was opened
         if i2c_bus: 
             i2c_bus.close()
+            print("I2C connection closed.")
