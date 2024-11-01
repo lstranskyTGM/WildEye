@@ -1,7 +1,6 @@
 import RPi.GPIO as GPIO
 import time
 
-
 # GPIO pin for the PIR sensor
 PIR_PIN = 18
 
@@ -56,3 +55,4 @@ if __name__ == '__main__':
     finally:
         # Clean up GPIO settings
         cleanup_gpio()
+        print("Cleaned up GPIO settings.")

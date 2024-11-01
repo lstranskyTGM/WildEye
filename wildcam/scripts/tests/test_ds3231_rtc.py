@@ -3,20 +3,19 @@ import time
 from datetime import datetime
 import adafruit_ds3231
 
-
 # I2C address for the DS3231 RTC
 DS3231_ADDRESS = 0x68
 
 
-def read_time(rtc):
+def read_time(rtc_module):
     """
     Read the current time from the DS3231 RTC.
     """
     # Get the current datetime from the RTC
-    return rtc.datetime
+    return rtc_module.datetime
 
 
-def set_time(rtc, dt):
+def set_time(rtc_module, dt):
     """
     Set the time on the DS3231 RTC.
     """
@@ -29,7 +28,7 @@ def set_time(rtc, dt):
             return
 
         # Set the RTC time
-        rtc.datetime = dt
+        rtc_module.datetime = dt
         print("Time set to:", dt)
     except Exception as error:
         print(f"Error setting time on DS3231: {error}")
@@ -42,18 +41,20 @@ if __name__ == "__main__":
     try:
         # Initialize I2C bus
         i2c_bus = smbus2.SMBus(1)  # Use 1 for Raspberry Pi Zero 2
-        rtc = adafruit_ds3231.DS3231(i2c_bus)  # Create DS3231 object once
+        
+        # Initialize the DS3231 RTC
+        rtc_module = adafruit_ds3231.DS3231(i2c_bus)  # Create DS3231 object once
         
         # Uncomment to set the time once
         # now = datetime.now()
-        # set_time(rtc, now)
+        # set_time(rtc_module, now)
         # Example: Year, Month, Day, Hour, Minute, Second, Day of Week, Day of Year, DST Offset (optional)
-        # set_time(rtc, (2023, 10, 23, 15, 6, 0, 0, 9, -1))
+        # set_time(rtc_module, (2023, 10, 23, 15, 6, 0, 0, 9, -1))
         # Example: Year, Month, Day, Hour, Minute, Second
-        # set_time(rtc, datetime(2023, 10, 23, 15, 6, 0))
+        # set_time(rtc_module, datetime(2023, 10, 23, 15, 6, 0))
         
         while True:
-            current_time = read_time(rtc)
+            current_time = read_time(rtc_module)
             print(f"Current Time: {current_time.strftime('%Y-%m-%d %H:%M:%S')}")
             time.sleep(1)  # Wait for 1 second
     except KeyboardInterrupt:
@@ -63,3 +64,4 @@ if __name__ == "__main__":
     finally:
         if i2c_bus:
             i2c_bus.close()  # Close the I2C bus
+            print("I2C connection closed.")

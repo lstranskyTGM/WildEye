@@ -76,4 +76,5 @@ if __name__ == "__main__":
     finally:
         # Close the I2C bus if it was opened
         if i2c_bus: 
-            i2c_bus.close()
+            i2c_bus.close()#
+            print("I2C connection closed.")

@@ -1,10 +1,8 @@
 import smbus2
 import time
 
-
 # MPU-6050 I2C address
 MPU6050_ADDR = 0x68
-
 
 # MPU-6050 Registers
 PWR_MGMT_1 = 0x6B     # Power Management register 1 - to wake up the sensor (from sleep mode)
@@ -46,8 +44,8 @@ class MPU6050:
         try:
             self.bus.write_byte_data(self.address, PWR_MGMT_1, 0)
             time.sleep(0.1)
-        except Exception as e:
-            print(f"Error initializing sensor: {e}")
+        except Exception as error:
+            print(f"Error initializing sensor: {error}")
 
     def read_raw_data(self, register):
         """
@@ -60,8 +58,8 @@ class MPU6050:
             if value > 32767:
                 value -= 65536
             return value
-        except Exception as e:
-            print(f"Error reading raw data from register {register}: {e}")
+        except Exception as error:
+            print(f"Error reading raw data from register {register}: {error}")
             return 0
 
     def get_acceleration(self):
