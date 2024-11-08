@@ -118,7 +118,7 @@ export default {
           name: 'Camera 1',
           id: 1,
           description: 'This is a camera 1',
-          lastCapturePreview: 'https://dummyimage.com/600x400/000/4e5285&text=temp',
+          lastCapturePreview: 'https://pixabay.com/get/ga7032aa8779154791af812753fda585702437883b042f43c61e981eb9460008aa5b974ac796b0ed28b7b11ffa657f5c1ce9fdbf035943dde63fa8d2ebd0e53b9_640.jpg',
           totalCaptures: 10,
           totalSpecies: 5,
         },
@@ -131,7 +131,7 @@ export default {
           name: 'Camera 2',
           id: 2,
           description: 'This is a camera 2',
-          lastCapturePreview: 'https://dummyimage.com/600x400/000/4e5285&text=temp',
+          lastCapturePreview: 'https://pixabay.com/get/g729a72756030f3d2beee9b02d97e3752b2b4cfc0aabfb2894427d9a987afdca339a9dc8a11619024fbba4def19b867c10bbd51d27fd2db46540b3f318b99ea5f_640.jpg',
           totalCaptures: 20,
           totalSpecies: 2,
         }

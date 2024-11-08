@@ -6,7 +6,7 @@
           <div class="row-cols-1 ms-auto me-auto h-100">
             <nav class="mt-0 h-100 w-100 align-content-start d-flex flex-column">
               <div class="col d-flex justify-content-center align-content-center">
-                <img src="@/assets/wildeye_transparent.png" class="card-img-top img-fluid" style="object-fit: contain; width: 70%;">
+                <img src="@/assets/logo_v2_1.png" class="card-img-top img-fluid" style="object-fit: contain; width: 70%;">
               </div>
               <div class="overflow-y-auto h-100 flex-grow-1">
                 <div class="col">
@@ -22,7 +22,7 @@
                   </router-link>
                 </div>
                 <div class="col mt-3">
-                  <router-link to="/about" class="text-decoration-none text-reset text-center">
+                  <router-link to="/picture" class="text-decoration-none text-reset text-center">
                     <div class="ratio ratio-1x1 bg-body p-2 rounded-3 w-75 ms-auto me-auto " style="height: 100%; width: 100%;">
                       <div class="d-flex justify-content-center align-items-center w-100 h-100 ">
                         <div class="shadow justify-content-center align-content-center rounded-3" style="width: 83%; height: 90%;">
@@ -34,7 +34,7 @@
                   </router-link>
                 </div>
                 <div class="col mt-3">
-                  <router-link to="/picture" class="text-decoration-none text-reset text-center">
+                  <router-link to="/about" class="text-decoration-none text-reset text-center">
                     <div class="ratio ratio-1x1 bg-body p-2 rounded-3 w-75 ms-auto me-auto " style="height: 100%; width: 100%;">
                       <div class="d-flex justify-content-center align-items-center w-100 h-100 ">
                         <div class="shadow justify-content-center align-content-center rounded-3" style="width: 83%; height: 90%;">

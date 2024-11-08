@@ -7,7 +7,7 @@
             <div class="masonry">
               <div class="masonry-item" v-for="(img, index) in images" :key="index">
                 <img :src="img.url" :alt="img.alt" class="img-fluid" :width="img.width"
-                     :style="{height :randomIntFromInterval(Math.min(200, img.height), img.height) +'px', objectFit: 'cover'}">
+                     :style="{objectFit: 'cover'}">
               </div>
             </div>
           </div>
@@ -95,6 +95,7 @@
 <script>
 // Hier sollte ich auch das setzen von einstellungen über query params erlauben, das kann ich dann gut verbinden mit der karte!!!!!11!!!!!!!!!!!!1!1!
 import router from "@/router";
+import axios from "axios";
 
 export default {
   name: 'PictureView',
@@ -106,7 +107,7 @@ export default {
     return {
       name: 'PictureView',
       images:[
-        {url: 'https://dummyimage.com/600x400/000/4e5285&text=Hallo!', alt: 'placeholder1', width: 600, height: 400},
+        /*{url: 'https://dummyimage.com/600x400/000/4e5285&text=Hallo!', alt: 'placeholder1', width: 600, height: 400},
         {url: 'https://dummyimage.com/600x400/000/4e5285&text=Hallo!', alt: 'placeholder2', width: 600, height: 400},
         {url: 'https://dummyimage.com/600x400/000/4e5285&text=Hallo!', alt: 'placeholder3', width: 600, height: 400},
         {url: 'https://dummyimage.com/600x400/000/4e5285&text=Hallo!', alt: 'placeholder4', width: 600, height: 400},
@@ -122,7 +123,7 @@ export default {
         {url: 'https://dummyimage.com/600x400/000/4e5285&text=Hallo!', alt: 'placeholder14', width: 600, height: 400},
         {url: 'https://dummyimage.com/600x400/000/4e5285&text=Hallo!', alt: 'placeholder15', width: 600, height: 400},
         {url: 'https://dummyimage.com/600x400/000/4e5285&text=Hallo!', alt: 'placeholder16', width: 600, height: 400},
-        {url: 'https://dummyimage.com/600x400/000/4e5285&text=Hallo!', alt: 'placeholder17', width: 600, height: 400},
+        {url: 'https://dummyimage.com/600x400/000/4e5285&text=Hallo!', alt: 'placeholder17', width: 600, height: 400},*/
       ],
     }
   },
@@ -131,6 +132,23 @@ export default {
       var r = Math.floor(Math.random() * (max - min + 1) + min)
       console.log(r)
       return r
+    },
+    loadPicturesFromPixaBay(){
+      axios.get(`https://pixabay.com/api/?key=20323843-817de742121b35a33998098e9&q=wildlife+fox&image_type=photo&page=${this.randomIntFromInterval(1, 20)}`,{
+        }).then((response) => {
+          console.log(JSON.parse(response.request.response))
+          let hits = JSON.parse(response.request.response).hits
+        for(let hit of hits) {
+          this.images.push({
+            url: hit.webformatURL,
+            alt: hit.tags,
+            width: hit.webformatWidth,
+            height: hit.webformatHeight
+          })
+        }
+        }).catch((error) => {
+          console.log(error)
+      })
     }
   },
   computed: {
@@ -139,6 +157,7 @@ export default {
   },
   mounted() {
     console.log(router.currentRoute.value.query)
+    this.loadPicturesFromPixaBay()
   },
   beforeDestroy() {
   },
