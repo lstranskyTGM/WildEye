@@ -14,7 +14,7 @@
                     <div class="ratio ratio-1x1 bg-body rounded-3 w-75 ms-auto me-auto " style="height: 100%; width: 100%;">
                       <div class="d-flex justify-content-center align-items-center w-100 h-100 ">
                         <div class="shadow justify-content-center align-content-center rounded-3" style="width: 83%; height: 90%;">
-                          <i class="bi bi-kanban w-100 d-block" style="font-size: 2rem; color: #a6b5cc;"></i>
+                          <i class="bi bi-kanban w-100 d-block" style="font-size: 2rem; color: #DA785DFF;"></i>
                           <small class="w-100">Dashboard</small>
                         </div>
                       </div>
@@ -26,7 +26,7 @@
                     <div class="ratio ratio-1x1 bg-body p-2 rounded-3 w-75 ms-auto me-auto " style="height: 100%; width: 100%;">
                       <div class="d-flex justify-content-center align-items-center w-100 h-100 ">
                         <div class="shadow justify-content-center align-content-center rounded-3" style="width: 83%; height: 90%;">
-                          <i class="bi bi-images w-100 d-block" style="font-size: 2rem; color: #a6b5cc"></i>
+                          <i class="bi bi-images w-100 d-block" style="font-size: 2rem; color: #DA785DFF"></i>
                           <small class="w-100">Pictures</small>
                         </div>
                       </div>
@@ -38,7 +38,7 @@
                     <div class="ratio ratio-1x1 bg-body p-2 rounded-3 w-75 ms-auto me-auto " style="height: 100%; width: 100%;">
                       <div class="d-flex justify-content-center align-items-center w-100 h-100 ">
                         <div class="shadow justify-content-center align-content-center rounded-3" style="width: 83%; height: 90%;">
-                          <i class="bi bi-broadcast w-100 d-block" style="font-size: 2rem; color: #a6b5cc"></i>
+                          <i class="bi bi-broadcast w-100 d-block" style="font-size: 2rem; color: #DA785DFF"></i>
                           <small class="w-100">Live</small>
                         </div>
                       </div>
@@ -50,7 +50,7 @@
                     <div class="ratio ratio-1x1 bg-body p-2 rounded-3 w-75 ms-auto me-auto " style="height: 100%; width: 100%;">
                       <div class="d-flex justify-content-center align-items-center w-100 h-100 ">
                         <div class="shadow justify-content-center align-content-center rounded-3" style="width: 83%; height: 90%;">
-                          <i class="bi bi-map w-100 d-block" style="font-size: 2rem; color: #a6b5cc"></i>
+                          <i class="bi bi-map w-100 d-block" style="font-size: 2rem; color: #DA785DFF"></i>
                           <small class="w-100 pt-0 mt-0">Map</small>
                         </div>
                       </div>
@@ -61,7 +61,7 @@
                   <div class="ratio ratio-1x1 bg-body p-2 rounded-3 w-75 ms-auto me-auto " style="height: 100%; width: 100%;">
                     <div class="d-flex justify-content-center align-items-center w-100 h-100 ">
                       <div class="shadow justify-content-center align-content-center rounded-3" style="width: 83%; height: 90%;">
-                        <i class="bi-0-circle-fill d-block" style="font-size: 2rem; color: #a6b5cc"></i>
+                        <i class="bi-0-circle-fill d-block" style="font-size: 2rem; color: #DA785DFF"></i>
                         <small class="w-100">Account</small>
                       </div>
                     </div>

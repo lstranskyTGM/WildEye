@@ -6,7 +6,7 @@
           <div class="row-cols-1 ms-auto me-auto h-100">
             <nav class="mt-0 h-100 w-100 align-content-start d-flex flex-column">
               <div class="col d-flex justify-content-center align-content-center pb-3">
-                <img src="@/assets/wildeye1.png" class="card-img-top img-fluid rounded rounded-3" style="object-fit: contain; width: 70%;">
+                <img src="@/assets/logo_v2_1.png" class="card-img-top img-fluid rounded rounded-3" style="object-fit: contain; width: 70%;">
               </div>
               <div class="overflow-y-auto h-100 flex-grow-1">
                 <div class="col">
