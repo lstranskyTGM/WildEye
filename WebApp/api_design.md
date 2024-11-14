@@ -1,6 +1,6 @@
 # API Design
 
-*13.11.2024 v1*
+*13.11.2024 v1.01*
 
 ## Register
 `api.wildeye.tech/register`
@@ -67,10 +67,6 @@
       "from": "string",
       "to": "string"
     },
-    "tags": [
-      "fox",
-      "nighttime"
-    ],
     "favouritesOnly": false
   }
 }
