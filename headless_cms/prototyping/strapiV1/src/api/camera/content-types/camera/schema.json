@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cameras",
+  "info": {
+    "singularName": "camera",
+    "pluralName": "cameras",
+    "displayName": "camera",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "latitude": {
+      "type": "decimal"
+    },
+    "longitude": {
+      "type": "decimal"
+    },
+    "info": {
+      "type": "text"
+    },
+    "cameraId": {
+      "type": "uid"
+    }
+  }
+}
