@@ -15,7 +15,8 @@
     "leaflet.heat": "^0.2.0",
     "leaflet": "^1.9.4",
     "bootstrap": "^5.3.3",
-    "axios": "^1.7.7"
+    "axios": "^1.7.7",
+    "@material/web": "^2.2.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",
