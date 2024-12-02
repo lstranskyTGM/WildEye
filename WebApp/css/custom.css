@@ -49,6 +49,8 @@
     --md-sys-color-surface-container-high: rgb(244 229 228);
     --md-sys-color-surface-container-highest: rgb(239 223 222);
     --wildeye-edge-color: #F2ECEE;
+    --wildeye-container-primary: #f8f1f6;
     --md-elevated-button-container-color: var(--md-sys-color-surface);
-    --md-elevated-button-text-color: var(--md-sys-color-on-secondary-fixed)
+    --md-elevated-button-text-color: var(--md-sys-color-on-secondary-fixed);
+    font-family: 'Roboto', sans-serif !Important;
 }

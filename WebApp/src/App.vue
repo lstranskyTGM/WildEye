@@ -71,20 +71,6 @@ export default {
   methods: {
     setActiveRoute(route){
       this.activeRoute = route;
-    },
-    async showToast() {
-      const platform = Capacitor.getPlatform();
-      console.log('Current platform:', platform);
-      await Toast.show({
-        text: `Hello from ${platform}!`
-      });
-    },
-    async getLocation() {
-      const coordinates = await Geolocation.getCurrentPosition();
-      console.log('Current position:', coordinates);
-      await Toast.show({
-        text: `Current position: ${coordinates.coords.latitude}, ${coordinates.coords.longitude}`
-      });
     }
   },
   beforeMount() {
@@ -97,6 +83,7 @@ export default {
 @import "../css/custom.css";
 #app, html, body {
   font-family: Roboto, sans-serif;
+  background-color: var(--md-sys-color-surface-container);
 }
 .edge_color{
   background-color: var(--wildeye-edge-color);

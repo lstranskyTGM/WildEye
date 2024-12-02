@@ -1,7 +1,7 @@
 <template>
   <div class="h-100 w-100 col-xxl-12 col-xl-12 col-lg-12 col-md-11 col-sm-12 col-12 overflow-y-auto d-grid overflow-x-hidden" style="max-height: 100%;">
-    <div v-for="camera in this.cameraObjects" :key="camera.id" class="py-2 ms-auto me-auto" style="height: 100%; min-height: 300px; width: 98%">
-      <DashboardComponent :camera="camera" class="w-100 h-100 shadow"></DashboardComponent>
+    <div v-for="camera in this.cameraObjects" :key="camera.id" class="py-2 ms-auto me-auto" style="height: 100%; min-height: 250px; width: 98%">
+      <DashboardMaterialComponent :camera="camera" class="w-100 h-100 shadow"></DashboardMaterialComponent>
     </div>
 
     <div class="py-2">
@@ -15,10 +15,12 @@
 <script>
 import DashboardComponent from "@/components/DashboardComponent.vue";
 import InputModal from "@/components/InputModal.vue";
+import DashboardMaterialComponent from "@/components/DashboardMaterialComponent.vue";
 
 export default {
   name: 'DashboardView',
   components: {
+    DashboardMaterialComponent,
     InputModal,
     DashboardComponent
   },
