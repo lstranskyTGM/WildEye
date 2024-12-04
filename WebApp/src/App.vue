@@ -6,7 +6,7 @@
           <div class="row-cols-1 ms-auto me-auto h-100">
             <nav class="mt-0 h-100 w-100 align-content-start d-flex flex-column">
               <div class="col d-flex justify-content-center align-content-center">
-                <img src="@/assets/logo_v2_1.png" class="card-img-top img-fluid" style="object-fit: contain; width: 70%;">
+                <img src="@/assets/logo_digital.png" class="card-img-top img-fluid" style="object-fit: contain; width: 70%;">
               </div>
               <div class="overflow-y-auto h-100 flex-grow-1">
                 <div class="col mt-3">
@@ -17,7 +17,7 @@
                   </router-link>
                 </div>
                 <div class="col mt-3">
-                  <router-link to="/picture" class="text-decoration-none text-reset text-center d-grid" @click="this.setActiveRoute('/picture')">
+                  <router-link to="/picture2" class="text-decoration-none text-reset text-center d-grid" @click="this.setActiveRoute('/picture')">
                     <md-elevated-button v-if="activeRoute === '/picture'" class="w-75 ms-auto me-auto"><i class="bi bi-images fs-3"></i></md-elevated-button>
                     <md-text-button v-else class="w-75 ms-auto me-auto" ><i class="bi bi-images fs-3"></i></md-text-button>
                     <p>Pictures</p>

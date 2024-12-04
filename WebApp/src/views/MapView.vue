@@ -1,7 +1,7 @@
 <template>
   <div class="h-100 card col-xxl-12 col-xl-12 col-lg-12 col-md-11 col-sm-12 col-12">
     <div class="card-img-top" style="height: 80vh;">
-      <l-map ref="map" class="l-map" v-model:zoom="zoom" :center="this.centerStart" :on-ready="addPOI" @click="addMarker">
+      <l-map ref="map" class="l-map rounded rounded-3" v-model:zoom="zoom" :center="this.centerStart" :on-ready="addPOI" @click="addMarker">
         <l-tile-layer
             :url="tiles[currentTileName]"
             layer-type="base"
@@ -30,37 +30,13 @@
         </div>
       </l-map>
     </div>
-    <div class="card-footer">
-      <div class="row">
-        <div class="col-2">
-          <div class="input-group mb-3" >
-            <span class="input-group-text" id="basic-addon1">Zoom</span>
-            <input type="number" class="form-control" placeholder="16" aria-label="Zoom" aria-describedby="basic-addon1" v-model="zoom">
-          </div>
-        </div>
-        <div class="dropup-center dropup col-xxl-2 col-xl-2 col-lg-2 col-md-3 col-sm-12 me-4">
-          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            {{currentTileName}}
-          </button>
-          <ul class="dropdown-menu">
-            <li v-for="(url, name) in tiles" :key="name">
-              <a class="dropdown-item" @click="selectTile(name)">{{name}}</a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-3 form-check-inline">
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" v-model="POI">
-            <label class="form-check-label" for="inlineCheckbox1">Notizen anzeigen</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" v-model="this.POIsBearbeiten">
-            <label class="form-check-label" for="inlineCheckbox2">Notizen Bearbeiten</label>
-          </div>
-        </div>
-
-      </div>
-
+    <div class="card-footer border border-0 d-flex justify-content-end m-2 overflow-x-auto text-nowrap" style="min-height: 50px; background-color: white; ">
+      <md-outlined-text-field label="Zoom" type="Number" value="17" v-model="zoom" class="pe-3">
+      </md-outlined-text-field>
+      <md-outlined-select class="pe-3" label="Choose Map">
+        <md-select-option value="Default" @click="selectTile('OpenStreetMap')" selected>Default</md-select-option>
+        <md-select-option v-for="(url, name) in tiles" :key="url" :value="name" @click="selectTile(name)">{{name}}</md-select-option>
+      </md-outlined-select>
     </div>
   </div>
 

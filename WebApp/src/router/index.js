@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import PictureView from "@/views/PictureView.vue";
 import MapView from "@/views/MapView.vue";
 import DashboardView from "@/views/DashboardView.vue";
+import MaterialPictureView from "@/views/MaterialPictureView.vue";
 
 const routes = [
   {
@@ -27,6 +28,11 @@ const routes = [
     path: '/map',
     name: 'map',
     component: MapView
+  },
+  {
+    path: '/picture2',
+    name: 'pictures2',
+    component: MaterialPictureView
   },
 
 ]
