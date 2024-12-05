@@ -13,10 +13,10 @@
         </l-map>
       </div>
       <div class="h-100 position-relative" style="max-height: 100% !important; width: 77%;">
-        <div class="card-header row m-0 border border-0" style="height: 30%;">
+        <div class="card-header row m-0 mx-0 px-0 border border-0" style="height: 30%;">
           <h1 class="card-title">{{ this.camera.name }}</h1>
           <i class="bi bi-pencil-square position-absolute top-0 text-end pe-5 pt-3 fs-3" v-on:click="$emit('edit', this.camera.id)"></i>
-          <hr class="mt-1" style="">
+          <hr class="mt-0 position-absolute" style="top: 30%; left: 2%; width: 96%">
         </div>
         <div class="card-body row overflow-hidden" style="height: 70%">
           <div class="dashboard-grid " style="height: 100%">

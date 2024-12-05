@@ -4,6 +4,7 @@ import PictureView from "@/views/PictureView.vue";
 import MapView from "@/views/MapView.vue";
 import DashboardView from "@/views/DashboardView.vue";
 import MaterialPictureView from "@/views/MaterialPictureView.vue";
+import AccountView from "@/views/AccountView.vue";
 
 const routes = [
   {
@@ -22,7 +23,7 @@ const routes = [
   {
     path: '/picture',
     name: 'pictures',
-    component: PictureView
+    component: MaterialPictureView
   },
   {
     path: '/map',
@@ -30,9 +31,9 @@ const routes = [
     component: MapView
   },
   {
-    path: '/picture2',
-    name: 'pictures2',
-    component: MaterialPictureView
+    path: '/account',
+    name: 'account',
+    component: AccountView
   },
 
 ]

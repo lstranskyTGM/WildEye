@@ -17,7 +17,7 @@
                   </router-link>
                 </div>
                 <div class="col mt-3">
-                  <router-link to="/picture2" class="text-decoration-none text-reset text-center d-grid" @click="this.setActiveRoute('/picture')">
+                  <router-link to="/picture" class="text-decoration-none text-reset text-center d-grid" @click="this.setActiveRoute('/picture')">
                     <md-elevated-button v-if="activeRoute === '/picture'" class="w-75 ms-auto me-auto"><i class="bi bi-images fs-3"></i></md-elevated-button>
                     <md-text-button v-else class="w-75 ms-auto me-auto" ><i class="bi bi-images fs-3"></i></md-text-button>
                     <p>Pictures</p>
@@ -31,7 +31,7 @@
                   </router-link>
                 </div>
                 <div class="col mt-3">
-                  <router-link to="/map" class="text-decoration-none text-reset text-center d-grid"  @click="this.setActiveRoute('/account')">
+                  <router-link to="/account" class="text-decoration-none text-reset text-center d-grid"  @click="this.setActiveRoute('/account')">
                     <md-elevated-button v-if="activeRoute === '/account'" class="w-75 ms-auto me-auto"><i class="bi bi-person-rolodex fs-3"></i></md-elevated-button>
                     <md-text-button v-else class="w-75 ms-auto me-auto"><i class="bi bi-person-rolodex fs-3"></i></md-text-button>
                     <p>Account</p>
