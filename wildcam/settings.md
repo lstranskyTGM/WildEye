@@ -4,69 +4,108 @@
 
 ### Data Protection 
 
-discardRecordingsIfHumanDetected: bool
+`discardHumanRecordings: bool`
 
 ### Data Collection
 
-collectEnvironmentData: bool
-collectGyroscopeData: bool
-collectGPSData: bool
-collectDetectionData: bool
+`collectEnvironmentData: bool`
+
+`collectGyroscopeData: bool`
+
+`collectGPSData: bool`
+
+`collectDetectionData: bool`
 
 ### Logging
 
-logLevel: str
+`logLevel: enum.Enum("DEBUG", "INFO", "WARNING", "ERROR")`
 
 ### Space Management
 
-overrideDataIfFull: bool
+`overwriteOnFull: bool`
 
 ## Detection
 
-detectionTimeout: int
-(detectionTimeoutDay: int)
-(detectionTimeoutNight: int)
+### Timeouts
+
+`defaultDetectionTimeout: int`
+
+`(dayDetectionTimeout: int)`
+
+`(nightDetectionTimeout: int)`
 
 ### PIR Sensor
 
-pirSensitivity: int
+`pirSensitivity: int(0-100)`
 
 ### Double Check (Optional)
 
-opticalFlow: bool
+`opticalFlow: bool`
 
 ## Recording
 
-recordType: str
-setTimeBasedRecording: bool
-setIntervalBasedRecording: bool
+### Recording Type
+
+`recordType: enum.Enum("PHOTO", "VIDEO", "BOTH")`
+
+### Recording Triggers
+
+`enableTrigger: bool`
+
+`enableTimeSpan: bool`
+
+`enableInterval: bool`
+
+### Optional Parameters
+
+`timeSpanStart: datetime.time`
+
+`timeSpanEnd: datetime.time`
+
+`intervalDurationSeconds: int`
 
 ### Image
 
-imageQuality: int
-burstAmount: int
-burstInterval: int
+`imageResolution: int`
+
+`burstAmount: int`
+
+`burstIntervalMilliseconds: int`
 
 ### Video
 
-videoQuality: int
-videoLength: int
+`videoResolution: int`
+
+`videoLengthSeconds: int`
 
 ## Update Cycle
 
 ### Trigger
 
-updateTrigger: str  (amount, interval, both)
-recordAmount: int
-updateInterval: int
+#### Amount-Based Trigger
+
+`enableAmountTrigger: bool`
+
+`recordAmountForUpdate: int`
+
+#### Interval-Based Trigger
+
+`enableIntervalTrigger: bool`
+
+`updateIntervalMinutes: int`
 
 ### Message
 
 (Thresholds used to determine a change)
-notifyOnGyroChange: bool
-notifyOnGPSChange: bool
-sendLogs: bool
+
+`notifyOnGyroscopeChange: bool`
+
+`notifyOnGPSChange: bool`
+
+`logTransmissionLevel: enum.Enum("NONE", "ERROR", "WARNING", "INFO", "DEBUG")`
 
 ## Transmission
 
-transmissionRetryAmount: int
+### Retry Policy
+
+`transmissionRetries: int`
