@@ -25,10 +25,15 @@
         </div>
       </div>
 
-      <h1>Camera Options</h1>
-      <div class="card h-50 rounded rounded-3 container_color "  style="width: 45% ; background-color: var(--wildeye-container-primary); min-height: 300px">
-
+      <h1 class="px-0 mx-0">Camera Options</h1>
+      <div class="w-100 d-flex overflow-x-scroll ps-0 ms-0 pe-5">
+        <div class="mx-0 ps-0" v-for="cam in this.cameraComponentData" style="width: 45% ; min-height: 330px; max-height: 100%;min-width: 45%">
+          <div class="pe-4 h-100">
+            <CameraComponent :name="cam.name" :info="cam.info"></CameraComponent>
+          </div>
+        </div>
       </div>
+
     </div>
     <div>
 
@@ -41,13 +46,27 @@
 import "@material/web/all"
 import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
 import SettingComponent from "@/components/SettingComponent.vue";
+import CameraComponent from "@/components/CameraComponent.vue";
 
 export default{
-  components: {SettingComponent},
+  components: {CameraComponent, SettingComponent},
   name: 'AccountView',
   data(){
     return{
-
+      cameraComponentData:[
+        {
+          name: "Wildkamera 1",
+          info: "This is a test camera. MP: 12, Battery: 100%, SD-Card: 32GB, Nightvision: True, 20m"
+        },
+        {
+          name: "Wildkamera 2",
+          info: "This is a test camera. MP: 12, Battery: 100%, SD-Card: 32GB, Nightvision: True, 20m"
+        },
+        {
+          name: "Wildkamera 3",
+          info: "This is a test camera. MP: 12, Battery: 100%, SD-Card: 32GB, Nightvision: True, 20m"
+        }
+      ]
     }
   },
   beforeMount() {
@@ -56,9 +75,8 @@ export default{
 }
 </script>
 
-<style>
-
-.container_color, .card{
+<style scoped>
+.container_color, .card {
   background-color: var(--wildeye-container-primary);
 }
 
@@ -68,8 +86,7 @@ export default{
   grid-auto-rows: minmax(min-content, min-content);
   gap: 10px;
   height: 100%;
-  grid-auto-flow: column;
+  grid-auto-flow: row; /* Change this to row */
   white-space: nowrap;
 }
-
 </style>

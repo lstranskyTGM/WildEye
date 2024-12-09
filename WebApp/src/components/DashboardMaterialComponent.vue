@@ -20,7 +20,7 @@
         </div>
         <div class="card-body row overflow-hidden" style="height: 70%">
           <div class="dashboard-grid " style="height: 100%">
-            <DashboardInfoComponent name="position" value="121212" icon="bi bi-pin-map" style="font-family: Roboto, sans-serif"></DashboardInfoComponent>
+            <DashboardInfoComponent name="position" value="121212" icon="bi bi-pin-map" ></DashboardInfoComponent>
             <DashboardInfoComponent name="Battery" value="86%" icon="bi bi-battery-half"></DashboardInfoComponent>
             <DashboardInfoComponent name="Last Synchronization" value="01.12.2024 09:31" icon="bi bi-cloud-upload"></DashboardInfoComponent>
             <DashboardInfoComponent name="Last Activity" value="13.12.2024, 07:36" icon="bi bi-clock"></DashboardInfoComponent>
@@ -76,7 +76,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 html, body, #app, DashboardInfoComponent {
   font-family: Roboto, sans-serif;
@@ -105,7 +105,6 @@ hr{
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-auto-rows: minmax(min-content, min-content);
   gap: 10px;
-  height: 100%;
-  grid-auto-flow: row;
+  grid-auto-flow: unset ;
 }
 </style>
