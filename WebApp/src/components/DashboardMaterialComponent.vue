@@ -13,10 +13,13 @@
         </l-map>
       </div>
       <div class="h-100 position-relative" style="max-height: 100% !important; width: 77%;">
-        <div class="card-header row m-0 mx-0 px-0 border border-0" style="height: 30%;">
+        <div class="card-header row m-0 mx-0 px-0 border border-0 d-flex align-items-center justify-content-between" style="height: 30%;">
           <h1 class="card-title">{{ this.camera.name }}</h1>
-          <i class="bi bi-pencil-square position-absolute top-0 text-end pe-5 pt-3 fs-3" v-on:click="$emit('edit', this.camera.id)"></i>
-          <hr class="mt-0 position-absolute" style="top: 30%; left: 2%; width: 96%">
+          <div class="position-absolute top-0 text-end pe-3 pt-3 fs-3">
+            <i :class="{'bi bi-heart-fill text-danger pe-1': camera.hearted, 'bi bi-heart pe-1': !camera.hearted}" @click="toggleHeart"></i>
+            <i class="bi bi-pencil-square " @click="console.log('hallo')"></i>
+          </div>
+          <hr class="mt-0 position-absolute" style="top: calc(30% - 0.75px); left: 2%; width: 96%">
         </div>
         <div class="card-body row overflow-hidden" style="height: 70%">
           <div class="dashboard-grid " style="height: 100%">
@@ -44,7 +47,13 @@ export default {
   props: {
     camera:Object
   },
-  methods: {latLng},
+  methods: {
+    latLng,
+    toggleHeart() {
+      console.log('toggleHeart', this.camera.id);
+      this.$emit('update_hearted', {to: !this.camera.hearted, id: this.camera.id});
+    }
+  },
   components: {
     DashboardInfoComponent,
     MarkerPopupComponent,
@@ -72,7 +81,8 @@ export default {
         touchZoom: false,
       }
     }
-  }
+  },
+
 }
 </script>
 
@@ -85,13 +95,11 @@ html, body, #app, DashboardInfoComponent {
 
 .card{
   background-color: var(--wildeye-container-primary);
-  border-width: 1.5px;
-  border-color: var(--md-sys-color-scrim);
 }
 
 hr{
   color: var(--md-sys-color-scrim) !important;
-  border-width: 2px;
+  border-width: 1.5px;
   background-color: var(--md-sys-color-scrim) !important;
   opacity: 0.5;
 }
@@ -106,5 +114,21 @@ hr{
   grid-auto-rows: minmax(min-content, min-content);
   gap: 10px;
   grid-auto-flow: unset ;
+  border-radius: 5px;
+}
+
+.text-danger {
+  color: red;
+}
+.icon-container {
+  display: flex;
+  gap: 10px; /* Adjust the gap as needed */
+  position: relative;
+  z-index: 10; /* Ensure the icons are on top */
+  width: min-content;
+}
+
+.icon-container i {
+  cursor: pointer;
 }
 </style>

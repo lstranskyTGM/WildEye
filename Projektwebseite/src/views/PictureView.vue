@@ -27,29 +27,29 @@ export default {
           desc:"Die Machbarkeitsstudie für das Projekt ist abgeschlossen und die Wildkamera kann realisiert werden.",
           pic: "milestone1.svg",
           progress: "25%",
-          date: "15.11.2024",
+          date: "20.12.2024",
           color: "#"
         },
         {
-          title:"Erste Bildaufnahme",
-          desc:"Es wurde eine erste Bildaufnahme aufgenommen, welche auf der Webseite einsehbar ist.",
+          title:"Erste Bildaufnahme und Bilderkennung",
+          desc:"Es wurde eine erste Bildaufnahme aufgenommen, welche mittels Bilderkennung analysiert und klassifiziert wurde.",
           pic: "milestone2.svg",
           progress: "25%",
-          date: "03.12.2024"
+          date: "19.01.2024"
         },
         {
           title:"Prototyp fertig",
           desc:"Es wurde der erste Prototyp der Wildkamera erstellt. Dieser kann aufnahmen tätigen, welche auf der Webseite einsehbar sind.",
           pic: "milestone3.svg",
           progress: "0%",
-          date: "15.01.2025"
+          date: "27.01.2025"
         },
         {
           title:"Testen fertig",
           desc:"Der Prototyp der Wildkamera wurde auf Funktionalität getestet und ist bereit für den Einsatz.",
           pic: "milestone4.svg",
           progress: "0%",
-          date: "31.01.2025"
+          date: "02.03.2025"
         }
       ]
     }

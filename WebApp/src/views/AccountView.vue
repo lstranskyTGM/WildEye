@@ -13,7 +13,7 @@
               </md-fab>
             </div>
 
-            <hr class="mt-0 position-absolute" style="top: 30%; left: 1%; width: 98%">
+            <hr class="mt-0 position-absolute" style="top: calc(30% - 0.75px); left: 1%; width: 98%">
           </div>
           <div class="card-body row m-0 p-0 pt-1" style="height: 70%; max-width: 100%">
             <div class="dashboard-grid overflow-x-auto overflow-y-auto" style="height: 100%; max-width: 100%">
@@ -88,5 +88,12 @@ export default{
   height: 100%;
   grid-auto-flow: row; /* Change this to row */
   white-space: nowrap;
+}
+hr{
+  color: var(--md-sys-color-scrim) !important;
+  border-width: 1.5px;
+  background-color: var(--md-sys-color-scrim) !important;
+  opacity: 0.5;
+  border-radius: 5px;
 }
 </style>

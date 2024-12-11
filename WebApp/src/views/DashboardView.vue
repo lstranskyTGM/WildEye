@@ -1,7 +1,7 @@
 <template>
   <div class="h-100 w-100 col-xxl-12 col-xl-12 col-lg-12 col-md-11 col-sm-12 col-12 overflow-y-auto d-grid overflow-x-hidden" style="max-height: 100%;">
     <div v-for="camera in this.cameraObjects" :key="camera.id" class="py-2 ms-auto me-auto" style="height: 100%; min-height: 250px; width: 98%">
-      <DashboardMaterialComponent :camera="camera" class="w-100 h-100 shadow"></DashboardMaterialComponent>
+      <DashboardMaterialComponent :camera="camera" class="w-100 h-100 shadow" v-on:update_hearted="updateHearted"></DashboardMaterialComponent>
     </div>
 
     <div class="py-2">
@@ -39,6 +39,8 @@ export default {
           lastSync: '2021-08-06 12:34:56',
           lat: 48.4262157636489,
           lng: 16.61251026756385,
+          hearted:false
+
         },
         {
           name: "Wildkamera 2",
@@ -52,6 +54,8 @@ export default {
           lastSync: '2021-08-06 12:34:56',
           lat: 48.42558212563766,
           lng: 16.61130863793849,
+          hearted:false
+
         },
         {
           name: "Wildkamera 3",
@@ -65,6 +69,7 @@ export default {
           lastSync: '2021-08-06 12:34:56',
           lat: 48.42568212563766,
           lng: 16.61140863793849,
+          hearted:false
         }
       ]
     }
@@ -83,6 +88,11 @@ export default {
     handleEditModalSubmit(changes) {
       console.log('Serial Code:', changes);
       // Handle the serial code, e.g., send it to the backend
+    },
+    updateHearted(payload) {
+      console.log('updateHearted', payload);
+      const index = this.cameraObjects.findIndex(img => img.id === payload.id);
+      this.cameraObjects[index].hearted = payload.to;
     }
   },
   mounted() {

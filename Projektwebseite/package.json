@@ -14,7 +14,8 @@
     "leaflet": "^1.9.4",
     "leaflet.heat": "^0.2.0",
     "vue": "^3.2.13",
-    "vue-router": "^4.0.3"
+    "vue-router": "^4.0.3",
+    "@material/web": "^2.2.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",

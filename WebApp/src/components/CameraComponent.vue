@@ -11,7 +11,7 @@
           </md-fab>
         </div>
 
-        <hr class="mt-0 position-absolute" style="top: 30%; left: 1%; width: 98%">
+        <hr class="mt-0 position-absolute" style="top: calc(30% - 0.75px); left: 1%; width: 98%">
       </div>
       <div class="card-body row m-0 p-0 pt-2" style="height: 70%; max-width: 100%">
         <div class="w-50 h-100 border border-top-0 border-bottom-0 border-start-0 border-end-3" style="min-width: 150px">
@@ -55,5 +55,11 @@
 </script>
 
 <style>
-
+hr{
+  color: var(--md-sys-color-scrim) !important;
+  border-width: 1.5px;
+  background-color: var(--md-sys-color-scrim) !important;
+  opacity: 0.5;
+  border-radius: 5px;
+}
 </style>
