@@ -61,7 +61,9 @@ export default {
       updates: [
         { image: require('@/assets/v2_projektwebsite.png'), alt: "V2 der Projektwebseite fertig", title: "V2 der Projektwebseite fertig! - 11.12.2024" },
         { image: require('@/assets/new_website.png'), alt: "Neue Website - Layout fertig", title: "Neue Website mit fertigem Layout! - 11.12.2024" },
-        { image: require('@/assets/figma_mockup.png'), alt: "Mockup fertig, Usability Tests begonnen", title: "Mockup fertig, Usability Tests begonnen - 1.12.2024" },
+        { image: require('@/assets/strapi_logo.png'), alt: "Strapi Prototyp", title: "Schnittstellen Prototyp mit Strapi erstellt - 08.12.2024" },
+        { image: require('@/assets/logo_digital.png'), alt: "Logo Digitalisiert", title: "Logo wurde digitalisiert - 04.12.2024" },
+        { image: require('@/assets/figma_mockup.png'), alt: "Mockup fertig, Usability Tests begonnen", title: "Mockup fertig, Usability Tests begonnen - 01.12.2024" },
         { image: require('@/assets/mockup_new_website.png'), alt: "Mockup neue Webseite", title: "Neues Mockup und Design! - 26.11.2024" },
         { image: require('@/assets/qrcode_wildeye_tech.png'), alt: "website qrcode", title: "Webseite jetzt gehostet! - 24.10.2024" },
         { image: require('@/assets/website_v1.png'), alt: "website", title: "V1 der Projektwebseite fertig - 24.10.2024" },

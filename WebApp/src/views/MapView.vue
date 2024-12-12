@@ -10,8 +10,8 @@
         ></l-tile-layer>
         <div v-for="camera in this.cameraPositions">
           <l-marker :lat-lng="latLng(camera.lat, camera.lng)">
-            <l-popup :options="popupOptions" class="custom-popup">
-              <marker-popup-component :camera="camera"></marker-popup-component>
+            <l-popup :options="popupOptions" class="custom-popup ratio ratio-16x9">
+              <MarkerPopupMaterialComponent :camera="camera" v-on:update_hearted="updateHearted"></MarkerPopupMaterialComponent>
             </l-popup>
           </l-marker>
         </div>
@@ -49,11 +49,13 @@ import "leaflet/dist/leaflet.css";
 import {latLng, LatLng} from "leaflet/src/geo";
 import MarkerPopupComponent from "@/components/MarkerPopupComponent.vue";
 import POIFormPopupComponent from "@/components/POIFormPopupComponent.vue";
+import MarkerPopupMaterialComponent from "@/components/MarkerPopupMaterialComponent.vue";
 // import L from "leaflet";
 // import "leaflet.heat";
 export default {
   name: 'MapView',
   components: {
+    MarkerPopupMaterialComponent,
     POIFormPopupComponent,
     LIcon,
     LCircleMarker,
@@ -94,9 +96,15 @@ export default {
           name: 'Camera 1',
           id: 1,
           description: 'This is a camera 1',
-          lastCapturePreview: 'https://pixabay.com/get/ga7032aa8779154791af812753fda585702437883b042f43c61e981eb9460008aa5b974ac796b0ed28b7b11ffa657f5c1ce9fdbf035943dde63fa8d2ebd0e53b9_640.jpg',
+          lastCapturePreview: 'https://www.w3schools.com/w3images/lights.jpg',
           totalCaptures: 10,
           totalSpecies: 5,
+          hearted: false,
+          date: "2021-09-01",
+          tags: [
+            {icon: "bi bi-person", text: "Person"},
+            {icon: "bi bi-camera", text: "Camera"}
+          ]
         },
         {
           lat: 48.42558212563766,
@@ -107,9 +115,15 @@ export default {
           name: 'Camera 2',
           id: 2,
           description: 'This is a camera 2',
-          lastCapturePreview: 'https://pixabay.com/get/g729a72756030f3d2beee9b02d97e3752b2b4cfc0aabfb2894427d9a987afdca339a9dc8a11619024fbba4def19b867c10bbd51d27fd2db46540b3f318b99ea5f_640.jpg',
+          lastCapturePreview: 'https://www.w3schools.com/w3images/lights.jpg',
           totalCaptures: 20,
           totalSpecies: 2,
+          date: "2021-09-01",
+          hearted: false,
+          tags: [
+            {icon: "bi bi-person", text: "Person"},
+            {icon: "bi bi-camera", text: "Camera"}
+          ]
         }
       ],
       mapOptions:{
@@ -173,6 +187,11 @@ export default {
         desc: POI.desc
       });
       console.log(this.POIs)
+    },
+    updateHearted(payload) {
+      console.log('updateHearted', payload);
+      const index = this.cameraPositions.findIndex(img => img.id === payload.id);
+      this.cameraPositions[index].hearted = payload.to;
     }
     /*onMapReady() {
       this.addHeatmapLayer();
@@ -182,6 +201,7 @@ export default {
       L.heatLayer(this.heatmapData, { radius: 25 }).addTo(map);
     }*/
   },
+
   computed: {
     currentTileName() {
       return this.currentTile;

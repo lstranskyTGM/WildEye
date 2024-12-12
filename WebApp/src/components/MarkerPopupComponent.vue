@@ -58,6 +58,9 @@
 </template>
 
 <script>
+import "@material/web/all"
+import {styles as typescaleStyles} from "@material/web/typography/md-typescale-styles";
+
 export default {
   name: 'MarkerPopupComponent',
   props: {
@@ -84,6 +87,9 @@ export default {
   computed: {
   },
   watch: {
+  },
+  beforeMount() {
+    document.adoptedStyleSheets = [typescaleStyles.styleSheet];
   },
   mounted() {
   },
