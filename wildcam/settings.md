@@ -66,7 +66,7 @@
 
 ### Image
 
-`imageResolution: int`
+`imageResolution: str`
 
 `burstAmount: int`
 
