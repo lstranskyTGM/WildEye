@@ -59,6 +59,8 @@ export default {
   data() {
     return {
       updates: [
+        { image: require('@/assets/wildeye neuronales netzwerk.png'), alt: "Neuronales Netzwerk von Wildeye", title: "Erstes neuronales Netzwerk für WildEye erstelt! - 13.12.2024" },
+        { image: require('@/assets/softwareloesung_design.png'), alt: "Aktivitätsdiagramm für die Softwarelösung", title: "Aktivitätsdiagramm für die Softwarelösung erstellt! - 11.12.2024" },
         { image: require('@/assets/v2_projektwebsite.png'), alt: "V2 der Projektwebseite fertig", title: "V2 der Projektwebseite fertig! - 11.12.2024" },
         { image: require('@/assets/new_website.png'), alt: "Neue Website - Layout fertig", title: "Neue Website mit fertigem Layout! - 11.12.2024" },
         { image: require('@/assets/strapi_logo.png'), alt: "Strapi Prototyp", title: "Schnittstellen Prototyp mit Strapi erstellt - 08.12.2024" },
