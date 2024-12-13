@@ -8,12 +8,10 @@ from PIL import Image
 
 # Transformationspipeline (Bildgrößenanpassung und Normalisierung)
 transform = transforms.Compose([
-    transforms.Resize((150, 150)),
+    transforms.Resize((64, 64)),  # Reduzierte Bildgröße
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
 ])
-
-# Dataset-Klasse für das Symbol "H" und "9"
 class SymbolDataset(Dataset):
     def __init__(self, root_dir, transform=None):
         self.root_dir = root_dir
@@ -29,16 +27,17 @@ class SymbolDataset(Dataset):
                     self.images.append(img_path)
                     self.labels.append(label)
 
-            #img = self.transform(img)
     def __len__(self):
         return len(self.images)
 
     def __getitem__(self, idx):
         img_path = self.images[idx]
         img = Image.open(img_path).convert('RGB')
+        label = self.labels[idx]  # Label außerhalb der Transformations-Bedingung setzen
         if self.transform:
-            label = self.labels[idx]
+            img = self.transform(img)  # Transformation anwenden, falls definiert
         return img, label
+
 
 
 def get_dataloaders(root_dir, batch_size=8):
