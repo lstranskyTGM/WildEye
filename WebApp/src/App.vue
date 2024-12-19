@@ -37,17 +37,33 @@
                     <p>Account</p>
                   </router-link>
                 </div>
+                <div class="col mt-3 ms-auto me-auto">
+                  <div class=" text-center d-grid " @click="this.opened = !this.opened" >
+                    <md-fab variant="primary" aria-label="Add new Camera" class="w-75 ms-auto mb-auto">
+                      <md-icon slot="icon"><i class="bi bi-plus-circle-dotted"></i></md-icon>
+                    </md-fab>
+                    <p>Add Camera</p>
+                  </div>
+                  <md-dialog :open="this.opened" v-on:close="this.opened = false">
+                    <div slot="headline">
+                      Add new Camera to account
+                    </div>
+                    <form slot="content" id="form-id" method="dialog">
+                      enter the code here or not ok thank you
+                    </form>
+                    <div slot="actions">
+                      <md-text-button form="form-id" @click="this.opened = false">Ok</md-text-button>
+                    </div>
+                  </md-dialog>
+                </div>
               </div>
-
             </nav>
-
           </div>
-
         </div>
       </div>
-      <div class="col-11 ms-auto me-0 edge_color pe-0 ps-0">
-        <div class="w-100 h-100 rounded-top-5 rounded-end-0 bg-white me-0 ms-0 pe-0 ps-0">
-          <div class="p-3 h-100 w-100">
+      <div class="col-11 ms-auto me-0 edge_color pe-0 ps-0" style="background-color: var(--md-sys-color-surface-container)">
+        <div class="w-100 h-100 rounded-top-5 rounded-end-0 bg-white me-0 ms-0 pe-0 ps-0" style="background-color: var(--md-sys-color-surface-container)">
+          <div class="p-3 h-100 w-100" style="background-color: var(--md-sys-color-surface-container)">
             <router-view/>
           </div>
 
@@ -65,7 +81,8 @@ export default {
   name: 'App',
   data(){
     return{
-      activeRoute: '/'
+      activeRoute: '/',
+      opened:false
     }
   },
   methods: {
@@ -80,13 +97,13 @@ export default {
 </script>
 
 <style>
-@import "../css/custom.css";
+@import "../css/treeGreen.css";
 #app, html, body {
   font-family: Roboto, sans-serif;
-  background-color: var(--md-sys-color-surface-container);
+  /*background-color: var(--md-sys-color-surface-container);*/
 }
 .edge_color{
-  background-color: var(--wildeye-edge-color);
+  background-color: var(--md-sys-color-surface-container-high);
 }
 
 </style>
