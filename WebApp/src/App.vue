@@ -5,7 +5,7 @@
         <div class="d-flex h-100 w-100">
           <div class="row-cols-1 ms-auto me-auto h-100">
             <nav class="mt-0 h-100 w-100 align-content-start d-flex flex-column">
-              <div class="col d-flex justify-content-center align-content-center">
+              <div class="col d-flex justify-content-center align-content-center " @click="this.setActiveRoute('/'); router().push('/')" role='button' >
                 <img src="@/assets/logo_digital.png" class="card-img-top img-fluid" style="object-fit: contain; width: 70%;">
               </div>
               <div class="overflow-y-auto h-100 flex-grow-1">
@@ -77,6 +77,7 @@
 
 import "@material/web/all"
 import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+import router from "@/router";
 export default {
   name: 'App',
   data(){
@@ -86,6 +87,9 @@ export default {
     }
   },
   methods: {
+    router() {
+      return router
+    },
     setActiveRoute(route){
       this.activeRoute = route;
     }

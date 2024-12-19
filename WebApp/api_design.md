@@ -67,7 +67,7 @@
       "from": "string",
       "to": "string"
     },
-    "favouritesOnly": false
+    "heartedOnly": false
   }
 }
 ```
@@ -79,17 +79,23 @@
   "images": [
     {
       "id": "string",
-      "header": "string",
+      "title": "string",
       "description": "string",
       "date": "string",
       "tags": [
-        "string",
-        "string"
+        {
+          "title": "string",
+          "icon": "bi bi-heart-fill"
+        },
+        {
+          "title": "string",
+          "icon": "bi bi-heart-fill"
+        }
       ],
       "url_preview": "string",
       "url_full": "string",
       "camera": "string",
-      "favourite": true
+      "hearted": true
     },
     {
       
@@ -118,25 +124,17 @@
     {
       "lat": 48.4262157636489,
       "lng": 16.61251026756385,
-      "info":[
-        "camera",
-        "night vision"
-      ],
+      "generalInfo": "string",
       "name": "string",
-      "id": 1,
-      "description": "string",
-      "lastCapturePreview": "string",
+      "id": 1, 
+      "lastCapturePreview": "url/string",
       "lastCaptureDate": "string",
       "totalCaptures": 10,
       "battery": 100,
-      "status": "online | offline",
       "lastSync": "string",
-      "preferences": {
-        "favourite": true
-      }
+      "hearted": true
     },
     {
-      
     }
   ]
 }
@@ -164,26 +162,108 @@
     {
       "lat": 48.4262157636489,
       "lng": 16.61251026756385,
-      "info":[
-        "camera",
-        "night vision"
-      ],
+      "generalInfo": "string",
       "name": "string",
       "id": 1,
-      "description": "string",
-      "lastCapturePreview": "string",
+      "lastCapturePreview": "url/string",
       "lastCaptureDate": "string",
       "totalCaptures": 10,
       "battery": 100,
-      "status": "online | offline",
       "lastSync": "string",
-      "preferences": {
-        "favourite": true
-      }
+      "hearted": true
     },
     {
       
     }
   ]
+}
+```
+
+### Post /advancedSettings
+
+```json
+{
+  "session": "string",
+  "id": 1
+}
+```
+
+### Response 
+Beispiel für Number, String, Boolean und Select inputs von leos liste auf github
+```json
+[
+{
+  "type": "number", 
+  "name": "Resolution",
+  "min": 0,
+  "max": 100,
+  "value": 50,
+  "required": true
+},
+{
+  "type": "string",
+  "name": "prefix",
+  "value": "WildEye",
+  "required": false
+},
+{
+  "type": "boolean",
+  "name": "Nightvision",
+  "value": true,
+  "required": true
+},
+{
+  "type": "select",
+  "name": "Logging",
+  "options": ["None", "Error", "Warning", "Info", "Debug"],
+  "value": "Info",
+  "required": true
+}
+]
+```
+
+### Put /advancedSettings
+
+```json
+{
+  "session": "string",
+  "id": 1,
+  "advancedSettings": [
+    {
+      "type": "number",
+      "name": "Resolution",
+      "min": 0,
+      "max": 100,
+      "value": 50,
+      "required": true
+    },
+    {
+      "type": "string",
+      "name": "prefix",
+      "value": "WildEye",
+      "required": false
+    },
+    {
+      "type": "boolean",
+      "name": "Nightvision",
+      "value": true,
+      "required": true
+    },
+    {
+      "type": "select",
+      "name": "Logging",
+      "options": ["None", "Error", "Warning", "Info", "Debug"],
+      "value": "Info",
+      "required": true
+    }
+  ]
+}
+```
+
+### Response
+
+```json
+{
+  "success": "boolean"
 }
 ```

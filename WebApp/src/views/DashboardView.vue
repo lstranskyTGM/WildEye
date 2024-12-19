@@ -1,7 +1,7 @@
 <template>
   <div class="h-100 w-100 col-xxl-12 col-xl-12 col-lg-12 col-md-11 col-sm-12 col-12 overflow-y-auto d-grid overflow-x-hidden" style="max-height: 100%;">
     <div v-for="camera in this.cameraObjects" :key="camera.id" class="py-2 ms-auto me-auto" style="height: 100%; min-height: 250px; width: 98%">
-      <DashboardMaterialComponent :camera="camera" class="w-100 h-100 shadow" v-on:update_hearted="updateHearted"></DashboardMaterialComponent>
+      <DashboardMaterialComponent :camera="camera" class="w-100 h-100 shadow" v-on:update_hearted="updateHearted" v-on:navigateToSettings=""></DashboardMaterialComponent>
     </div>
 
     <div class="py-2">

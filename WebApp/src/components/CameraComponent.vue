@@ -16,7 +16,7 @@
       <div class="card-body row m-0 p-0 pt-2" style="height: 70%; max-width: 100%">
         <div class="w-50 h-100 border border-top-0 border-bottom-0 border-start-0 border-end-3" style="min-width: 150px">
           <SettingComponent name="Name" :value="name" confirm_needed="false" icon="bi bi-camera"></SettingComponent>
-          <md-outlined-button @click="this.opened= true">
+          <md-outlined-button @click="openSettingsDialog">
             Open advanced settings
             <svg slot="icon" viewBox="0 0 48 48"><path d="M9 42q-1.2 0-2.1-.9Q6 40.2 6 39V9q0-1.2.9-2.1Q7.8 6 9 6h13.95v3H9v30h30V25.05h3V39q0 1.2-.9 2.1-.9.9-2.1.9Zm10.1-10.95L17 28.9 36.9 9H25.95V6H42v16.05h-3v-10.9Z"/></svg>
           </md-outlined-button>
@@ -35,12 +35,19 @@
       </div>
     </div>
   </div>
-  <md-dialog :open="this.opened" v-on:close="this.opened = false">
+  <md-dialog :open="this.opened" v-on:close="this.onCloseSettingsDialog">
     <div slot="headline">
-      {{this.text}}
+      Advanced Settings for {{this.name}}
     </div>
     <form slot="content" id="form-id" method="dialog">
-      A simple dialog with free-form content.
+      <div v-if="this.settings==null">
+        Please note that content might need some time to load
+        <br>
+        <md-circular-progress four-color indeterminate ></md-circular-progress>
+      </div>
+      <div v-else>
+        <AdvancedSettingsComponent v-for="setting in this.settings" :setting="setting" @update-setting="updateSetting"></AdvancedSettingsComponent>
+      </div>
     </form>
     <div slot="actions">
       <md-text-button form="form-id" @click="this.opened = false">Ok</md-text-button>
@@ -52,19 +59,74 @@
 
   import SettingComponent from "@/components/SettingComponent.vue";
   import "@material/web/all"
+  import AdvancedSettingsComponent from "@/components/AdvancedSettingsComponent.vue";
 
   export default {
     name: 'CameraComponent',
-    components: {SettingComponent},
+    components: {AdvancedSettingsComponent, SettingComponent},
     data(){
       return{
         text:"kjdfghlskdjfgh",
-        opened:false
+        opened:false,
+        settings:null
       }
     },
     props: {
       name: String,
       info: String
+    },
+    methods: {
+      openSettingsDialog(){
+        this.opened = true;
+        if(this.settings === null){
+          this.getSettings();
+        }
+        console.log(this.settings)
+      },
+      getSettings(){
+        // eventually, make a request to the server to get the advanced settings.
+        this.settings=[
+          {
+            type: "number",
+            name: "Resolution",
+            min: 0,
+            max: 100,
+            value: 50,
+            required: true
+          },
+          {
+            type: "string",
+            name: "prefix",
+            value: "WildEye",
+            required: false
+          },
+          {
+            type: "boolean",
+            name: "Nightvision",
+            value: true,
+            required: true
+          },
+          {
+            type: "select",
+            name: "Logging",
+            options: ["None", "Error", "Warning", "Info", "Debug"],
+            value: "Info",
+            required: true
+          }
+        ]
+      },
+      updateSetting(updatedSetting) {
+        const setting = this.settings.find(s => s.name === updatedSetting.name);
+        if (setting) {
+          setting.value = updatedSetting.value;
+        }
+      },
+      onCloseSettingsDialog(){
+        this.opened = false;
+        console.log(this.settings)
+        // when connected to the server, send the updated settings to the server.
+        // The changes are already in the settings object.
+      }
     }
   }
 </script>

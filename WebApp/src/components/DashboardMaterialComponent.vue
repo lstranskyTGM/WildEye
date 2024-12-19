@@ -17,7 +17,7 @@
           <h1 class="card-title">{{ this.camera.name }}</h1>
           <div class="position-absolute top-0 text-end pe-3 pt-3 fs-3">
             <i :class="{'bi bi-heart-fill text-danger pe-1': camera.hearted, 'bi bi-heart pe-1': !camera.hearted}" @click="toggleHeart"></i>
-            <i class="bi bi-pencil-square " @click="console.log('hallo')"></i>
+            <i class="bi bi-pencil-square " @click="$emit('navigateToSettings')"></i>
           </div>
           <hr class="mt-0 position-absolute" style="top: calc(30% - 0.75px); left: 2%; width: 96%">
         </div>
@@ -41,6 +41,7 @@ import {LCircleMarker, LIcon, LMap, LMarker, LPopup, LTileLayer} from "@vue-leaf
 import "leaflet/dist/leaflet.css";
 import {latLng, LatLng} from "leaflet/src/geo";
 import DashboardInfoComponent from "@/components/DashboardInfoComponent.vue";
+import router from "@/router";
 
 export default {
   name: 'DashboardMaterialComponent',
@@ -48,6 +49,9 @@ export default {
     camera:Object
   },
   methods: {
+    router() {
+      return router
+    },
     latLng,
     toggleHeart() {
       console.log('toggleHeart', this.camera.id);
