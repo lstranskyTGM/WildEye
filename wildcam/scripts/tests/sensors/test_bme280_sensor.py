@@ -1,80 +1,129 @@
 import smbus2
 import bme280
 import time
-import sys
+import logging
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO, 
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 
-# I2C address for BME280 sensor
-BME280_ADDRESS = 0x76
-
-
-def initialize_bme280(bus):
+class BME280Sensor:
     """
-    Initialize the BME280 sensor by loading the calibration parameters.
+    A class to interact with the BME280 sensor for temperature, pressure, and humidity readings.
     """
-    # Load calibration parameters from the sensor
-    try:
-        calibration_params = bme280.load_calibration_params(bus, BME280_ADDRESS)
-        return calibration_params
-    except Exception as error:
-        print(f"Error initializing BME280: {error}")
-        return None  # Return None if initialization fails
+
+    def __init__(self, bus_number=1, address=0x76):
+        """
+        Initialize the BME280Sensor instance.
+
+        Args:
+            bus_number (int): The I2C bus number (default: 1 for Raspberry Pi).
+            address (int): The I2C address of the BME280 sensor (default: 0x76).
+        """
+        self.bus_number = bus_number
+        self.address = address
+        self.bus = None
+        self.calibration_params = None
+
+    def initialize(self):
+        """
+        Initialize the I2C bus and load calibration parameters for the BME280 sensor.
+        """
+        try:
+            self.bus = smbus2.SMBus(self.bus_number)
+            self.calibration_params = bme280.load_calibration_params(self.bus, self.address)
+            logging.info(f"BME280 initialized at address {hex(self.address)}.")
+        except Exception as error:
+            logging.error(f"Error initializing BME280: {error}")
+            self.calibration_params = None
+
+    def read_data(self):
+        """
+        Read temperature, pressure, and humidity data from the BME280 sensor.
+
+        Returns:
+            dict: A dictionary containing temperature, pressure, and humidity data.
+                  Returns None if reading fails.
+        """
+        if not self.calibration_params:
+            logging.warning("Sensor not initialized. Please initialize first.")
+            return None
+
+        try:
+            data = bme280.sample(self.bus, self.address, self.calibration_params)
+            return {
+                "timestamp": data.timestamp,
+                "temperature": data.temperature,
+                "pressure": data.pressure,
+                "humidity": data.humidity,
+            }
+        except Exception as error:
+            logging.error(f"Error reading data from BME280: {error}")
+            return None
+
+    def cleanup(self):
+        """
+        Clean up the I2C bus connection.
+        """
+        try:
+            if self.bus:
+                self.bus.close()
+                logging.info("I2C connection closed.")
+        except Exception as error:
+            logging.error(f"Error during cleanup: {error}")
 
 
-def read_bme280(bus, address, calibration_params):
+def display_sensor_data(data):
     """
-    Read and return sensor data from the BME280 sensor.
-    """
-    try:
-        data = bme280.sample(bus, address, calibration_params)
-        return data
-    except Exception as error:
-        print(f"Error reading BME280 data: {error}")
-        return None  # Return None if reading fails
-    
+    Display temperature, pressure, and humidity data.
 
-def print_sensor_data(data):
+    Args:
+        data (dict): A dictionary containing temperature, pressure, and humidity data.
     """
-    Print temperature, pressure, and humidity data.
-    """
-    if data:  # Ensure data is not None before printing
-        print(f"Data ID: {data.id}")
-        print(f"Timestamp: {data.timestamp}")
-        print(f"Temperature: {data.temperature:.2f} °C")
-        print(f"Pressure: {data.pressure:.2f} hPa")
-        print(f"Humidity: {data.humidity:.2f} %")
+    if data:
+        print(f"Timestamp: {data['timestamp']}")
+        print(f"Temperature: {data['temperature']:.2f} °C")
+        print(f"Pressure: {data['pressure']:.2f} hPa")
+        print(f"Humidity: {data['humidity']:.2f} %")
         print("-" * 40)
     else:
         print("No valid data to display.")
 
 
-if __name__ == "__main__":
-    # Ensure the I2C bus is defined
-    i2c_bus = None
-    
+def monitor_bme280(sensor):
+    """
+    Continuously monitor and log data from the BME280 sensor until interrupted.
+
+    Args:
+        sensor (BME280Sensor): An instance of the BME280Sensor class.
+    """
     try:
-        # Initialize I2C bus
-        i2c_bus = smbus2.SMBus(1)  # Use 1 for Raspberry Pi Zero 2
+        sensor.initialize()
 
-        # Initialize the BME280 sensor
-        calibration_params = initialize_bme280(i2c_bus)
-        
-        # Check if initialization was successful
-        if calibration_params is None:
-            print("Failed to initialize BME280. Exiting.")
-            sys.exit()
+        if not sensor.calibration_params:
+            logging.error("Failed to initialize BME280. Exiting...")
+            return
 
-        # Continuous data reading and printing
+        logging.info("BME280 sensor is ready. Reading data...")
+
         while True:
-            sensor_data = read_bme280(i2c_bus, BME280_ADDRESS, calibration_params)
-            print_sensor_data(sensor_data)
+            sensor_data = sensor.read_data()
+            display_sensor_data(sensor_data)
             time.sleep(1)
+
     except KeyboardInterrupt:
-        print("\nProgram interrupted. Exiting...")
-    except Exception as error:
-        print(f"An error occurred: {error}")
+        logging.info("KeyboardInterrupt detected. Exiting...")
+
     finally:
-        # Close the I2C bus if it was opened
-        if i2c_bus: 
-            i2c_bus.close()#
-            print("I2C connection closed.")
+        sensor.cleanup()
+
+
+if __name__ == "__main__":
+    # Create an instance of the BME280Sensor class
+    bme_sensor = BME280Sensor()
+
+    # Start monitoring the sensor
+    monitor_bme280(bme_sensor)
