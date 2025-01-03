@@ -1,125 +1,106 @@
-import smbus2
 import time
+import logging
+from mpu6050 import mpu6050
 
-# MPU-6050 I2C address
-MPU6050_ADDR = 0x68
-
-# MPU-6050 Registers
-PWR_MGMT_1 = 0x6B     # Power Management register 1 - to wake up the sensor (from sleep mode)
-ACCEL_XOUT_H = 0x3B   # High byte of X-axis accelerometer data
-ACCEL_YOUT_H = 0x3D   # High byte of Y-axis accelerometer data
-ACCEL_ZOUT_H = 0x3F   # High byte of Z-axis accelerometer data
-TEMP_OUT_H = 0x41     # High byte of temperature data
-GYRO_XOUT_H = 0x43    # High byte of X-axis gyroscope data
-GYRO_YOUT_H = 0x45    # High byte of Y-axis gyroscope data
-GYRO_ZOUT_H = 0x47    # High byte of Z-axis gyroscope data
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 
-class MPU6050:
+class MPU6050Sensor:
     """
-    Class to interact with the MPU-6050 sensor using I2C communication.
-    
-    Attributes:
-        bus (smbus2.SMBus): The I2C bus to communicate with the sensor.
-        address (int): The I2C address of the sensor (default is 0x68).
-    Methods:
-        initialize_sensor(): Wakes up the sensor by writing to the power management register.
-        read_raw_data(register): Reads raw data (16-bit) from the specified register and combines high and low bytes.
-        get_acceleration(): Reads and returns the acceleration data in g (gravity) for X, Y, Z axes.
-        get_gyroscope(): Reads and returns the gyroscope data in degrees per second (°/s) for X, Y, Z axes.
-        get_temperature(): Reads and returns the temperature in Celsius.
+    A class to interact with the MPU-6050 sensor for accelerometer, gyroscope, and temperature readings.
     """
-    def __init__(self, bus, address=MPU6050_ADDR):
-        """
-        Initializes the MPU-6050 sensor with the specified I2C bus and address.
-        """
-        self.bus = bus
-        self.address = address
-        self.initialize_sensor()
 
-    def initialize_sensor(self):
+    def __init__(self, address=0x68):
         """
-        Wakes up the MPU-6050 by writing to the power management register.
+        Initialize the MPU6050Sensor instance.
+
+        Args:
+            address (int): The I2C address of the MPU-6050 sensor (default: 0x68).
         """
         try:
-            self.bus.write_byte_data(self.address, PWR_MGMT_1, 0)
-            time.sleep(0.1)
+            self.sensor = mpu6050(address)
+            logging.info(f"MPU-6050 initialized at address {hex(address)}.")
         except Exception as error:
-            print(f"Error initializing sensor: {error}")
+            logging.error(f"Error initializing MPU-6050: {error}")
+            self.sensor = None
 
-    def read_raw_data(self, register):
+    def read_data(self):
         """
-        Reads raw data (16-bit) from the specified register and combines high and low bytes.
+        Read accelerometer, gyroscope, and temperature data from the MPU-6050 sensor.
+
+        Returns:
+            dict: A dictionary containing accelerometer, gyroscope, and temperature data.
+                  Returns None if reading fails.
         """
+        if not self.sensor:
+            logging.warning("Sensor not initialized. Please check initialization.")
+            return None
+
         try:
-            high = self.bus.read_byte_data(self.address, register)
-            low = self.bus.read_byte_data(self.address, register + 1)
-            value = (high << 8) | low
-            if value > 32767:
-                value -= 65536
-            return value
+            accel_data = self.sensor.get_accel_data()
+            gyro_data = self.sensor.get_gyro_data()
+            temp = self.sensor.get_temp()
+
+            return {
+                "acceleration": accel_data,
+                "gyroscope": gyro_data,
+                "temperature": temp,
+            }
         except Exception as error:
-            print(f"Error reading raw data from register {register}: {error}")
-            return 0
+            logging.error(f"Error reading data from MPU-6050: {error}")
+            return None
 
-    def get_acceleration(self):
-        """
-        Reads and returns the acceleration data in g (gravity) for X, Y, Z axes.
-        """
-        ax = self.read_raw_data(ACCEL_XOUT_H) / 16384.0
-        ay = self.read_raw_data(ACCEL_YOUT_H) / 16384.0
-        az = self.read_raw_data(ACCEL_ZOUT_H) / 16384.0
-        return {'ax': ax, 'ay': ay, 'az': az}
 
-    def get_gyroscope(self):
-        """
-        Reads and returns the gyroscope data in degrees per second (°/s) for X, Y, Z axes.
-        """
-        gx = self.read_raw_data(GYRO_XOUT_H) / 131.0
-        gy = self.read_raw_data(GYRO_YOUT_H) / 131.0
-        gz = self.read_raw_data(GYRO_ZOUT_H) / 131.0
-        return {'gx': gx, 'gy': gy, 'gz': gz}
+def display_sensor_data(data):
+    """
+    Display accelerometer, gyroscope, and temperature data.
 
-    def get_temperature(self):
-        """
-        Reads and returns the temperature in Celsius.
-        """
-        temp_raw = self.read_raw_data(TEMP_OUT_H)
-        temp = (temp_raw / 340.0) + 36.53
-        return temp
+    Args:
+        data (dict): A dictionary containing accelerometer, gyroscope, and temperature data.
+    """
+    if data:
+        accel = data["acceleration"]
+        gyro = data["gyroscope"]
+        temp = data["temperature"]
+
+        print(f"Acceleration (g): X={accel['x']:.2f}, Y={accel['y']:.2f}, Z={accel['z']:.2f}")
+        print(f"Gyroscope (deg/s): X={gyro['x']:.2f}, Y={gyro['y']:.2f}, Z={gyro['z']:.2f}")
+        print(f"Temperature (C): {temp:.2f}")
+        print("-" * 40)
+    else:
+        print("No valid data to display.")
+
+
+def monitor_mpu6050(sensor):
+    """
+    Continuously monitor and log data from the MPU-6050 sensor until interrupted.
+
+    Args:
+        sensor (MPU6050Sensor): An instance of the MPU6050Sensor class.
+    """
+    if not sensor.sensor:
+        logging.error("Failed to initialize MPU-6050. Exiting...")
+        return
+
+    logging.info("MPU-6050 sensor is ready. Reading data...")
+
+    try:
+        while True:
+            sensor_data = sensor.read_data()
+            display_sensor_data(sensor_data)
+            time.sleep(1)
+
+    except KeyboardInterrupt:
+        logging.info("KeyboardInterrupt detected. Exiting...")
 
 
 if __name__ == "__main__":
-    # Ensure the I2C bus is defined
-    i2c_bus = None
+    # Create an instance of the MPU6050Sensor class
+    mpu_sensor = MPU6050Sensor()
 
-    try:
-        # Initialize I2C bus
-        i2c_bus = smbus2.SMBus(1)  # Use 1 for Raspberry Pi Zero 2
-            
-        # Initialize MPU-6050 sensor
-        gyro_sensor = MPU6050(i2c_bus)
-            
-        while True:
-            # Get sensor data
-            accel_data = gyro_sensor.get_acceleration()
-            gyro_data = gyro_sensor.get_gyroscope()
-            temp = gyro_sensor.get_temperature()
-
-            # Display the data
-            print("Acceleration (g): X={:.2f}, Y={:.2f}, Z={:.2f}".format(
-                accel_data['ax'], accel_data['ay'], accel_data['az']))
-            print("Gyroscope (deg/s): X={:.2f}, Y={:.2f}, Z={:.2f}".format(
-                gyro_data['gx'], gyro_data['gy'], gyro_data['gz']))
-            print("Temperature (C): {:.2f}".format(temp))
-
-            # Wait before next reading
-            time.sleep(1)
-    except KeyboardInterrupt:
-        print("\nTest interrupted.")
-    except Exception as error:
-        print(f"An error occurred: {error}")
-    finally:
-        if i2c_bus:
-            i2c_bus.close()  # Close the I2C bus
-            print("I2C connection closed.")
+    # Start monitoring the sensor
+    monitor_mpu6050(mpu_sensor)
