@@ -7,7 +7,7 @@
       <md-icon slot="leading-icon"><i :class="icon"></i></md-icon>
     </md-outlined-text-field>
     <div v-if="confirm_needed==='true'">
-      <md-outlined-text-field v-model="newValue" label="Confirm Input" class="mt-1 color-bg roboto-font rounded-2" style="font-family: Roboto, sans-serif">
+      <md-outlined-text-field v-model="confirmValue" label="Confirm Input" class="mt-1 color-bg roboto-font rounded-2" style="font-family: Roboto, sans-serif">
         <md-icon slot="leading-icon"><i :class="icon"></i></md-icon>
       </md-outlined-text-field>
     </div>
@@ -28,7 +28,8 @@ export default {
   },
   data() {
     return {
-      newValue: ""
+      newValue: "",
+      confirmValue: ""
     }
   },
   beforeMount() {
