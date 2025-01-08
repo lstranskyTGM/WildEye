@@ -61,9 +61,9 @@
           </div>
         </div>
       </div>
-      <div class="col-11 ms-auto me-0 edge_color pe-0 ps-0" style="background-color: var(--md-sys-color-surface-container)">
-        <div class="w-100 h-100 rounded-top-5 rounded-end-0 bg-white me-0 ms-0 pe-0 ps-0" style="background-color: var(--md-sys-color-surface-container)">
-          <div class="p-3 h-100 w-100" style="background-color: var(--md-sys-color-surface-container)">
+      <div class="col-11 ms-auto me-0 edge_color p-0" style="background-color: var(--md-sys-color-surface-container-high)">
+        <div class="bg-white me-0 ms-0 pe-0 ps-0 w-100 h-100 rounded rounded-5" style="">
+          <div class="px-3 h-100 w-100 rounded rounded-3" style="background-color: var(--md-sys-color-surface-container)">
             <router-view/>
           </div>
 

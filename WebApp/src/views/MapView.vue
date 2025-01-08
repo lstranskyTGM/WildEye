@@ -1,44 +1,47 @@
 <template>
-  <div class="h-100 card col-xxl-12 col-xl-12 col-lg-12 col-md-11 col-sm-12 col-12">
-    <div class="card-img-top" style="height: 80vh;">
-      <l-map ref="map" class="l-map rounded rounded-3" v-model:zoom="zoom" :center="this.centerStart" :on-ready="addPOI" @click="addMarker">
-        <l-tile-layer
-            :url="tiles[currentTileName]"
-            layer-type="base"
-            name="OpenStreetMap"
+  <div class="w-100 h-100 ps-2 py-3">
+    <div class="h-100 card col-xxl-12 col-xl-12 col-lg-12 col-md-11 col-sm-12 col-12 rounded-3">
+      <div class="card-img-top" style="height: 80vh;">
+        <l-map ref="map" class="l-map rounded rounded-3" v-model:zoom="zoom" :center="this.centerStart" :on-ready="addPOI" @click="addMarker">
+          <l-tile-layer
+              :url="tiles[currentTileName]"
+              layer-type="base"
+              name="OpenStreetMap"
 
-        ></l-tile-layer>
-        <div v-for="camera in this.cameraPositions">
-          <l-marker :lat-lng="latLng(camera.lat, camera.lng)">
-            <l-popup :options="popupOptions" class="custom-popup ratio ratio-16x9">
-              <MarkerPopupMaterialComponent :camera="camera" v-on:update_hearted="updateHearted"></MarkerPopupMaterialComponent>
-            </l-popup>
-          </l-marker>
-        </div>
-        <div >
-          <l-marker ref="marker" :lat-lng="marker" :options="markerOptions">
-            <l-icon :icon-size= [1,1] icon-url="icon.png"> </l-icon>
-            <l-popup ref="popup" :options="POIPopupOptions">
-              <POIFormPopupComponent v-on:savePOI="addPOI" :cords="this.latestCords"></POIFormPopupComponent>
-            </l-popup>
-          </l-marker>
-        </div>
-        <div v-for="i in this.POIs" v-show="notizen">
-          <l-circle-marker :lat-lng="latLng(i.lat, i.lng)" :radius="10" >
-            <!--Also add a Popup for each custom POI-->
-          </l-circle-marker>
-        </div>
-      </l-map>
-    </div>
-    <div class="card-footer border border-0 d-flex justify-content-end m-2 overflow-x-auto text-nowrap" style="min-height: 50px; background-color: white; ">
-      <md-outlined-text-field label="Zoom" type="Number" value="17" v-model="zoom" class="pe-3">
-      </md-outlined-text-field>
-      <md-outlined-select class="pe-3" label="Choose Map">
-        <md-select-option value="Default" @click="selectTile('OpenStreetMap')" selected>Default</md-select-option>
-        <md-select-option v-for="(url, name) in tiles" :key="url" :value="name" @click="selectTile(name)">{{name}}</md-select-option>
-      </md-outlined-select>
+          ></l-tile-layer>
+          <div v-for="camera in this.cameraPositions">
+            <l-marker :lat-lng="latLng(camera.lat, camera.lng)">
+              <l-popup :options="popupOptions" class="custom-popup ratio ratio-16x9">
+                <MarkerPopupMaterialComponent :camera="camera" v-on:update_hearted="updateHearted"></MarkerPopupMaterialComponent>
+              </l-popup>
+            </l-marker>
+          </div>
+          <div >
+            <l-marker ref="marker" :lat-lng="marker" :options="markerOptions">
+              <l-icon :icon-size= [1,1] icon-url="icon.png"> </l-icon>
+              <l-popup ref="popup" :options="POIPopupOptions">
+                <POIFormPopupComponent v-on:savePOI="addPOI" :cords="this.latestCords"></POIFormPopupComponent>
+              </l-popup>
+            </l-marker>
+          </div>
+          <div v-for="i in this.POIs" v-show="notizen">
+            <l-circle-marker :lat-lng="latLng(i.lat, i.lng)" :radius="10" >
+              <!--Also add a Popup for each custom POI-->
+            </l-circle-marker>
+          </div>
+        </l-map>
+      </div>
+      <div class="card-footer border border-0 d-flex justify-content-end m-2 overflow-x-auto text-nowrap" style="min-height: 50px; background-color: white; ">
+        <md-outlined-text-field label="Zoom" type="Number" value="17" v-model="zoom" class="pe-3">
+        </md-outlined-text-field>
+        <md-outlined-select class="pe-3" label="Choose Map">
+          <md-select-option value="Default" @click="selectTile('OpenStreetMap')" selected>Default</md-select-option>
+          <md-select-option v-for="(url, name) in tiles" :key="url" :value="name" @click="selectTile(name)">{{name}}</md-select-option>
+        </md-outlined-select>
+      </div>
     </div>
   </div>
+
 
 
 </template>

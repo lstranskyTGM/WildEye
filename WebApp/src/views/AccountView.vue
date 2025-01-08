@@ -1,6 +1,6 @@
 <template>
   <div class="" style="width: 100%; height: 100%">
-    <div class="row ps-3 pb-3 h-100 w-100 overflow-scroll" style="max-height: 100%">
+    <div class="row ps-3 py-3 h-100 w-100 overflow-scroll" style="max-height: 100%">
       <div class="card h-50 rounded rounded-3 mb-3 px-0 container_color w-100" style="  background-color: var(--wildeye-container-primary); min-height: 300px">
         <div class="h-100 position-relative" style="max-height: 100% !important; width: 100%;">
           <div class="card-header row m-0 border border-0 mx-0 px-0 d-felx" style="height: 30%;">
