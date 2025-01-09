@@ -78,6 +78,7 @@
 import "@material/web/all"
 import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
 import router from "@/router";
+import axios from "axios";
 export default {
   name: 'App',
   data(){
@@ -86,12 +87,73 @@ export default {
       opened:false
     }
   },
+  provide() {
+    return {
+      cameraObjects: this.getCameraObjectsFromAPI()
+    };
+  },
   methods: {
     router() {
       return router
     },
     setActiveRoute(route){
       this.activeRoute = route;
+    },
+    getCameraObjectsFromAPI(){
+      // get camera objects from API
+      /*axios.post('https://api.example.com/getCameraObjects',
+          {
+                  session: "klshdflgkjshdg"
+                }
+      ).catch(function (error) {
+          console.log(error);
+      }).then(function (response) {
+          this.cameraObjects = response.data;
+      });*/
+      return [{
+        name: "Station Tiefwaldgasse",
+        id: 'dfjk43kb92020',
+        battery: 100,
+        signal: 100,
+        lastCapturePreview: 'https://www.w3schools.com/w3images/lights.jpg',
+        lastPictureDate: '2021-08-06 12:34:56',
+        numPictures: 69,
+        lastSync: '2021-08-06 12:34:56',
+        lat: 48.4262157636489,
+        lng: 16.61251026756385,
+        hearted:false,
+        info: "This is a test camera. MP: 12, Battery: 100%, SD-Card: 32GB, Night vision: True, 20m"
+      },
+        {
+          name: "Liechtensteinstraße",
+          id: 'dfjk43kb92021',
+          battery: 100,
+          signal: 100,
+          lastCapturePreview: 'https://www.w3schools.com/w3images/lights.jpg',
+          lastPictureDate: '2021-08-06 12:34:56',
+          numPictures: 420,
+          lastSync: '2021-08-06 12:34:56',
+          lat: 48.42558212563766,
+          lng: 16.61130863793849,
+          hearted:false,
+          info: "This is a test camera. MP: 12, Battery: 100%, SD-Card: 32GB, Nightvision: True, 20m"
+
+        },
+        {
+          name: "Jägerstraße",
+          id: 'dfjk43kb92022',
+          battery: 100,
+          signal: 100,
+          lastCapturePreview: 'https://www.w3schools.com/w3images/lights.jpg',
+          lastPictureDate: '2021-08-06 12:34:56',
+          numPictures: 9,
+          lastSync: '2021-08-06 12:34:56',
+          lat: 48.42568212563766,
+          lng: 16.61140863793849,
+          hearted:false,
+          info: "This is a test camera. MP: 12, Battery: 100%, SD-Card: 32GB, Nightvision: True, 20m"
+
+        }]
     }
   },
   beforeMount() {

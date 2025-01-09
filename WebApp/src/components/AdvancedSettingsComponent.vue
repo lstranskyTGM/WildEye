@@ -3,7 +3,7 @@
     <div v-if="setting.type==='number'" class="w-100 h-100">
       <md-outlined-text-field
           type="number"
-          label="Number"
+          :label="setting.name"
           class="w-100 h-100 py-2 px-1"
           :value="setting.value"
           @input="updateSetting($event.target.value)"
@@ -13,7 +13,7 @@
     <div v-else-if="setting.type==='string'" class="w-100 h-100">
       <md-outlined-text-field
           type="text"
-          label="Text"
+          :label="setting.name"
           class="w-100 h-100 py-2 px-1"
           :value="setting.value"
           @input="updateSetting($event.target.value)"
@@ -21,13 +21,14 @@
       </md-outlined-text-field>
     </div>
     <div v-if="setting.type === 'select'" class="w-100 h-100">
-      <md-outlined-select @change="updateSetting($event.target.value)">
+      <md-outlined-select @change="updateSetting($event.target.value)" :label="setting.name">
         <md-select-option v-for="entry in setting.options" :value="entry" :selected="setting.value===entry">
           <div slot="headline">{{ entry }}</div>
         </md-select-option>
       </md-outlined-select>
     </div>
     <div v-if="setting.type === 'boolean'" class="w-100 h-100">
+      {{ setting.name }}
       <md-switch icons show-only-selected-icon :selected="setting.value" @change="updateSetting($event.target.checked)"></md-switch>
     </div>
   </div>

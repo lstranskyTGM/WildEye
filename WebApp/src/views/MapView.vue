@@ -57,6 +57,7 @@ import MarkerPopupMaterialComponent from "@/components/MarkerPopupMaterialCompon
 // import "leaflet.heat";
 export default {
   name: 'MapView',
+  inject: ['cameraObjects'],
   components: {
     MarkerPopupMaterialComponent,
     POIFormPopupComponent,
@@ -73,6 +74,7 @@ export default {
   data() {
     return {
       name: 'MapView',
+      cameraPositions: this.cameraObjects,
       map: null,
       centerStart: [48.4262157636489, 16.61251026756385],
       marker: [0,0],
@@ -88,20 +90,14 @@ export default {
         "Transport": "https://tile.memomaps.de/tilegen/{z}/{x}/{y}.png"
       },
       // Hier kann man noch viele andere Daten hinzufügen, wie zb der Akkustand, das letzte Update, usw...
-      cameraPositions:[
+      /*cameraPositions:[
         {
           lat: 48.4262157636489,
           lng: 16.61251026756385,
-          type:[
-            'camera',
-            'thermal'
-          ],
           name: 'Camera 1',
           id: 1,
           description: 'This is a camera 1',
           lastCapturePreview: 'https://www.w3schools.com/w3images/lights.jpg',
-          totalCaptures: 10,
-          totalSpecies: 5,
           hearted: false,
           date: "2021-09-01",
           tags: [
@@ -128,7 +124,7 @@ export default {
             {icon: "bi bi-camera", text: "Camera"}
           ]
         }
-      ],
+      ],*/
       mapOptions:{
         doubleClickZoom: false
       },

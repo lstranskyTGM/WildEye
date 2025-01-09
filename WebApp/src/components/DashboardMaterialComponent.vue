@@ -2,7 +2,7 @@
   <div class="card h-25 rounded rounded-3" style="width: 97%">
     <div class="row g-0 h-100 container_color rounded rounded-3" style="min-height: 100%">
       <div class="container_color rounded rounded-3" style="min-height: 100%; width: 23%; height: 25%">
-        <l-map ref="map" class="l-map rounded rounded-3 container_color" v-model:zoom="zoom" :center="[camera.lat, camera.lng]" :options="mapOptions">
+        <l-map ref="map" class="l-map rounded rounded-3 container_color" v-model:zoom="zoom" :center="[camera.lat, camera.lng]" :options="mapOptions" @click="$router.push('/map')">
           <l-tile-layer
               :url="'https://tile.openstreetmap.org/{z}/{x}/{y}.png'"
               layer-type="base"
@@ -22,7 +22,7 @@
           <hr class="mt-0 position-absolute" style="top: calc(30% - 0.75px); left: 2%; width: 96%">
         </div>
         <div class="card-body row overflow-hidden" style="height: 70%">
-          <div class="dashboard-grid " style="height: 100%">
+          <div class="dashboard-grid overflow-y-auto" style="height: 100%">
             <DashboardInfoComponent name="position" value="121212" icon="bi bi-pin-map" ></DashboardInfoComponent>
             <DashboardInfoComponent name="Battery" value="86%" icon="bi bi-battery-half"></DashboardInfoComponent>
             <DashboardInfoComponent name="Last Synchronization" value="01.12.2024 09:31" icon="bi bi-cloud-upload"></DashboardInfoComponent>

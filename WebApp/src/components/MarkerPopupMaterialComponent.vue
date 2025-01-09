@@ -3,7 +3,7 @@
     <div class="ratio ratio-16x9 card w-100 h-100 card_background">
       <div class="h-100 position-relative" style="max-height: 100% !important; top: -100%">
         <div class="card-header row m-0 mx-0 px-0 border border-0 d-flex align-items-center justify-content-between" style="height: 30%;">
-          <h1 class="card-title">{{ this.camera.name }}</h1>
+          <h3 class="card-title">{{ this.camera.name }}</h3>
           <div class="position-absolute top-0 text-end pe-3 pt-3 fs-3">
             <i :class="{'bi bi-heart-fill text-danger pe-2': camera.hearted, 'bi bi-heart pe-2': !camera.hearted}" @click="toggleHeart"></i>
             <i class="bi bi-images pe-2" @click="launchPictureView(camera.id)"></i>
@@ -18,7 +18,7 @@
           </div>
           <div class="w-50 h-100 ps-2 pt-0 mt-0">
             <b>Last Capture:</b>
-            <img :src="camera.lastCapturePreview" :alt="camera.alt" class="rounded rounded-3 img-fluid ">
+            <img :src="camera.lastCapturePreview" :alt="camera.name" class="rounded rounded-3 img-fluid ">
           </div>
         </div>
       </div>

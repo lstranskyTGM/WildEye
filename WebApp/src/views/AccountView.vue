@@ -7,15 +7,15 @@
             <h1 class=" mt-auto mb-auto " style="width:fit-content">Account Overview</h1>
 <!--            <i class="bi bi-check-all position-absolute top-0 text-end pe-3 pt-2 fs-3" ></i>
             <p class="position-absolute text-end pe-3 " style="top: 13%">Apply all changes</p>-->
-            <md-elevated-button class="me-2" style="max-width: fit-content; max-height: 50%">Apply changes</md-elevated-button>
+<!--            <md-elevated-button class="me-2" style="max-width: fit-content; max-height: 50%">Apply changes</md-elevated-button>-->
 
             <hr class="mt-0 position-absolute" style="top: calc(30% - 0.75px); left: 1%; width: 98%">
           </div>
           <div class="card-body row m-0 p-0 pt-1" style="height: 70%; max-width: 100%">
             <div class="dashboard-grid overflow-x-auto overflow-y-auto" style="height: 100%; max-width: 100%">
-              <SettingComponent name="Username" value="WildEyeFan1" icon="bi bi-person-vcard" confirm_needed="false" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
-              <SettingComponent name="E-Mail" value="Wil*****@gmail.com" icon="bi bi-envelope-at" confirm_needed="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
-              <SettingComponent name="Password" value="WildEyeFan1" icon="bi bi-person-vcard" confirm_needed="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
+              <SettingComponent name="Username" value="WildEyeFan1" icon="bi bi-person-vcard" confirm_needed="false" popup="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
+              <SettingComponent name="E-Mail" value="Wil*****@gmail.com" icon="bi bi-envelope-at" confirm_needed="true" popup="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
+              <SettingComponent name="Password" value="************" icon="bi bi-asterisk" confirm_needed="true" popup="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
             </div>
 
           </div>
@@ -47,23 +47,25 @@ import CameraComponent from "@/components/CameraComponent.vue";
 
 export default{
   components: {CameraComponent, SettingComponent},
+  inject: ['cameraObjects'],
   name: 'AccountView',
   data(){
     return{
-      cameraComponentData:[
+      cameraComponentData: this.cameraObjects,
+      /*cameraComponentData:[
         {
-          name: "Wildkamera 1",
+          name: "Station Tiefwaldgasse",
           info: "This is a test camera. MP: 12, Battery: 100%, SD-Card: 32GB, Nightvision: True, 20m"
         },
         {
-          name: "Wildkamera 2",
+          name: "Jägergasse",
           info: "This is a test camera. MP: 12, Battery: 100%, SD-Card: 32GB, Nightvision: True, 20m"
         },
         {
-          name: "Wildkamera 3",
+          name: "Dreiecksweg",
           info: "This is a test camera. MP: 12, Battery: 100%, SD-Card: 32GB, Nightvision: True, 20m"
         }
-      ]
+      ]*/
     }
   },
   beforeMount() {
