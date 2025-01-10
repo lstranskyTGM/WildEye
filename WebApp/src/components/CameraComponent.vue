@@ -60,8 +60,10 @@
   import SettingComponent from "@/components/SettingComponent.vue";
   import "@material/web/all"
   import AdvancedSettingsComponent from "@/components/AdvancedSettingsComponent.vue";
+  import axios from "axios";
 
   export default {
+    inject: ['serverIP'],
     name: 'CameraComponent',
     components: {AdvancedSettingsComponent, SettingComponent},
     data(){
@@ -85,36 +87,13 @@
       },
       getSettings(){
         // eventually, make a request to the server to get the advanced settings.
-
-        this.settings=[
-          {
-            type: "number",
-            name: "Resolution",
-            min: 0,
-            max: 100,
-            value: 50,
-            required: true
-          },
-          {
-            type: "string",
-            name: "prefix",
-            value: "WildEye",
-            required: false
-          },
-          {
-            type: "boolean",
-            name: "Nightvision",
-            value: true,
-            required: true
-          },
-          {
-            type: "select",
-            name: "Logging",
-            options: ["None", "Error", "Warning", "Info", "Debug"],
-            value: "Info",
-            required: true
-          }
-        ]
+        axios.post(this.serverIP+'/advancedSettings', {session: this.name, id: this.name})
+            .then(response => {
+              this.settings = response.data;
+            })
+            .catch(error => {
+              console.log(error);
+            });
       },
       updateSetting(updatedSetting) {
         const setting = this.settings.find(s => s.name === updatedSetting.name);

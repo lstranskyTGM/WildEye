@@ -84,12 +84,15 @@ export default {
   data(){
     return{
       activeRoute: '/',
-      opened:false
+      opened:false,
+      serverIP: "http://localhost:5000",
+      cameraObjects: []
     }
   },
   provide() {
     return {
-      cameraObjects: this.getCameraObjectsFromAPI()
+      serverIP: this.serverIP,
+      cameraObjects: this.cameraObjects
     };
   },
   methods: {
@@ -100,17 +103,20 @@ export default {
       this.activeRoute = route;
     },
     getCameraObjectsFromAPI(){
+      var that= this
       // get camera objects from API
-      /*axios.post('https://api.example.com/getCameraObjects',
+      axios.post(this.serverIP+'/cameras',
           {
-                  session: "klshdflgkjshdg"
+                  session: "Snorlax0815"
                 }
       ).catch(function (error) {
           console.log(error);
       }).then(function (response) {
-          this.cameraObjects = response.data;
-      });*/
-      return [{
+        console.log(response);
+        that.cameraObjects.push(...response.data.cameras);
+      });
+
+      /*return [{
         name: "Station Tiefwaldgasse",
         id: 'dfjk43kb92020',
         battery: 100,
@@ -153,11 +159,14 @@ export default {
           hearted:false,
           info: "This is a test camera. MP: 12, Battery: 100%, SD-Card: 32GB, Nightvision: True, 20m"
 
-        }]
+        }]*/
     }
   },
   beforeMount() {
     document.adoptedStyleSheets = [typescaleStyles.styleSheet];
+  },
+  mounted() {
+    this.getCameraObjectsFromAPI();
   }
 }
 </script>

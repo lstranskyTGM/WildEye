@@ -31,7 +31,18 @@
       {{ setting.name }}
       <md-switch icons show-only-selected-icon :selected="setting.value" @change="updateSetting($event.target.checked)"></md-switch>
     </div>
+    <div v-else-if="setting.type==='time'" class="w-100 h-100">
+      <md-outlined-text-field
+          type="time"
+          :label="setting.name"
+          class="w-100 h-100 py-2 px-1"
+          :value="setting.value"
+          @input="updateSetting($event.target.value)"
+      >
+      </md-outlined-text-field>
+    </div>
   </div>
+
 </template>
 
 <script>

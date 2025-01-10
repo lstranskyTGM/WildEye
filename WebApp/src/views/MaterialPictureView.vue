@@ -77,9 +77,11 @@ import "@material/web/all"
 import {defineComponent} from "vue";
 import SinglePictureComponent from "@/components/SinglePictureComponent.vue";
 import AdvancedSettingsComponent from "@/components/AdvancedSettingsComponent.vue";
+import axios from "axios";
 
 export default defineComponent({
   name: 'MaterialPictureView',
+  inject: ['serverIP'],
   components: {
     AdvancedSettingsComponent,
     SinglePictureComponent
@@ -155,74 +157,22 @@ export default defineComponent({
         {value: "camera3", headline: "Camera 3"},
         {value: "camera4", headline: "Camera 4"},
       ],
-      images: [
-        {
-          id: 0,
-          url: "https://www.w3schools.com/w3images/lights.jpg",
-          cameraName: "Camera 1",
-          alt: "Lights",
-          title: "Lights",
-          date: "2021-09-01",
-          hearted: false,
-          tags: [
-            {icon: "bi bi-person", text: "Person"},
-            {icon: "bi bi-camera", text: "Camera"}
-          ]
-        },
-        {
-          id: 1,
-          url: "https://www.w3schools.com/w3images/lights.jpg",
-          cameraName: "Camera 2",
-          alt: "Lights",
-          title: "Lights",
-          date: "2021-09-01",
-          hearted: false,
-          tags: [
-            {icon: "bi bi-person", text: "Person"},
-            {icon: "bi bi-camera", text: "Camera"},
-            {icon: "bi bi-camera", text: "Camera"},
-            {icon: "bi bi-camera", text: "Camera"},
-            {icon: "bi bi-camera", text: "Camera"},
-            {icon: "bi bi-camera", text: "Camera"},
-            {icon: "bi bi-camera", text: "Camera"}
-
-          ]
-        },
-        {
-          id: 2,
-          url: "https://www.w3schools.com/w3images/lights.jpg",
-          cameraName: "Camera 3",
-          alt: "Lights",
-          title: "Lights",
-          date: "2021-09-01",
-          hearted: false,
-          tags: [
-            {icon: "bi bi-person", text: "Person"},
-            {icon: "bi bi-camera", text: "Camera"}
-          ]
-        },
-        {
-          id: 3,
-          url: "https://www.w3schools.com/w3images/lights.jpg",
-          cameraName: "Camera 4",
-          alt: "Lights",
-          title: "Lights",
-          date: "2021-09-01",
-          hearted: false,
-          tags: [
-            {icon: "bi bi-person", text: "Person"},
-            {icon: "bi bi-camera", text: "Camera"},
-            {icon: "bi bi-camera", text: "Camera"},
-            {icon: "bi bi-camera", text: "Camera"},
-            {icon: "bi bi-camera", text: "Camera"},
-            {icon: "bi bi-camera", text: "Camera"},
-            {icon: "bi bi-camera", text: "Camera"}
-
-          ]
-        },
-
-      ]
+      images: []
     }
+  },
+  mounted(){
+    var that = this
+    axios.post(this.serverIP+'/imageSearch',
+        {
+          session: "Snorlax0815",
+          imageSearchSettings: ""
+        }
+    ).catch(function (error) {
+      console.log(error);
+    }).then(function (response) {
+      console.log(response);
+      that.images.push(...response.data);
+    });
   }
 })
 </script>
