@@ -11,10 +11,10 @@
                 </div>
               </div>
               <div class="fab-container">
-                <md-fab variant="primary" aria-label="left">
+                <md-fab variant="primary" aria-label="left" v-on:click="this.page = Math.max(0, this.page-1); this.getImages(); console.log('page-1 '+ this.page)">
                   <md-icon slot="icon"><i class="bi bi-arrow-left-circle"></i></md-icon>
                 </md-fab>
-                <md-fab variant="primary" aria-label="right">
+                <md-fab variant="primary" aria-label="right" v-on:click="this.page = Math.max(0, this.page+1); this.getImages();console.log('page+1+ '+this.page)">
                   <md-icon slot="icon"><i class="bi bi-arrow-right-circle"></i></md-icon>
                 </md-fab>
               </div>
@@ -23,18 +23,15 @@
           </div>
 
         </div>
-        <div class="card-footer border border-0 d-flex justify-content-end m-2 overflow-x-auto text-nowrap" style="min-height: 50px; background-color: white; ">
-          <div class=" pe-3" style="min-width: max(25%, 100px)">
-            <md-filled-text-field label="Search for" value="" v-model="searchValue">
-            </md-filled-text-field>
-          </div>
+        <div class="card-footer border border-0 d-flex justify-content-between m-2 overflow-x-auto text-nowrap" style="min-height: 50px; background-color: white; ">
+          <p class="fs-2 text-center justify-content-start p-0 m-0">Page: {{this.page}}</p>
           <md-elevated-button @click="openSettingsDialog">
-            Additional Settings (Popup)
+            Settings (Popup)
             <i class="bi bi-search" slot="icon"></i>
           </md-elevated-button>
-          <md-dialog :open="this.opened" v-on:close="this.onCloseSettingsDialog">
+          <md-dialog :open="this.opened" v-on:close="this.onCloseSettingsDialog" class="" style="min-width: 40%; max-height: 100%">
             <div slot="headline">
-              Advanced Settings
+              Image search settings
             </div>
             <form slot="content" id="form-id" method="dialog">
               <div v-if="this.settings==null">
@@ -43,12 +40,15 @@
                 <md-circular-progress four-color indeterminate ></md-circular-progress>
               </div>
               <div v-else>
-                All Changes are saved automatically
-                <AdvancedSettingsComponent v-for="setting in this.settings" :setting="setting" @update-setting="updateSetting"></AdvancedSettingsComponent>
+                <div v-for="section in this.settings">
+                  <p class="fs-2">{{section.sectionName}}</p>
+                  <md-divider></md-divider>
+                  <AdvancedSettingsComponent v-for="setting in section.sectionSettings" :setting="setting" @update-setting="updateSetting" class="pb-3 pt-1"></AdvancedSettingsComponent>
+                </div>
               </div>
             </form>
             <div slot="actions">
-              <md-text-button form="form-id" @click="this.opened = false">Ok</md-text-button>
+              <md-text-button form="form-id" @click="this.opened = false; ">Ok</md-text-button>
               <md-text-button form="form-id" @click="getSettings">Reset</md-text-button>
             </div>
           </md-dialog>
@@ -101,35 +101,13 @@ export default defineComponent({
     },
     getSettings(){
       // eventually, make a request to the server to get the advanced settings.
-      this.settings=[
-        {
-          type: "number",
-          name: "Resolution",
-          min: 0,
-          max: 100,
-          value: 50,
-          required: true
-        },
-        {
-          type: "string",
-          name: "prefix",
-          value: "WildEye",
-          required: false
-        },
-        {
-          type: "boolean",
-          name: "Nightvision",
-          value: true,
-          required: true
-        },
-        {
-          type: "select",
-          name: "Logging",
-          options: ["None", "Error", "Warning", "Info", "Debug"],
-          value: "Info",
-          required: true
-        }
-      ]
+      axios.post(this.serverIP+'/imageSearchSettings', {session: "Snorlax0815", id: this.name})
+          .then(response => {
+            this.settings = response.data;
+          })
+          .catch(error => {
+            console.log(error);
+          });
     },
     updateSetting(updatedSetting) {
       const setting = this.settings.find(s => s.name === updatedSetting.name);
@@ -137,11 +115,29 @@ export default defineComponent({
         setting.value = updatedSetting.value;
       }
     },
+
     onCloseSettingsDialog(){
       this.opened = false;
       console.log(this.settings)
       // when connected to the server, send the updated settings to the server.
       // The changes are already in the settings object.
+    },
+    getImages(){
+      var that = this
+      axios.post(this.serverIP+'/imageSearch',
+          {
+            session: "Snorlax0815",
+            imageSearchSettings: this.settings,
+            page: this.page
+          }
+      ).catch(function (error) {
+        console.log(error);
+      }).then(function (response) {
+        console.log(response);
+        // clear images
+        that.images = [];
+        that.images.push(...response.data);
+      });
     }
   },
   data(){
@@ -157,22 +153,13 @@ export default defineComponent({
         {value: "camera3", headline: "Camera 3"},
         {value: "camera4", headline: "Camera 4"},
       ],
-      images: []
+      images: [],
+      page: 0
     }
   },
   mounted(){
-    var that = this
-    axios.post(this.serverIP+'/imageSearch',
-        {
-          session: "Snorlax0815",
-          imageSearchSettings: ""
-        }
-    ).catch(function (error) {
-      console.log(error);
-    }).then(function (response) {
-      console.log(response);
-      that.images.push(...response.data);
-    });
+    this.getSettings();
+    this.getImages();
   }
 })
 </script>

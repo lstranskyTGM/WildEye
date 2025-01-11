@@ -86,7 +86,8 @@ export default {
       activeRoute: '/',
       opened:false,
       serverIP: "http://localhost:5000",
-      cameraObjects: []
+      cameraObjects: [],
+
     }
   },
   provide() {

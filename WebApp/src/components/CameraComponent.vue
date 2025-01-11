@@ -35,9 +35,9 @@
       </div>
     </div>
   </div>
-  <md-dialog :open="this.opened" v-on:close="this.onCloseSettingsDialog">
+  <md-dialog :open="this.opened" v-on:close="this.onCloseSettingsDialog" style="min-height: 50px; background-color: white; ">
     <div slot="headline">
-      Advanced Settings for {{this.name}}
+      Settings for {{this.name}}
     </div>
     <form slot="content" id="form-id" method="dialog">
       <div v-if="this.settings==null">
@@ -46,7 +46,12 @@
         <md-circular-progress four-color indeterminate ></md-circular-progress>
       </div>
       <div v-else>
-        <AdvancedSettingsComponent v-for="setting in this.settings" :setting="setting" @update-setting="updateSetting"></AdvancedSettingsComponent>
+
+        <div v-for="section in this.settings">
+          <p class="fs-2">{{section.sectionName}}</p>
+          <md-divider></md-divider>
+          <AdvancedSettingsComponent v-for="setting in section.sectionSettings" :setting="setting" @update-setting="updateSetting" class="pb-3 pt-1"></AdvancedSettingsComponent>
+        </div>
       </div>
     </form>
     <div slot="actions">

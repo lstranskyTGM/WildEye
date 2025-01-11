@@ -21,19 +21,29 @@
       </md-outlined-text-field>
     </div>
     <div v-if="setting.type === 'select'" class="w-100 h-100">
-      <md-outlined-select @change="updateSetting($event.target.value)" :label="setting.name">
+      <md-outlined-select @change="updateSetting($event.target.value)" :label="setting.name" class="w-100 h-100">
         <md-select-option v-for="entry in setting.options" :value="entry" :selected="setting.value===entry">
           <div slot="headline">{{ entry }}</div>
         </md-select-option>
       </md-outlined-select>
     </div>
-    <div v-if="setting.type === 'boolean'" class="w-100 h-100">
-      {{ setting.name }}
-      <md-switch icons show-only-selected-icon :selected="setting.value" @change="updateSetting($event.target.checked)"></md-switch>
+    <div v-if="setting.type === 'boolean'" class="w-100 h-100 d-flex justify-content-between">
+      <md-switch icons show-only-selected-icon :selected="setting.value" @change="updateSetting($event.target.checked)" :id="setting.name"></md-switch>
+      <label :for="setting.name">{{setting.name}}</label>
     </div>
     <div v-else-if="setting.type==='time'" class="w-100 h-100">
       <md-outlined-text-field
           type="time"
+          :label="setting.name"
+          class="w-100 h-100 py-2 px-1"
+          :value="setting.value"
+          @input="updateSetting($event.target.value)"
+      >
+      </md-outlined-text-field>
+    </div>
+    <div v-else-if="setting.type==='date'" class="w-100 h-100">
+      <md-outlined-text-field
+          type="date"
           :label="setting.name"
           class="w-100 h-100 py-2 px-1"
           :value="setting.value"
