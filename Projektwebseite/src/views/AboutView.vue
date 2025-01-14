@@ -39,7 +39,7 @@
               </div>
             </div>
             <div class="card-footer">
-              <small>last update: 2024-10-24</small>
+              <small>last update: 2025-01-14</small>
             </div>
           </div>
         </div>
