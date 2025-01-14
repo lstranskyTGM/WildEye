@@ -23,7 +23,7 @@ export default {
           name: "Markus Rafeiner",
           c: "5AHITM",
           topic: "Erstellung einer modernen und reaktiven Webseite, in welcher der Benutzer alle seine Wildkameras einsehen und verwalten, sowie generelle Einstellungen übernehmen kann.",
-          pic: "Portrait2.jpg",
+          pic: "new_1.jpg",
           email: "mrafeiner@student.tgm.ac.at"
         },
         {
@@ -38,7 +38,7 @@ export default {
           name: "Felix Aust",
           c: "5AHIT",
           topic: "Realisierung einer sichere Schnittstelle zwischen Kamera und Webseite, inklusive eines Datenbanksystems zur persistenten Speicherung; Entwurf eines ansprechenden und wiedererkennbaren Logos.",
-          pic: "felix.jpg",
+          pic: "new_2.jpg",
           email: "faust@student.tgm.ac.at"
         },
         {

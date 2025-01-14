@@ -26,7 +26,7 @@ export default {
           title:"Machbarkeit fertig",
           desc:"Die Machbarkeitsstudie für das Projekt ist abgeschlossen und die Wildkamera kann realisiert werden.",
           pic: "milestone1.svg",
-          progress: "25%",
+          progress: "100%",
           date: "20.12.2024",
           color: "#"
         },
@@ -34,14 +34,14 @@ export default {
           title:"Erste Bildaufnahme und Bilderkennung",
           desc:"Es wurde eine erste Bildaufnahme aufgenommen, welche mittels Bilderkennung analysiert und klassifiziert wurde.",
           pic: "milestone2.svg",
-          progress: "25%",
+          progress: "50%",
           date: "19.01.2024"
         },
         {
           title:"Prototyp fertig",
           desc:"Es wurde der erste Prototyp der Wildkamera erstellt. Dieser kann aufnahmen tätigen, welche auf der Webseite einsehbar sind.",
           pic: "milestone3.svg",
-          progress: "0%",
+          progress: "25%",
           date: "27.01.2025"
         },
         {
