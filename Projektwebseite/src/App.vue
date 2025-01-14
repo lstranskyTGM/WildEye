@@ -75,7 +75,7 @@ export default {
 </script>
 
 <style>
-@import "../css/custom.css";
+@import "../css/treeGreen.css";
 #app, html, body {
   font-family: Roboto, sans-serif;
   background-color: var(--md-sys-color-surface-container);

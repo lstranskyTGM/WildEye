@@ -34,4 +34,8 @@ export default {
   min-height: 200px;
   height: 33%;
 }
+
+.card {
+  background-color: var(--wildeye-container-primary);
+}
 </style>
