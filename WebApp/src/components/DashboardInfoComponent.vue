@@ -1,6 +1,6 @@
 <template>
   <div class="m-0 p-0 roboto-font" style="font-family: Roboto, sans-serif">
-    <md-outlined-text-field :value="value" readonly=true :label="name" class="mt-1 color-bg roboto-font" style="font-family: Roboto, sans-serif">
+    <md-outlined-text-field :value="value" readonly=true :label="name" class="mt-1 color-bg roboto-font" style="font-family: Roboto, sans-serif" >
       <md-icon slot="leading-icon"><i :class="icon"></i></md-icon>
     </md-outlined-text-field>
   </div>

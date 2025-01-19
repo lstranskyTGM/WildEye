@@ -31,7 +31,7 @@
             Settings (Popup)
             <i class="bi bi-search" slot="icon"></i>
           </md-elevated-button>
-          <md-dialog :open="this.opened" v-on:close="this.onCloseSettingsDialog" class="" style="min-width: 40%; max-height: 100%">
+          <md-dialog :open="this.opened" v-on:close="this.onCloseSettingsDialog" class="" style="min-width: 40%; max-height: 80%">
             <div slot="headline">
               Image search settings
             </div>

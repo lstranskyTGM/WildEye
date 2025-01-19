@@ -74,20 +74,57 @@
               <md-outlined-text-field
                   type="text"
                   label="Username"
-                  class="w-100"
+                  class="w-100 pb-3 pt-1"
                   v-model="input_username"
               >
               </md-outlined-text-field>
               <md-outlined-text-field
                   type="password"
                   label="Password"
-                  class="w-100"
+                  class="w-100 pb-3 pt-1"
                   v-model="input_password"
               >
               </md-outlined-text-field>
             </form>
             <div slot="actions">
               <md-text-button form="form-id" @click="this.opened2 = false; completeLoginWithCameras(this.input_username, this.input_password)">Ok</md-text-button>
+            </div>
+          </md-dialog>
+          <md-dialog :open="this.opened3" v-on:close="this.opened3 = false">
+            <div slot="headline">
+              Welcome to WildEye!
+            </div>
+            <form slot="content" id="form-id" method="dialog">
+              You are not logged in, please log in or register to access the full functionality of WildEye.
+              <md-outlined-text-field
+                  type="text"
+                  label="Username"
+                  class="w-100 pb-3 pt-1"
+                  v-model="input_username"
+              >
+              </md-outlined-text-field>
+              <md-outlined-text-field
+                  type="password"
+                  label="Password"
+                  class="w-100 pb-3 pt-1"
+                  v-model="input_password"
+              >
+              </md-outlined-text-field>
+              <md-outlined-text-field
+                  type="email"
+                  label="email"
+                  class="w-100 pb-3 pt-1"
+                  v-model="input_email"
+                  v-if="register"
+              >
+              </md-outlined-text-field>
+
+            </form>
+            <div slot="actions">
+              <md-text-button form="form-id" @click="this.register = !this.register" v-if="!register">New Here? Register</md-text-button>
+              <md-text-button form="form-id" @click="this.register = !this.register" v-if="register">Log in instead</md-text-button>
+              <md-text-button form="form-id" @click="this.opened3 = false; completeLoginWithCameras(this.input_username, this.input_password)">Continue</md-text-button>
+              <md-text-button form="form-id" @click="this.opened3 = false">Cancel</md-text-button>
             </div>
           </md-dialog>
         </div>
@@ -111,12 +148,15 @@ export default {
     return {
       input_username: "",
       input_password: "",
+      input_email: "",
       activeRoute: '/',
       opened: false,
       serverIP: "http://localhost:5000",
       cameraObjects: [],
       session: Cookies.get('session') || "0", // Get session from cookie or default to "0"
-      opened2: false
+      opened2: false,
+      opened3: false,
+      register: false
     }
   },
   provide() {
@@ -179,8 +219,31 @@ export default {
     document.adoptedStyleSheets = [typescaleStyles.styleSheet];
   },
   mounted() {
-
-
+    // check if session is valid
+    if (this.session!== "0"){
+      // get confirmation from API, if false, reset session
+      axios.post(this.serverIP + '/checkSession',
+          {
+            session: this.session
+          }
+      ).catch(function (error) {
+        console.log(error);
+      }).then( (response) => {
+        console.log(response);
+        if (response.data.status === "Unauthorized"){
+          this.session = "0";
+          Cookies.set('session', this.session); // Save session as a cookie
+          this.opened3 = true;
+        }
+        else
+          this.getCameraObjectsFromAPI();
+      });
+      return;
+    }
+    if (this.session === "0")
+      this.opened3 = true;
+    else
+      this.getCameraObjectsFromAPI();
   },
   computed: {
     session_computed() {

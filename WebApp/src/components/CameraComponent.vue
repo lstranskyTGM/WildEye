@@ -81,7 +81,8 @@
     },
     props: {
       name: String,
-      info: String
+      info: String,
+      id: Number
     },
     methods: {
       openSettingsDialog(){
