@@ -31,7 +31,7 @@ import DashboardMaterialComponent from "@/components/DashboardMaterialComponent.
 
 export default {
   name: 'DashboardView',
-  inject: ['cameraObjects'],
+  inject: ['cameraObjects', "session"],
   components: {
     DashboardMaterialComponent,
     InputModal,

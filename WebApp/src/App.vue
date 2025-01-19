@@ -64,9 +64,32 @@
       <div class="col-11 ms-auto me-0 edge_color p-0" style="background-color: var(--md-sys-color-surface-container-high)">
         <div class="bg-white me-0 ms-0 pe-0 ps-0 w-100 h-100 rounded rounded-5" style="">
           <div class="px-3 h-100 w-100 rounded rounded-3" style="background-color: var(--md-sys-color-surface-container)">
-            <router-view/>
+            <router-view v-on:login="this.opened2 = true" v-on:logout="resetData" />
           </div>
-
+          <md-dialog :open="this.opened2" v-on:close="this.opened2 = false">
+            <div slot="headline">
+              Login
+            </div>
+            <form slot="content" id="form-id" method="dialog">
+              <md-outlined-text-field
+                  type="text"
+                  label="Username"
+                  class="w-100"
+                  v-model="input_username"
+              >
+              </md-outlined-text-field>
+              <md-outlined-text-field
+                  type="password"
+                  label="Password"
+                  class="w-100"
+                  v-model="input_password"
+              >
+              </md-outlined-text-field>
+            </form>
+            <div slot="actions">
+              <md-text-button form="form-id" @click="this.opened2 = false; completeLoginWithCameras(this.input_username, this.input_password)">Ok</md-text-button>
+            </div>
+          </md-dialog>
         </div>
       </div>
     </div>
@@ -75,101 +98,105 @@
 
 <script>
 
+import Cookies from "js-cookie";
 import "@material/web/all"
 import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
 import router from "@/router";
 import axios from "axios";
+import {provide} from "vue";
+
 export default {
   name: 'App',
-  data(){
-    return{
+  data() {
+    return {
+      input_username: "",
+      input_password: "",
       activeRoute: '/',
-      opened:false,
+      opened: false,
       serverIP: "http://localhost:5000",
       cameraObjects: [],
-
+      session: Cookies.get('session') || "0", // Get session from cookie or default to "0"
+      opened2: false
     }
   },
   provide() {
     return {
       serverIP: this.serverIP,
-      cameraObjects: this.cameraObjects
+      cameraObjects: this.cameraObjects,
+      session: this.session_computed
     };
   },
   methods: {
     router() {
       return router
     },
-    setActiveRoute(route){
+    setActiveRoute(route) {
       this.activeRoute = route;
     },
-    getCameraObjectsFromAPI(){
-      var that= this
+    getCameraObjectsFromAPI() {
+      var that = this
+      console.log(this.serverIP + " : " + this.session)
+      // provide('session', this.session);
       // get camera objects from API
-      axios.post(this.serverIP+'/cameras',
+      axios.post(this.serverIP + '/cameras',
           {
-                  session: "Snorlax0815"
-                }
+            session: this.session
+          }
       ).catch(function (error) {
-          console.log(error);
+        console.log(error);
       }).then(function (response) {
         console.log(response);
         that.cameraObjects.push(...response.data.cameras);
       });
-
-      /*return [{
-        name: "Station Tiefwaldgasse",
-        id: 'dfjk43kb92020',
-        battery: 100,
-        signal: 100,
-        lastCapturePreview: 'https://www.w3schools.com/w3images/lights.jpg',
-        lastPictureDate: '2021-08-06 12:34:56',
-        numPictures: 69,
-        lastSync: '2021-08-06 12:34:56',
-        lat: 48.4262157636489,
-        lng: 16.61251026756385,
-        hearted:false,
-        info: "This is a test camera. MP: 12, Battery: 100%, SD-Card: 32GB, Night vision: True, 20m"
-      },
-        {
-          name: "Liechtensteinstraße",
-          id: 'dfjk43kb92021',
-          battery: 100,
-          signal: 100,
-          lastCapturePreview: 'https://www.w3schools.com/w3images/lights.jpg',
-          lastPictureDate: '2021-08-06 12:34:56',
-          numPictures: 420,
-          lastSync: '2021-08-06 12:34:56',
-          lat: 48.42558212563766,
-          lng: 16.61130863793849,
-          hearted:false,
-          info: "This is a test camera. MP: 12, Battery: 100%, SD-Card: 32GB, Nightvision: True, 20m"
-
-        },
-        {
-          name: "Jägerstraße",
-          id: 'dfjk43kb92022',
-          battery: 100,
-          signal: 100,
-          lastCapturePreview: 'https://www.w3schools.com/w3images/lights.jpg',
-          lastPictureDate: '2021-08-06 12:34:56',
-          numPictures: 9,
-          lastSync: '2021-08-06 12:34:56',
-          lat: 48.42568212563766,
-          lng: 16.61140863793849,
-          hearted:false,
-          info: "This is a test camera. MP: 12, Battery: 100%, SD-Card: 32GB, Nightvision: True, 20m"
-
-        }]*/
+    },
+    login(username, password) {
+      var that = this;
+      return axios.post(this.serverIP + '/login', {
+        username: username,
+        password: password
+      }).catch(function (error) {
+        console.log(error);
+      }).then((response) => {
+        console.log(response);
+        this.session = response.data.session;
+        Cookies.set('session', this.session); // Save session as a cookie
+        console.log("Login complete, session: "+that.session);
+      });
+    },
+    completeLoginWithCameras(username, password){
+      this.resetData();
+      this.login(username, password).then(() => {
+        this.getCameraObjectsFromAPI();
+      });
+    },
+    resetData(){
+      this.cameraObjects.splice(0, this.cameraObjects.length);
+      this.session = "0";
+      Cookies.set('session', this.session); // Save session as a cookie
     }
   },
   beforeMount() {
     document.adoptedStyleSheets = [typescaleStyles.styleSheet];
   },
   mounted() {
-    this.getCameraObjectsFromAPI();
+
+
+  },
+  computed: {
+    session_computed() {
+      return this.session
+    }
+  },
+  watch: {
+    session_computed: {
+      handler: function (val) {
+        console.log('session changed', val);
+      },
+      deep: true
+    }
   }
 }
+
 </script>
 
 <style>

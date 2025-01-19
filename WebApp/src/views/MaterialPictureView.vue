@@ -5,6 +5,8 @@
         <div class="card-body overflow-y-auto rounded rounded-3 card_background" style="height: 93%">
           <div class="row">
             <div class="col-12">
+<!--              <p v-if="session === '0'">Log in to display Images for your account. {{session}}</p>-->
+              <p v-if="images.length===0">No Images to display.</p>
               <div class="grid">
                 <div class="grid-item " v-for="(img, index) in images" :key="index">
                   <SinglePictureComponent :id="img.id" :url="img.url" :alt="img.alt" :title="img.title" :date="img.date" :hearted="img.hearted" :tags="img.tags" :cameraName="img.cameraName" v-on:update_hearted="updateHearted"></SinglePictureComponent>
@@ -78,6 +80,7 @@ import {defineComponent} from "vue";
 import SinglePictureComponent from "@/components/SinglePictureComponent.vue";
 import AdvancedSettingsComponent from "@/components/AdvancedSettingsComponent.vue";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export default defineComponent({
   name: 'MaterialPictureView',
@@ -100,8 +103,12 @@ export default defineComponent({
       console.log(this.settings)
     },
     getSettings(){
+      if(this.session === null){
+        console.log("No session available")
+        return;
+      }
       // eventually, make a request to the server to get the advanced settings.
-      axios.post(this.serverIP+'/imageSearchSettings', {session: "Snorlax0815", id: this.name})
+      axios.post(this.serverIP+'/imageSearchSettings', {session: this.session, id: this.name})
           .then(response => {
             this.settings = response.data;
           })
@@ -126,7 +133,7 @@ export default defineComponent({
       var that = this
       axios.post(this.serverIP+'/imageSearch',
           {
-            session: "Snorlax0815",
+            session: this.session,
             imageSearchSettings: this.settings,
             page: this.page
           }
@@ -154,10 +161,15 @@ export default defineComponent({
         {value: "camera4", headline: "Camera 4"},
       ],
       images: [],
-      page: 0
+      page: 0,
+      session: Cookies.get('session') || "0"
     }
   },
   mounted(){
+    if (this.session === "0") {
+      console.log("No session to display images")
+      return
+    }
     this.getSettings();
     this.getImages();
   }

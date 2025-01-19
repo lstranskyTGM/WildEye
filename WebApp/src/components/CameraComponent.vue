@@ -66,16 +66,17 @@
   import "@material/web/all"
   import AdvancedSettingsComponent from "@/components/AdvancedSettingsComponent.vue";
   import axios from "axios";
+  import Cookies from "js-cookie";
 
   export default {
-    inject: ['serverIP'],
+    inject: ['serverIP', "session"],
     name: 'CameraComponent',
     components: {AdvancedSettingsComponent, SettingComponent},
     data(){
       return{
         text:"kjdfghlskdjfgh",
         opened:false,
-        settings:null
+        settings:null,
       }
     },
     props: {
@@ -92,7 +93,7 @@
       },
       getSettings(){
         // eventually, make a request to the server to get the advanced settings.
-        axios.post(this.serverIP+'/advancedSettings', {session: this.name, id: this.name})
+        axios.post(this.serverIP+'/advancedSettings', {session: this.session, id: this.id})
             .then(response => {
               this.settings = response.data;
             })

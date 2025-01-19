@@ -9,6 +9,16 @@
             <p class="position-absolute text-end pe-3 " style="top: 13%">Apply all changes</p>-->
 <!--            <md-elevated-button class="me-2" style="max-width: fit-content; max-height: 50%">Apply changes</md-elevated-button>-->
 
+            <md-elevated-button @click="logout; $emit('logout')" class="mx-2" style="max-height: 50%; width: fit-content">
+              Logout
+              <svg slot="icon" viewBox="0 0 48 48"><path d="M9 42q-1.2 0-2.1-.9Q6 40.2 6 39V9q0-1.2.9-2.1Q7.8 6 9 6h13.95v3H9v30h30V25.05h3V39q0 1.2-.9 2.1-.9.9-2.1.9Zm10.1-10.95L17 28.9 36.9 9H25.95V6H42v16.05h-3v-10.9Z"/></svg>
+            </md-elevated-button>
+
+            <md-elevated-button @click="$emit('login')" class="mx-2" style="max-height: 50%; width: fit-content">
+              Login
+              <svg slot="icon" viewBox="0 0 48 48"><path d="M9 42q-1.2 0-2.1-.9Q6 40.2 6 39V9q0-1.2.9-2.1Q7.8 6 9 6h13.95v3H9v30h30V25.05h3V39q0 1.2-.9 2.1-.9.9-2.1.9Zm10.1-10.95L17 28.9 36.9 9H25.95V6H42v16.05h-3v-10.9Z"/></svg>
+            </md-elevated-button>
+
             <hr class="mt-0 position-absolute" style="top: calc(30% - 0.75px); left: 1%; width: 98%">
           </div>
           <div class="card-body row m-0 p-0 pt-1" style="height: 70%; max-width: 100%">
@@ -44,28 +54,38 @@ import "@material/web/all"
 import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
 import SettingComponent from "@/components/SettingComponent.vue";
 import CameraComponent from "@/components/CameraComponent.vue";
+import axios from "axios";
+import router from "@/router";
+import {ref} from "vue";
+import Cookies from "js-cookie";
 
 export default{
   components: {CameraComponent, SettingComponent},
-  inject: ['cameraObjects'],
+  inject: ['cameraObjects', "session", "serverIP"],
   name: 'AccountView',
   data(){
     return{
       cameraComponentData: this.cameraObjects,
-      /*cameraComponentData:[
-        {
-          name: "Station Tiefwaldgasse",
-          info: "This is a test camera. MP: 12, Battery: 100%, SD-Card: 32GB, Nightvision: True, 20m"
-        },
-        {
-          name: "Jägergasse",
-          info: "This is a test camera. MP: 12, Battery: 100%, SD-Card: 32GB, Nightvision: True, 20m"
-        },
-        {
-          name: "Dreiecksweg",
-          info: "This is a test camera. MP: 12, Battery: 100%, SD-Card: 32GB, Nightvision: True, 20m"
-        }
-      ]*/
+      session: Cookies.get('session') // Access session from cookie
+    }
+  },
+  methods: {
+    logout(){
+      console.log("logout")
+      if (this.session === "0") {
+        console.log("No session to logout")
+        return
+      }
+      axios.post(this.serverIP+'/logout',
+          {
+            session: this.session
+          }
+      ).catch(function (error) {
+        console.log(error);
+      }).then((response) => {
+        console.log(response);
+        // router.push('/')
+      });
     }
   },
   beforeMount() {
