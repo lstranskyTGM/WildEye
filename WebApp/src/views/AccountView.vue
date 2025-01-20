@@ -25,7 +25,7 @@
           </div>
           <div class="card-body row m-0 p-0 pt-1" style="height: 70%; max-width: 100%">
             <div v-if="session !== '0'" class="dashboard-grid overflow-x-auto overflow-y-auto" style="height: 100%; max-width: 100%">
-              <SettingComponent name="Username" value="WildEyeFan1" icon="bi bi-person-vcard" confirm_needed="false" popup="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
+              <SettingComponent name="Username" value="Snorlax0815" icon="bi bi-person-vcard" confirm_needed="false" popup="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
               <SettingComponent name="E-Mail" value="Wil*****@gmail.com" icon="bi bi-envelope-at" confirm_needed="true" popup="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
               <SettingComponent name="Password" value="************" icon="bi bi-asterisk" confirm_needed="true" popup="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
             </div>

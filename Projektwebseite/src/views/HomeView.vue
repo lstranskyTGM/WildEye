@@ -30,7 +30,7 @@ export default {
           name: "Leonhard Stransky",
           c: "5AHIT",
           topic: "Erstellung eines Prototyp einer Wildkamera mit 3D gedruckten Komponenten, welcher Bilder und Aufnahmen über Mobilfunk überträgt und als modularer Bausatz für Hobbyisten dienen kann.",
-          pic: "leo.jpg",
+          pic: "new_3.jpg",
           email: "lstransky@student.tgm.ac.at",
           extra: "Projektleiter"
         },
