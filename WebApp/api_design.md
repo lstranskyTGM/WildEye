@@ -19,8 +19,7 @@
 
 ```json
 {
-  "session": "string glaub ich aber da bist du der itsi experte falls passt sonst infos",
-  "info": "string"
+  "session": "string glaub ich aber da bist du der itsi experte falls passt sonst infos"
 }
 ```
 
@@ -39,8 +38,25 @@
 
 ```json
 {
-  "session": "string",
-  "info": "string"
+  "session": "string"
+}
+```
+
+## Logout
+`api.wildeye.tech/logout`
+### Post
+
+```json
+{
+  "session": "string"
+}
+```
+
+### Response
+
+```json
+{
+  "success": true
 }
 ```
 
@@ -53,8 +69,8 @@
   "session": "string",
   "settings": {
     "cameras": [
-      "string",
-      "string"
+      "id",
+      "id"
     ],
     "sort": {
       "by": "date | name",
@@ -74,6 +90,9 @@
 
 ### Response
 
+Welche Tags mit welchen Klassen übereinstimmen muss mit Julian abgeklärt werden, 
+je nachdem, was seine AI halt kann. Es gibt auf jeden fall einen Tag mit dem Namen der Camera.
+
 ```json
 {
   "images": [
@@ -92,8 +111,8 @@
           "icon": "bi bi-heart-fill"
         }
       ],
-      "url_preview": "string",
-      "url_full": "string",
+      "url": "string",
+      "alt": "string",
       "camera": "string",
       "hearted": true
     },
@@ -107,8 +126,10 @@
 ## Camera
 `api.wildeye.tech/camera`
 
-### Post /all
-`/camera/all`
+### Post /cameras
+`/cameras`
+
+alle Cameras von dem Account werden zurückgegeben
 
 ```json
 {
@@ -124,7 +145,7 @@
     {
       "lat": 48.4262157636489,
       "lng": 16.61251026756385,
-      "generalInfo": "string",
+      "info": "string",
       "name": "string",
       "id": 1, 
       "lastCapturePreview": "url/string",
@@ -133,24 +154,21 @@
       "battery": 100,
       "lastSync": "string",
       "hearted": true
-    },
-    {
     }
   ]
 }
 ```
 
-### Post /certain
+### Post /camera/<int:id>
 
 `camera/certain`
 
+Nur die Kamera mit der ID wird zurückgegeben. Ich weiß nicht warum ich das mit einem url parameter
+gemacht habe, falls ich es ändern soll bitte sagen.
+
 ```json
 {
-  "session": "string",
-  "ids": [
-    1,
-    2
-  ]
+  "session": "string"
 }
 ```
 
@@ -162,7 +180,7 @@
     {
       "lat": 48.4262157636489,
       "lng": 16.61251026756385,
-      "generalInfo": "string",
+      "info": "string",
       "name": "string",
       "id": 1,
       "lastCapturePreview": "url/string",
@@ -171,15 +189,14 @@
       "battery": 100,
       "lastSync": "string",
       "hearted": true
-    },
-    {
-      
     }
   ]
 }
 ```
 
 ### Post /advancedSettings
+
+Wenn die Settings für jede Kamera gleich sind, dann kann man die id auch weglassen.
 
 ```json
 {
@@ -189,75 +206,72 @@
 ```
 
 ### Response 
-Beispiel für Number, String, Boolean und Select inputs von leos liste auf github
+Beispiel für Number, String, Boolean und Select inputs von leos liste auf github.
+Auf dem flask server hab ich das schon in json umgewandelt, und so erwarte ich es mir auch.
 ```json
 [
-{
-  "type": "number", 
-  "name": "Resolution",
-  "min": 0,
-  "max": 100,
-  "value": 50,
-  "required": true
-},
-{
-  "type": "string",
-  "name": "prefix",
-  "value": "WildEye",
-  "required": false
-},
-{
-  "type": "boolean",
-  "name": "Nightvision",
-  "value": true,
-  "required": true
-},
-{
-  "type": "select",
-  "name": "Logging",
-  "options": ["None", "Error", "Warning", "Info", "Debug"],
-  "value": "Info",
-  "required": true
-}
+  {
+    "sectionName": "General",
+    "sectionSettings": [
+      {
+        "type": "boolean",
+        "name": "discardHumanRecordings",
+        "value": true,
+        "required": true
+      },
+      {
+        "type": "boolean",
+        "name": "collectGPSData",
+        "value": true,
+        "required": true
+      }
+    ]
+  },
+  {
+    "sectionName": "Detection",
+    "sectionSettings": [
+      {
+        "type": "number",
+        "name": "defaultDetectionTimeout",
+        "min": 0,
+        "max": null,
+        "value": 10,
+        "required": true
+      },
+      {
+        "type": "number",
+        "name": "dayDetectionTimeout",
+        "min": 0,
+        "max": null,
+        "value": 10,
+        "required": false
+      }
+    ]
+  }
 ]
 ```
 
 ### Put /advancedSettings
+ 
+Nur der teil der sich wirklich verändert wird hier gegeben.
+man kann hier eig auf alles bis auf name und value verzichten, aner es ist aufwand das zu machen
 
 ```json
-{
-  "session": "string",
-  "id": 1,
-  "advancedSettings": [
-    {
-      "type": "number",
-      "name": "Resolution",
-      "min": 0,
-      "max": 100,
-      "value": 50,
-      "required": true
-    },
-    {
-      "type": "string",
-      "name": "prefix",
-      "value": "WildEye",
-      "required": false
-    },
-    {
-      "type": "boolean",
-      "name": "Nightvision",
-      "value": true,
-      "required": true
-    },
-    {
-      "type": "select",
-      "name": "Logging",
-      "options": ["None", "Error", "Warning", "Info", "Debug"],
-      "value": "Info",
-      "required": true
-    }
-  ]
-}
+[
+  {
+    "sectionName": "Detection",
+    "sectionSettings": [
+      {
+        "type": "number",
+        "name": "defaultDetectionTimeout",
+        "min": 0,
+        "max": null,
+        "value": 10,
+        "required": true
+      }
+    ]
+  }
+]
 ```
 
 ### Response
@@ -265,5 +279,116 @@ Beispiel für Number, String, Boolean und Select inputs von leos liste auf githu
 ```json
 {
   "success": "boolean"
+}
+```
+
+
+## imageSearchSettings
+
+### post
+
+```json
+{
+  "session": "string"
+}
+```
+
+### Response
+
+```json
+[
+  {
+    "sectionName": "General Search",
+    "sectionSettings": [
+      {
+        "type": "string",
+        "name": "Search for Names or Tags",
+        "value": "",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Cameras",
+    "sectionSettings": [
+      {
+        "type": "boolean",
+        "name": "string",
+        "value": true,
+        "required": true
+      }
+    ]
+  }
+]
+```
+
+## Images
+
+### Post /imageSearch
+
+```json
+{
+  "session": "string",
+  "imageSearchSettings": "string, einfach das gleiche wie man bekommt von dem server",
+  "page": 0
+}
+```
+
+### Response
+
+```json
+[
+  {
+    "id": 0,
+    "url": "https://www.w3schools.com/w3images/lights.jpg",
+    "cameraID": 1,
+    "alt": "Lights",
+    "title": "Lights",
+    "description": "Wunderschönes Bild",
+    "date": "2021-09-01",
+    "hearted": false,
+    "tags": [
+      {"icon": "bi bi-person", "text": "Person"},
+      {"icon": "bi bi-camera", "text": "Camera"}
+    ]
+  },
+  {
+    "id": 1,
+    "url": "https://www.w3schools.com/w3images/lights.jpg",
+    "cameraName": 2,
+    "alt": "Lights",
+    "title": "Lights",
+    "date": "2021-09-01",
+    "hearted": false,
+    "tags": [
+      {"icon": "bi bi-person", "text": "Person"},
+      {"icon": "bi bi-camera", "text": "Camera"},
+      {"icon": "bi bi-camera", "text": "Camera"},
+      {"icon": "bi bi-camera", "text": "Camera"},
+      {"icon": "bi bi-camera", "text": "Camera"},
+      {"icon": "bi bi-camera", "text": "Camera"},
+      {"icon": "bi bi-camera", "text": "Camera"}
+
+    ]
+  }
+]
+```
+
+## checkSession
+
+### Post /checkSession
+
+```json
+{
+  "session": "string"
+}
+```
+
+### Response
+
+```json
+{
+  "success": "True", 
+  "authorized": "False"
 }
 ```

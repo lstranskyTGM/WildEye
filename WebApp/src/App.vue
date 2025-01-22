@@ -123,7 +123,7 @@
             <div slot="actions">
               <md-text-button form="form-id" @click="this.register = !this.register" v-if="!register">New Here? Register</md-text-button>
               <md-text-button form="form-id" @click="this.register = !this.register" v-if="register">Log in instead</md-text-button>
-              <md-text-button form="form-id" @click="this.opened3 = false; completeLoginWithCameras(this.input_username, this.input_password)">Continue</md-text-button>
+              <md-text-button form="form-id" @click="completeLoginWithCameras(this.input_username, this.input_password)">Continue</md-text-button>
               <md-text-button form="form-id" @click="this.opened3 = false">Cancel</md-text-button>
             </div>
           </md-dialog>
@@ -198,15 +198,26 @@ export default {
         console.log(error);
       }).then((response) => {
         console.log(response);
-        this.session = response.data.session;
-        Cookies.set('session', this.session); // Save session as a cookie
-        console.log("Login complete, session: "+that.session);
+        if (response.data.success !== false){
+          this.session = response.data.session;
+          Cookies.set('session', this.session); // Save session as a cookie
+          console.log("Login complete, session: "+that.session);
+          this.opened3 = false;
+          return true
+        }
+        else{
+          console.log("Login failed");
+          alert("Login failed: "+response.data.error);
+          return false
+        }
       });
     },
     completeLoginWithCameras(username, password){
       this.resetData();
-      this.login(username, password).then(() => {
-        this.getCameraObjectsFromAPI();
+      this.login(username, password).then((loginSuccess) => {
+        if (loginSuccess) {
+          this.getCameraObjectsFromAPI();
+        }
       });
     },
     resetData(){
@@ -230,7 +241,7 @@ export default {
         console.log(error);
       }).then( (response) => {
         console.log(response);
-        if (response.data.status === "Unauthorized"){
+        if (response.data.authorized === false){
           this.session = "0";
           Cookies.set('session', this.session); // Save session as a cookie
           this.opened3 = true;

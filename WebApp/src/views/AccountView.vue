@@ -24,7 +24,7 @@
             <hr class="mt-0 position-absolute" style="top: calc(30% - 0.75px); left: 1%; width: 98%">
           </div>
           <div class="card-body row m-0 p-0 pt-1" style="height: 70%; max-width: 100%">
-            <div v-if="session !== '0'" class="dashboard-grid overflow-x-auto overflow-y-auto" style="height: 100%; max-width: 100%">
+            <div v-if="this.session!=='0'" class="dashboard-grid overflow-x-auto overflow-y-auto" style="height: 100%; max-width: 100%">
               <SettingComponent name="Username" value="Snorlax0815" icon="bi bi-person-vcard" confirm_needed="false" popup="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
               <SettingComponent name="E-Mail" value="Wil*****@gmail.com" icon="bi bi-envelope-at" confirm_needed="true" popup="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
               <SettingComponent name="Password" value="************" icon="bi bi-asterisk" confirm_needed="true" popup="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
@@ -60,38 +60,44 @@ import axios from "axios";
 import router from "@/router";
 import {ref} from "vue";
 import Cookies from "js-cookie";
+import {createRouter as $router} from "vue-router";
+import {routes} from "vue-router/auto-routes";
 
 export default{
   components: {CameraComponent, SettingComponent},
-  inject: ['cameraObjects', "session", "serverIP"],
+  inject: ['cameraObjects', "serverIP"],
   name: 'AccountView',
   data(){
     return{
       cameraComponentData: this.cameraObjects,
-      session: Cookies.get('session') // Access session from cookie
+      session: Cookies.get('session'), // Access session from cookie
     }
   },
   methods: {
-    logout(){
-      console.log("logout")
+    logout() {
+      console.log("logout");
       if (this.session === "0") {
-        console.log("No session to logout")
-        return
+        console.log("No session to logout");
+        return;
       }
-      axios.post(this.serverIP+'/logout',
-          {
-            session: this.session
-          }
-      ).catch(function (error) {
+      axios.post(this.serverIP + '/logout', {
+        session: this.session
+      }).catch((error) => {
         console.log(error);
       }).then((response) => {
         console.log(response);
-        // router.push('/')
+        Cookies.set('session', '0');
+        this.session = '0';
+        // :(((((((((((((((( no worky works
+        this.$router.push({ path: '/' });
       });
     }
   },
   beforeMount() {
     document.adoptedStyleSheets = [typescaleStyles.styleSheet];
+  },
+  computed: {
+
   }
 }
 </script>

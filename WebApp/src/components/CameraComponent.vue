@@ -69,7 +69,7 @@
   import Cookies from "js-cookie";
 
   export default {
-    inject: ['serverIP', "session"],
+    inject: ['serverIP'],
     name: 'CameraComponent',
     components: {AdvancedSettingsComponent, SettingComponent},
     data(){
@@ -77,6 +77,7 @@
         text:"kjdfghlskdjfgh",
         opened:false,
         settings:null,
+        session: Cookies.get('session')
       }
     },
     props: {
