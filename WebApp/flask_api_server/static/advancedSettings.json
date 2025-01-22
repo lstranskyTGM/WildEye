@@ -1,0 +1,246 @@
+[
+  {
+    "sectionName": "General",
+    "sectionSettings": [
+      {
+        "type": "boolean",
+        "name": "discardHumanRecordings",
+        "value": true,
+        "required": true
+      },
+      {
+        "type": "boolean",
+        "name": "collectEnvironmentData",
+        "value": true,
+        "required": true
+      },
+      {
+        "type": "boolean",
+        "name": "collectGyroscopeData",
+        "value": true,
+        "required": true
+      },
+      {
+        "type": "boolean",
+        "name": "collectGPSData",
+        "value": true,
+        "required": true
+      },
+      {
+        "type": "boolean",
+        "name": "collectDetectionData",
+        "value": true,
+        "required": true
+      },
+      {
+        "type": "select",
+        "name": "logLevel",
+        "options": ["DEBUG", "INFO", "WARNING", "ERROR"],
+        "value": "INFO",
+        "required": true
+      },
+      {
+        "type": "boolean",
+        "name": "overwriteOnFull",
+        "value": true,
+        "required": true
+      }
+    ]
+  },
+  {
+    "sectionName": "Detection",
+    "sectionSettings": [
+      {
+        "type": "number",
+        "name": "defaultDetectionTimeout",
+        "min": 0,
+        "max": null,
+        "value": 10,
+        "required": true
+      },
+      {
+        "type": "number",
+        "name": "dayDetectionTimeout",
+        "min": 0,
+        "max": null,
+        "value": 10,
+        "required": false
+      },
+      {
+        "type": "number",
+        "name": "nightDetectionTimeout",
+        "min": 0,
+        "max": null,
+        "value": 10,
+        "required": false
+      },
+      {
+        "type": "number",
+        "name": "pirSensitivity",
+        "min": 0,
+        "max": 100,
+        "value": 50,
+        "required": true
+      },
+      {
+        "type": "boolean",
+        "name": "opticalFlow",
+        "value": true,
+        "required": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Recording",
+    "sectionSettings": [
+      {
+        "type": "select",
+        "name": "recordType",
+        "options": ["PHOTO", "VIDEO", "BOTH"],
+        "value": "BOTH",
+        "required": true
+      },
+      {
+        "type": "boolean",
+        "name": "enableTrigger",
+        "value": true,
+        "required": true
+      },
+      {
+        "type": "boolean",
+        "name": "enableTimeSpan",
+        "value": true,
+        "required": true
+      },
+      {
+        "type": "boolean",
+        "name": "enableInterval",
+        "value": true,
+        "required": true
+      },
+      {
+        "type": "time",
+        "name": "timeSpanStart",
+        "value": "00:00:00",
+        "required": false
+      },
+      {
+        "type": "time",
+        "name": "timeSpanEnd",
+        "value": "23:59:59",
+        "required": false
+      },
+      {
+        "type": "number",
+        "name": "intervalDurationSeconds",
+        "min": 0,
+        "max": null,
+        "value": 60,
+        "required": false
+      },
+      {
+        "type": "string",
+        "name": "imageResolution",
+        "value": "1920x1080",
+        "required": true
+      },
+      {
+        "type": "number",
+        "name": "burstAmount",
+        "min": 1,
+        "max": 100,
+        "value": 3,
+        "required": true
+      },
+      {
+        "type": "number",
+        "name": "burstIntervalMilliseconds",
+        "min": 1,
+        "max": null,
+        "value": 500,
+        "required": true
+      },
+      {
+        "type": "number",
+        "name": "videoResolution",
+        "min": 0,
+        "max": null,
+        "value": 1080,
+        "required": true
+      },
+      {
+        "type": "number",
+        "name": "videoLengthSeconds",
+        "min": 1,
+        "max": null,
+        "value": 10,
+        "required": true
+      }
+    ]
+  },
+  {
+    "sectionName": "Update Cycle",
+    "sectionSettings": [
+      {
+        "type": "boolean",
+        "name": "enableAmountTrigger",
+        "value": true,
+        "required": true
+      },
+      {
+        "type": "number",
+        "name": "recordAmountForUpdate",
+        "min": 1,
+        "max": null,
+        "value": 10,
+        "required": true
+      },
+      {
+        "type": "boolean",
+        "name": "enableIntervalTrigger",
+        "value": true,
+        "required": true
+      },
+      {
+        "type": "number",
+        "name": "updateIntervalMinutes",
+        "min": 1,
+        "max": null,
+        "value": 60,
+        "required": true
+      },
+      {
+        "type": "boolean",
+        "name": "notifyOnGyroscopeChange",
+        "value": true,
+        "required": true
+      },
+      {
+        "type": "boolean",
+        "name": "notifyOnGPSChange",
+        "value": true,
+        "required": true
+      },
+      {
+        "type": "select",
+        "name": "logTransmissionLevel",
+        "options": ["NONE", "ERROR", "WARNING", "INFO", "DEBUG"],
+        "value": "INFO",
+        "required": true
+      }
+    ]
+  },
+  {
+    "sectionName": "Transmission",
+    "sectionSettings": [
+      {
+        "type": "number",
+        "name": "transmissionRetries",
+        "min": 0,
+        "max": null,
+        "value": 3,
+        "required": true
+      }
+    ]
+  }
+]

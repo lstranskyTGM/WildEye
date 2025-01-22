@@ -1,0 +1,47 @@
+[
+        {
+          "id": 0,
+          "url": "https://www.w3schools.com/w3images/lights.jpg",
+          "cameraID": 1,
+          "alt": "Lights",
+          "title": "Lights",
+          "date": "2021-09-01",
+          "hearted": false,
+          "tags": [
+            {"icon": "bi bi-person", "text": "Person"},
+            {"icon": "bi bi-camera", "text": "Camera"}
+          ]
+        },
+        {
+          "id": 1,
+          "url": "https://www.w3schools.com/w3images/lights.jpg",
+          "cameraName": 2,
+          "alt": "Lights",
+          "title": "Lights",
+          "date": "2021-09-01",
+          "hearted": false,
+          "tags": [
+            {"icon": "bi bi-person", "text": "Person"},
+            {"icon": "bi bi-camera", "text": "Camera"},
+            {"icon": "bi bi-camera", "text": "Camera"},
+            {"icon": "bi bi-camera", "text": "Camera"},
+            {"icon": "bi bi-camera", "text": "Camera"},
+            {"icon": "bi bi-camera", "text": "Camera"},
+            {"icon": "bi bi-camera", "text": "Camera"}
+
+          ]
+        },
+        {
+          "id": 2,
+          "url": "https://www.w3schools.com/w3images/lights.jpg",
+          "cameraName": 3,
+          "alt": "Lights",
+          "title": "Lights",
+          "date": "2021-09-01",
+          "hearted": false,
+          "tags": [
+            {"icon": "bi bi-person", "text": "Person"},
+            {"icon": "bi bi-camera", "text": "Camera"}
+          ]
+        }
+  ]

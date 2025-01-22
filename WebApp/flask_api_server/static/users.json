@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "username": "Snorlax0815",
+        "password": "password",
+        "email": "snorlax@gmail.com",
+        "cameras": [1, 2, 3]
+    },
+    {
+        "id": 2,
+        "username": "AndyGuardian3323",
+        "password": "password",
+        "email": "andy@gmail.com",
+        "cameras": [1]
+    },
+    {
+        "username": "Snorlax0816",
+        "password": "password",
+        "email": "snorlax0815@gmail.com",
+        "id": 3,
+        "cameras": []
+    },
+    {
+        "username": "L21L21",
+        "password": "password",
+        "email": "l21l21@gmail.com",
+        "id": 4,
+        "cameras": [3, 2]
+    }
+]
