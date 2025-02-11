@@ -59,7 +59,7 @@ export default {
   data() {
     return {
       updates: [
-        { image: require('@/assets/ai1.jpg'), alt: "KI-Modell", title: "KI-Modell trainiert und ausführbar! - 11.02.2025" },
+        { image: require('@/assets/ai2.jpg'), alt: "KI-Modell", title: "KI-Modell trainiert und ausführbar! - 11.02.2025" },
         { image: require('@/assets/hardware_prototyp_1.png'), alt: "Hardwareprototyp erstellt", title: "Erster Hardwareprototyp erstellt! - 14.01.2025" },
         { image: require('@/assets/Development_server.png'), alt: "Development Server erstellt", title: "Development Server erstellt zum testen der API, Designänderungen! - 12.01.2025" },
         { image: require('@/assets/wildeye neuronales netzwerk.png'), alt: "Neuronales Netzwerk von Wildeye", title: "Erstes neuronales Netzwerk für WildEye erstellt! - 13.12.2024" },
