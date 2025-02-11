@@ -34,21 +34,21 @@ export default {
           title:"Erste Bildaufnahme und Bilderkennung",
           desc:"Es wurde eine erste Bildaufnahme aufgenommen, welche mittels Bilderkennung analysiert und klassifiziert wurde.",
           pic: "milestone2.svg",
-          progress: "50%",
+          progress: "100%",
           date: "19.01.2024"
         },
         {
           title:"Prototyp fertig",
           desc:"Es wurde der erste Prototyp der Wildkamera erstellt. Dieser kann aufnahmen tätigen, welche auf der Webseite einsehbar sind.",
           pic: "milestone3.svg",
-          progress: "25%",
+          progress: "75%",
           date: "27.01.2025"
         },
         {
           title:"Testen fertig",
           desc:"Der Prototyp der Wildkamera wurde auf Funktionalität getestet und ist bereit für den Einsatz.",
           pic: "milestone4.svg",
-          progress: "0%",
+          progress: "25%",
           date: "02.03.2025"
         }
       ]

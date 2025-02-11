@@ -139,12 +139,6 @@
         "required": false
       },
       {
-        "type": "string",
-        "name": "imageResolution",
-        "value": "1920x1080",
-        "required": true
-      },
-      {
         "type": "number",
         "name": "burstAmount",
         "min": 1,
