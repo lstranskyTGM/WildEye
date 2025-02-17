@@ -169,7 +169,7 @@ Retrieves a specific Wild Camera by its ID if it belongs to the authenticated us
 Example cURL Request:
 
 ```bash
-curl -X GET http://localhost:1337/api/wild-camera/1 
+curl -X GET http://localhost:1337/api/wild-cameras/1 
   -H "Authorization: Bearer <your-jwt-token>"
 ```
 Successful Response:
@@ -194,7 +194,7 @@ Successful Response:
 ### Get Images for a Specific Camera
 **Endpoint:**
 
-GET /api/wild-camera/:id/images
+GET /api/wild-cameras/:id/images
 
 **Description:**
 
@@ -207,7 +207,7 @@ Retrieves only the images associated with the specified Wild Camera (after verif
 Example cURL Request:
 
 ```bash
-curl -X GET http://localhost:1337/api/wild-camera/1/images 
+curl -X GET http://localhost:1337/api/wild-cameras/1/images 
   -H "Authorization: Bearer <your-jwt-token>"
 ```
 
