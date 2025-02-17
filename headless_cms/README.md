@@ -42,13 +42,13 @@ Registers a new user and automatically seeds a default Wild Camera for that user
 Example cURL Request:
 
 ```bash
-curl -X POST http://localhost:1337/api/auth/local/register \
-  -H "Content-Type: application/json" \
+curl -X POST http://localhost:1337/api/auth/local/register 
+  -H "Content-Type: application/json" 
   -d '{
     "username": "testuser",
     "email": "testuser@example.com",
     "password": "password123"
-}'
+}
 ```
 
 
@@ -87,8 +87,8 @@ Logs in an existing user and returns a JWT token.
 Example cURL Request:
 
 ```bash
-curl -X POST http://localhost:1337/api/auth/local \
-  -H "Content-Type: application/json" \
+curl -X POST http://localhost:1337/api/auth/local 
+  -H "Content-Type: application/json" 
   -d '{
     "identifier": "testuser@example.com",
     "password": "password123"
@@ -125,7 +125,7 @@ Retrieves all Wild Cameras associated with the authenticated user.
 Example cURL Request:
 
 ```bash
-curl -X GET http://localhost:1337/api/wild-cameras \
+curl -X GET http://localhost:1337/api/wild-cameras 
   -H "Authorization: Bearer <your-jwt-token>"
 ```
 
@@ -169,7 +169,7 @@ Retrieves a specific Wild Camera by its ID if it belongs to the authenticated us
 Example cURL Request:
 
 ```bash
-curl -X GET http://localhost:1337/api/wild-camera/1 \
+curl -X GET http://localhost:1337/api/wild-camera/1 
   -H "Authorization: Bearer <your-jwt-token>"
 ```
 Successful Response:
@@ -207,7 +207,7 @@ Retrieves only the images associated with the specified Wild Camera (after verif
 Example cURL Request:
 
 ```bash
-curl -X GET http://localhost:1337/api/wild-camera/1/images \
+curl -X GET http://localhost:1337/api/wild-camera/1/images 
   -H "Authorization: Bearer <your-jwt-token>"
 ```
 
@@ -234,7 +234,7 @@ Authorization: Bearer <your-jwt-token>
 If your JWT token is eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..., your request header should be:
 
 ```bash
-curl -X GET http://localhost:1337/api/wild-cameras \
+curl -X GET http://localhost:1337/api/wild-cameras 
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
