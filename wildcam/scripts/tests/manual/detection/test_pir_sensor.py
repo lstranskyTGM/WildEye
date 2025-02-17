@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO
+#import lgpio as GPIO
 import time
 
 # GPIO pin for the PIR sensor

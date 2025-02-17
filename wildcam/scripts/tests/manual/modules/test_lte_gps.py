@@ -12,8 +12,6 @@ ser = serial.Serial(
     baudrate=115200,
     timeout=1
 )
-
-
 # ser.flushInput()  # Flush the input buffer
 
 

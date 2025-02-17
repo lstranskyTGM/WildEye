@@ -1,5 +1,6 @@
 import time
 import logging
+# Update library to use smbus2 instead of smbus (Drop-in replacement)
 from mpu6050 import mpu6050
 
 # Configure logging
