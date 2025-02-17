@@ -1,6 +1,7 @@
 # Wild Camera API Documentation
 
 This documentation provides details on the available endpoints for managing Wild Cameras, including how to populate the API and test the endpoints. The API is built on Strapi v4 and uses JWT-based authentication. All requests to protected endpoints must include a valid JWT token in the `Authorization` header.
+**currently the lastCapturePreview is unavailable**
 
 ## Table of Contents
 
@@ -115,7 +116,7 @@ Authorization: Bearer <your-jwt-token>
 
 **Endpoint:**
 
-GET /cameras
+GET /api/wild-cameras
 
 **Description:**
 
@@ -124,7 +125,7 @@ Retrieves all Wild Cameras associated with the authenticated user.
 Example cURL Request:
 
 ```bash
-curl -X GET http://localhost:1337/cameras \
+curl -X GET http://localhost:1337/api/wild-cameras \
   -H "Authorization: Bearer <your-jwt-token>"
 ```
 
@@ -155,7 +156,7 @@ Successful Response:
 
 **Endpoint:**
 
-GET /camera/:id
+GET /api/wild-cameras/:id
 
 **Description:**
 
@@ -168,7 +169,7 @@ Retrieves a specific Wild Camera by its ID if it belongs to the authenticated us
 Example cURL Request:
 
 ```bash
-curl -X GET http://localhost:1337/camera/1 \
+curl -X GET http://localhost:1337/api/wild-camera/1 \
   -H "Authorization: Bearer <your-jwt-token>"
 ```
 Successful Response:
@@ -180,7 +181,7 @@ Successful Response:
   "battery": 100,
   "lastCapturePreview": "https://www.w3schools.com/w3images/lights.jpg",
   "lastPictureDate": "2021-08-06T12:34:56.000Z",
-  "numPictures": 69,
+  "numPictures": 70,
   "lastSync": "2021-08-06T12:34:56.000Z",
   "lat": 48.4262157636489,
   "lng": 16.61251026756385,
@@ -193,7 +194,7 @@ Successful Response:
 ### Get Images for a Specific Camera
 **Endpoint:**
 
-GET /camera/:id/images
+GET /api/wild-camera/:id/images
 
 **Description:**
 
@@ -206,7 +207,7 @@ Retrieves only the images associated with the specified Wild Camera (after verif
 Example cURL Request:
 
 ```bash
-curl -X GET http://localhost:1337/camera/1/images \
+curl -X GET http://localhost:1337/api/wild-camera/1/images \
   -H "Authorization: Bearer <your-jwt-token>"
 ```
 
@@ -233,7 +234,7 @@ Authorization: Bearer <your-jwt-token>
 If your JWT token is eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..., your request header should be:
 
 ```bash
-curl -X GET http://localhost:1337/cameras \
+curl -X GET http://localhost:1337/api/wild-cameras \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
