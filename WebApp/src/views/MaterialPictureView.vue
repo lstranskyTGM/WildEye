@@ -9,7 +9,7 @@
               <p v-if="images.length===0">No Images to display.</p>
               <div class="grid">
                 <div class="grid-item " v-for="(img, index) in images" :key="index">
-                  <SinglePictureComponent :id="img.id" :url="img.url" :alt="img.alt" :title="img.title" :date="img.date" :hearted="img.hearted" :tags="img.tags" :cameraName="img.cameraName" v-on:update_hearted="updateHearted"></SinglePictureComponent>
+                  <SinglePictureComponent :id="img.id" :url="img.url" :alt="img.alt" :title="img.title" :date="img.date" :hearted="img.hearted" :tags="img.tags" :cameraName="img.cameraName" :AIurl="img.url"  v-on:update_hearted="updateHearted"></SinglePictureComponent>
                 </div>
               </div>
               <div class="fab-container">
@@ -110,7 +110,10 @@ export default defineComponent({
       // eventually, make a request to the server to get the advanced settings.
       axios.post(this.serverIP+'/imageSearchSettings', {session: this.session, id: this.name})
           .then(response => {
-            this.settings = response.data;
+            if(response){
+              this.settings = response.data;
+
+            }
           })
           .catch(error => {
             console.log(error);
@@ -141,9 +144,12 @@ export default defineComponent({
         console.log(error);
       }).then(function (response) {
         console.log(response);
-        // clear images
-        that.images = [];
-        that.images.push(...response.data);
+        if(response){
+          // clear images
+          that.images = [];
+          that.images.push(...response.data);
+        }
+
       });
     }
   },
@@ -154,12 +160,6 @@ export default defineComponent({
       searchValue: "",
       startDate: "",
       endDate: "",
-      cameras:[
-        {value: "camera1", headline: "Camera 1"},
-        {value: "camera2", headline: "Camera 2"},
-        {value: "camera3", headline: "Camera 3"},
-        {value: "camera4", headline: "Camera 4"},
-      ],
       images: [],
       page: 0,
       session: Cookies.get('session') || "0"

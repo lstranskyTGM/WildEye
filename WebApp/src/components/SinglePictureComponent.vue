@@ -2,7 +2,25 @@
   <div>
     <div class="card h-100 w-100 card-background shadow-sm p-0 m-0">
       <div class="position-relative">
-        <img class="card-img-top rounded rounded-bottom-3" :src="url" :alt="alt" @click="this.opened = !this.opened">
+        <div class="carousel slide card-img-top">
+          <div class="carousel-inner">
+            <div class="carousel-item">
+              <img class=" rounded rounded-bottom-3 d-block w-100" :src="url" :alt="alt" @click="this.opened = !this.opened">
+            </div>
+            <div class="carousel-item">
+              <img class=" rounded rounded-bottom-3 d-block w-100" :src="AIurl" :alt="alt" @click="this.opened = !this.opened">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+
+        </div>
         <div @click="toggleHeart" class="heart-icon">
           <i :class="{'bi bi-heart-fill text-danger': hearted, 'bi bi-heart': !hearted}" ></i>
         </div>
@@ -62,6 +80,7 @@ export default {
   props: {
     id: Number,
     url: String,
+    AIurl: String,
     alt: String,
     title: String,
     date: String,
