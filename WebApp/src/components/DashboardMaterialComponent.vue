@@ -23,10 +23,10 @@
         </div>
         <div class="card-body row overflow-hidden" style="height: 70%">
           <div class="dashboard-grid overflow-y-auto" style="height: 100%">
-            <DashboardInfoComponent name="position" value="121212" icon="bi bi-pin-map" ></DashboardInfoComponent>
-            <DashboardInfoComponent name="Battery" value="86%" icon="bi bi-battery-half"></DashboardInfoComponent>
-            <DashboardInfoComponent name="Last Synchronization" value="01.12.2024 09:31" icon="bi bi-cloud-upload"></DashboardInfoComponent>
-            <DashboardInfoComponent name="Last Activity" value="13.12.2024, 07:36" icon="bi bi-clock"></DashboardInfoComponent>
+            <DashboardInfoComponent name="position" :value="`Lat: ${this.camera.lat}, Lng: ${this.camera.lng}`" icon="bi bi-pin-map" ></DashboardInfoComponent>
+            <DashboardInfoComponent name="Battery" :value="this.camera.battery" icon="bi bi-battery-half"></DashboardInfoComponent>
+            <DashboardInfoComponent name="Last Synchronization" :value="formattedLastSync" icon="bi bi-cloud-upload"></DashboardInfoComponent>
+            <DashboardInfoComponent name="Last Activity" :value="formattedLastPictureDate" icon="bi bi-clock"></DashboardInfoComponent>
           </div>
         </div>
       </div>
@@ -86,7 +86,14 @@ export default {
       }
     }
   },
-
+  computed: {
+    formattedLastPictureDate() {
+      return new Date(this.camera.lastPictureDate).toLocaleString();
+    },
+    formattedLastSync(){
+      return new Date(this.camera.lastSync).toLocaleString();
+    }
+  }
 }
 </script>
 
