@@ -69,7 +69,7 @@ Successful Response:
 
 **Endpoint:**
 
-POST /api/auth/local/login
+POST /api/auth/local
 
 **Description:**
 
