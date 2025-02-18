@@ -101,6 +101,14 @@
                   label="Username"
                   class="w-100 pb-3 pt-1"
                   v-model="input_username"
+                  v-if="register"
+              >
+              </md-outlined-text-field>
+              <md-outlined-text-field
+                  type="email"
+                  label="email"
+                  class="w-100 pb-3 pt-1"
+                  v-model="input_email"
               >
               </md-outlined-text-field>
               <md-outlined-text-field
@@ -110,20 +118,13 @@
                   v-model="input_password"
               >
               </md-outlined-text-field>
-              <md-outlined-text-field
-                  type="email"
-                  label="email"
-                  class="w-100 pb-3 pt-1"
-                  v-model="input_email"
-                  v-if="register"
-              >
-              </md-outlined-text-field>
 
             </form>
             <div slot="actions">
               <md-text-button form="form-id" @click="this.register = !this.register" v-if="!register">New Here? Register</md-text-button>
               <md-text-button form="form-id" @click="this.register = !this.register" v-if="register">Log in instead</md-text-button>
-              <md-text-button form="form-id" @click="completeLoginWithCameras(this.input_username, this.input_password)">Continue</md-text-button>
+              <md-text-button form="form-id" @click="this.completeLoginWithCameras(this.input_email, this.input_password)" v-if="!this.register">Continue</md-text-button>
+              <md-text-button form="form-id" @click="this.registerWithCameras(this.input_email, this.input_password, this.input_username)" v-if="this.register">Register</md-text-button>
               <md-text-button form="form-id" @click="this.opened3 = false">Cancel</md-text-button>
             </div>
           </md-dialog>
@@ -142,6 +143,16 @@ import router from "@/router";
 import axios from "axios";
 import {provide} from "vue";
 
+// Add a request interceptor
+axios.interceptors.request.use(function (config) {
+  // Log the request to the console
+  console.log('Request:', config);
+  return config;
+}, function (error) {
+  // Do something with request error
+  return Promise.reject(error);
+});
+
 export default {
   name: 'App',
   data() {
@@ -151,7 +162,7 @@ export default {
       input_email: "",
       activeRoute: '/',
       opened: false,
-      serverIP: "http://localhost:5000",
+      serverIP: "https://strapi.wildeye.tech",
       cameraObjects: [],
       session: Cookies.get('session') || "0", // Get session from cookie or default to "0"
       opened2: false,
@@ -175,46 +186,89 @@ export default {
     },
     getCameraObjectsFromAPI() {
       var that = this
-      console.log(this.serverIP + " : " + this.session)
+      console.log("get cameras from api : "+this.serverIP + " : " + this.session)
       // provide('session', this.session);
       // get camera objects from API
-      axios.post(this.serverIP + '/cameras',
+      axios.get(this.serverIP + '/api/wild-cameras'
+      ).catch(function (error) {
+        console.log(error);
+      }).then(function (response) {
+        console.log(response);
+        that.cameraObjects.push(...response.data.data);
+      });
+    },
+    login(email, password) {
+      var that = this;
+      console.log("Logging in with: "+email+" : "+password);
+      return axios.post(this.serverIP + '/api/auth/local', {
+        password: password,
+        identifier: email
+      }).catch(function (error) {
+        console.log(error);
+      }).then((response) => {
+        console.log(response);
+        if(response){
+          if ( response.data.jwt !== false){
+            // wenn es hwt ist, sonst session genannt
+            this.session = response.data.jwt;
+            Cookies.set('session', this.session); // Save session as a cookie
+            axios.defaults.headers.common['Authorization'] = `Bearer ${this.session}`;
+            console.log("Login complete, session: "+that.session);
+            this.opened3 = false;
+            return true
+          }
+          else{
+            console.log("Login failed");
+            alert("Login failed: "+response.data.error);
+            return false
+          }
+        }
+        else{
+          return false;
+        }
+
+      });
+    },
+    completeLoginWithCameras(email, password){
+      this.resetData();
+      this.login(email, password).then((loginSuccess) => {
+        if (loginSuccess) {
+          this.getCameraObjectsFromAPI();
+        }
+      });
+    },
+    registerFunc(email, password, username){
+      var that = this;
+      console.log("Registering with: "+email+" : "+password + " : "+username);
+      return axios.post(this.serverIP + '/api/auth/local/register',
           {
-            session: this.session
+            username: username,
+            email: email,
+            password: password
           }
       ).catch(function (error) {
         console.log(error);
       }).then(function (response) {
         console.log(response);
-        that.cameraObjects.push(...response.data.cameras);
-      });
-    },
-    login(username, password) {
-      var that = this;
-      return axios.post(this.serverIP + '/login', {
-        username: username,
-        password: password
-      }).catch(function (error) {
-        console.log(error);
-      }).then((response) => {
-        console.log(response);
-        if (response.data.success !== false){
-          this.session = response.data.session;
-          Cookies.set('session', this.session); // Save session as a cookie
-          console.log("Login complete, session: "+that.session);
-          this.opened3 = false;
-          return true
-        }
-        else{
-          console.log("Login failed");
-          alert("Login failed: "+response.data.error);
-          return false
+        if(response){
+          if (response.data.jwt){
+            // wenn es hwt ist, sonst session genannt
+            that.session = response.data.jwt;
+            Cookies.set('session', that.session); // Save session as a cookie
+            axios.defaults.headers.common['Authorization'] = `Bearer ${that.session}`;
+            console.log("Register complete, session: "+that.session);
+            that.opened3 = false;
+          }
+          else{
+            console.log("Register failed");
+            alert("Register failed: "+response.data.error);
+          }
         }
       });
     },
-    completeLoginWithCameras(username, password){
+    registerWithCameras(email, password, username){
       this.resetData();
-      this.login(username, password).then((loginSuccess) => {
+      this.registerFunc(email, password, username).then((loginSuccess) => {
         if (loginSuccess) {
           this.getCameraObjectsFromAPI();
         }
@@ -231,13 +285,14 @@ export default {
   },
   mounted() {
     // check if session is valid
-    if (this.session!== "0"){
+    if (this.session!= "0"){
       // get confirmation from API, if false, reset session
-      axios.post(this.serverIP + '/checkSession',
+      /*axios.post(this.serverIP + '/checkSession',
           {
             session: this.session
           }
       ).catch(function (error) {
+        console.log("Error in checkSession")
         console.log(error);
       }).then( (response) => {
         console.log(response);
@@ -246,15 +301,23 @@ export default {
           Cookies.set('session', this.session); // Save session as a cookie
           this.opened3 = true;
         }
-        else
+        else{
+          axios.defaults.headers.common['Authorization'] = `Bearer ${this.session}`;
           this.getCameraObjectsFromAPI();
+        }
       });
-      return;
+      return;*/
     }
-    if (this.session === "0")
+    if (this.session == "0"){
       this.opened3 = true;
-    else
+    }
+
+    else{
+      axios.defaults.headers.common['Authorization'] = `Bearer ${this.session}`;
       this.getCameraObjectsFromAPI();
+    }
+
+
   },
   computed: {
     session_computed() {
