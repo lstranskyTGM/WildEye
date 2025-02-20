@@ -89,6 +89,7 @@ class CameraModule(BaseModule):
             self.camera.start_recording(file_path)
             time.sleep(duration)
             self.camera.stop_recording()
+            self.camera.stop()
             return file_path
         except Exception as e:
             print(f"Error recording video: {e}")
