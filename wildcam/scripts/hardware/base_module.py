@@ -1,8 +1,9 @@
 import functools
 from abc import ABC, abstractmethod
+from typing import Any, Callable
 
 
-def requires_initialization(method):
+def requires_initialization(method: Callable) -> Callable:
     """
     Decorator to ensure a module is initialized before calling a method.
     """
@@ -23,14 +24,14 @@ class BaseModule(ABC):
         _initialized (bool): Flag indicating if the module is initialized.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initializes base attributes but does not initialize hardware.
         """
         self._initialized = False
 
     @abstractmethod
-    def initialize(self):
+    def initialize(self) -> None:
         """
         Perform all necessary hardware initialization.
         Must be called before using the module.
@@ -38,7 +39,7 @@ class BaseModule(ABC):
         pass
 
     @abstractmethod
-    def read_data(self):
+    def read_data(self) -> Any:
         """
         Retrieve data from the hardware module.
         
@@ -51,7 +52,7 @@ class BaseModule(ABC):
         pass
 
     @abstractmethod
-    def cleanup(self):
+    def cleanup(self) -> None:
         """
         Perform cleanup operations when shutting down the module (e.g., release resources).
         """
