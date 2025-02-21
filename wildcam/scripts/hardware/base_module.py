@@ -1,6 +1,6 @@
 import functools
 from abc import ABC, abstractmethod
-from typing import Any, Callable
+from typing import Callable
 
 
 def requires_initialization(method: Callable) -> Callable:
@@ -22,6 +22,10 @@ class BaseModule(ABC):
     
     Attributes:
         _initialized (bool): Flag indicating if the module is initialized.
+        
+    Methods:
+        initialize(): Performs all necessary hardware initialization.
+        cleanup(): Releases resources and performs cleanup operations.
     """
 
     def __init__(self) -> None:
@@ -35,19 +39,6 @@ class BaseModule(ABC):
         """
         Perform all necessary hardware initialization.
         Must be called before using the module.
-        """
-        pass
-
-    @abstractmethod
-    def read_data(self) -> Any:
-        """
-        Retrieve data from the hardware module.
-        
-        Returns:
-            Any: Data retrieved from the module (e.g., sensor readings).
-        
-        Raises:
-            RuntimeError: If the module is not initialized.
         """
         pass
 
