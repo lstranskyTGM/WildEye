@@ -12,6 +12,14 @@ class CameraModule(BaseModule):
     
     Attributes:
         camera (Picamera2): The camera object for capturing images or recording videos.
+        
+    Methods:
+        initialize(): Initializes the camera module.
+        configure_camera(mode): Configures the camera for image or video capture.
+        capture_image(): Captures an image and saves it with a timestamp.
+        record_video(duration): Records a video and saves it with a timestamp.
+        generate_file_path(file_type, base_dir): Generates a file path based on the type.
+        cleanup(): Releases camera resources when shutting down.
     """
 
     def __init__(self) -> None:
@@ -120,9 +128,6 @@ class CameraModule(BaseModule):
         Release camera resources when shutting down.
         """
         if self.camera:
-            try:
-                self.camera.close()
-            except Exception as e:
-                print(f"Warning: Error closing camera: {e}")
+            self.camera.close()
             self.camera = None
         self._initialized = False
