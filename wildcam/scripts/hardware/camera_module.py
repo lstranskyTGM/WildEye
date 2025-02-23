@@ -2,7 +2,7 @@ from picamera2 import Picamera2
 import time
 import os
 from datetime import datetime
-from .base_module import BaseModule, requires_initialization
+from .base_module import BaseModule, requires_hardware_setup
 
 
 class CameraModule(BaseModule):
@@ -14,7 +14,7 @@ class CameraModule(BaseModule):
         camera (Picamera2): The camera object for capturing images or recording videos.
         
     Methods:
-        initialize(): Initializes the camera module.
+        hardware_setup(): Sets up the camera module.
         configure_camera(mode): Configures the camera for image or video capture.
         capture_image(): Captures an image and saves it with a timestamp.
         record_video(duration): Records a video and saves it with a timestamp.
@@ -23,16 +23,16 @@ class CameraModule(BaseModule):
     """
 
     def __init__(self) -> None:
-        """Initializes base attributes but does not start the camera yet."""
+        """Initializes base attributes."""
         super().__init__()
         self.camera = None
         
-    def initialize(self) -> None:
-        """Initialize the camera module."""
+    def hardware_setup(self) -> None:
+        """Sets up the camera module."""
         self.camera = Picamera2()
         self._initialized = True
 
-    @requires_initialization
+    @requires_hardware_setup
     def configure_camera(self, mode: str) -> None:
         """
         Configures the camera for the specified mode.
@@ -48,7 +48,7 @@ class CameraModule(BaseModule):
             raise ValueError("Invalid mode. Choose 'image' or 'video'.")
         self.camera.configure(self.config)
 
-    @requires_initialization
+    @requires_hardware_setup
     def capture_image(self) -> str | None:
         """
         Capture an image and save it to the specified file path.
@@ -72,7 +72,7 @@ class CameraModule(BaseModule):
             print(f"Error capturing image: {e}")
             return None
 
-    @requires_initialization
+    @requires_hardware_setup
     def record_video(self, duration: int = 5) -> str | None:
         """
         Record a video and save it to the specified file path.
