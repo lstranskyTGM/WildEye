@@ -62,7 +62,7 @@ class CameraModule(BaseModule):
         try:
             self.configure_camera("image")
             self.camera.start()
-            file_path = self.generate_file_path("image")
+            file_path = self._generate_file_path("image")
             os.makedirs(os.path.dirname(file_path), exist_ok=True)
             #time.sleep(2)
             self.camera.capture_file(file_path)
@@ -87,7 +87,7 @@ class CameraModule(BaseModule):
         try:
             self.configure_camera("video")
             self.camera.start()
-            file_path = self.generate_file_path("video")
+            file_path = self._generate_file_path("video")
             os.makedirs(os.path.dirname(file_path), exist_ok=True)
             #time.sleep(2)
             self.camera.start_recording(file_path)
@@ -99,7 +99,7 @@ class CameraModule(BaseModule):
             print(f"Error recording video: {e}")
             return None
         
-    def generate_file_path(self, file_type: str, base_dir: str = "../media/upload_queue") -> str:
+    def _generate_file_path(self, file_type: str, base_dir: str = "../media/upload_queue") -> str:
         """
         Generate a full file path for the specified file type.
         
