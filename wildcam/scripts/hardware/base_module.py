@@ -4,9 +4,7 @@ from typing import Callable
 
 
 def requires_initialization(method: Callable) -> Callable:
-    """
-    Decorator to ensure a module is initialized before calling a method.
-    """
+    """Decorator to ensure a module is initialized before calling a method."""
     @functools.wraps(method)
     def wrapper(self, *args, **kwargs):
         if not self._initialized:
@@ -29,22 +27,15 @@ class BaseModule(ABC):
     """
 
     def __init__(self) -> None:
-        """
-        Initializes base attributes but does not initialize hardware.
-        """
+        """Initializes base attributes but does not initialize hardware."""
         self._initialized = False
 
     @abstractmethod
     def initialize(self) -> None:
-        """
-        Perform all necessary hardware initialization.
-        Must be called before using the module.
-        """
+        """Perform all necessary hardware initialization."""
         pass
 
     @abstractmethod
     def cleanup(self) -> None:
-        """
-        Perform cleanup operations when shutting down the module (e.g., release resources).
-        """
+        """Perform cleanup operations when shutting down the module (e.g., release resources)."""
         pass

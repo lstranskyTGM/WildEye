@@ -23,16 +23,12 @@ class CameraModule(BaseModule):
     """
 
     def __init__(self) -> None:
-        """
-        Initializes base attributes but does not start the camera yet.
-        """
+        """Initializes base attributes but does not start the camera yet."""
         super().__init__()
         self.camera = None
         
     def initialize(self) -> None:
-        """
-        Initialize the camera module.
-        """
+        """Initialize the camera module."""
         self.camera = Picamera2()
         self._initialized = True
 
@@ -124,9 +120,7 @@ class CameraModule(BaseModule):
             raise ValueError("Invalid file type. Choose 'image' or 'video'.")
         
     def cleanup(self) -> None:
-        """
-        Release camera resources when shutting down.
-        """
+        """Release camera resources when shutting down."""
         if self.camera:
             self.camera.close()
             self.camera = None

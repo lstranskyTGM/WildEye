@@ -17,18 +17,12 @@ class PIRSensor(BaseModule):
     """
 
     def __init__(self, pin=17) -> None:
-        """
-        Initializes base attributes but does not configure GPIO yet.
-        """
+        """Initializes base attributes but does not configure GPIO yet."""
         super().__init__()
         self.pin = pin
     
     def initialize(self) -> None:
-        """
-        Initialize the PIR sensor:
-        - Set up GPIO pins for motion detection input.
-        - Configure interrupts for non-blocking event detection.
-        """
+        """Initialize the PIR sensor."""
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         self._initialized = True
@@ -46,9 +40,7 @@ class PIRSensor(BaseModule):
         print(f"Motion detection interrupt added on GPIO pin {self.pin}.")
 
     def cleanup(self) -> None:
-        """
-        Cleanup GPIO resources.
-        """
+        """Cleanup GPIO resources."""
         if GPIO.event_detected(self.pin):
             GPIO.remove_event_detect(self.pin)
         GPIO.cleanup(self.pin)
