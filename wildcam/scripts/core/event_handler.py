@@ -7,6 +7,17 @@ class EventHandler:
     """
     Handles system events for the WildCam.
     Processes motion detection, update cycles, and config mode activation.
+    
+    Attributes:
+        _record_type (Literal["image", "video"]): The type of media to record (image or video).
+        camera (CameraModule): The camera module for capturing media.
+        pir_sensor (PIRSensor): The PIR sensor module for motion detection.
+    
+    Methods:
+        set_interrupts(state): Enable or disable motion detection interrupts.
+        handle_motion_event(): Handle motion detection event and trigger media capture.
+        handle_update_cycle(): Handle the update cycle event.
+        handle_config_mode(): Handle the configuration mode activation event
     """
 
     def __init__(self) -> None:
@@ -16,7 +27,12 @@ class EventHandler:
         self.pir_sensor = PIRSensor()
 
     def set_interrupts(self, state: bool) -> None:
-        """Enable or disable motion detection interrupts."""
+        """
+        Enable or disable motion detection interrupts.
+        
+        Args:
+            state (bool): True to enable interrupts, False to disable.
+        """
         if state:
             self.pir_sensor.set_interrupt(self.handle_motion_event)
         else:
@@ -44,9 +60,11 @@ class EventHandler:
         else:
             print(f"Error: {self._record_type.capitalize()} capture failed.")
 
-    # TODO: Implement methods for update cycles and configuration mode activation
-    # def handle_update_cycle(self):
-    #     pass
+    # TODO: Implement the following methods
+    def handle_update_cycle(self) -> None:
+        """Handle the update cycle event."""
+        pass
 
-    # def handle_config_mode(self):
-    #     pass
+    def handle_config_mode(self) -> None:
+        """Handle the configuration mode activation event."""
+        pass
