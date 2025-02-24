@@ -41,14 +41,14 @@ export default {
           title:"Prototyp fertig",
           desc:"Es wurde der erste Prototyp der Wildkamera erstellt. Dieser kann aufnahmen tätigen, welche auf der Webseite einsehbar sind.",
           pic: "milestone3.svg",
-          progress: "75%",
+          progress: "100%",
           date: "27.01.2025"
         },
         {
           title:"Testen fertig",
           desc:"Der Prototyp der Wildkamera wurde auf Funktionalität getestet und ist bereit für den Einsatz.",
           pic: "milestone4.svg",
-          progress: "25%",
+          progress: "50%",
           date: "02.03.2025"
         }
       ]

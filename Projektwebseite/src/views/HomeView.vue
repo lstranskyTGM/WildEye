@@ -37,7 +37,7 @@ export default {
         {
           name: "Felix Aust",
           c: "5AHIT",
-          topic: "Realisierung einer sichere Schnittstelle zwischen Kamera und Webseite, inklusive eines Datenbanksystems zur persistenten Speicherung; Entwurf eines ansprechenden und wiedererkennbaren Logos.",
+          topic: "Realisierung einer sicheren Schnittstelle zwischen Kamera und Webseite, inklusive eines Datenbanksystems zur persistenten Speicherung; Entwurf eines ansprechenden und wiedererkennbaren Logos.",
           pic: "new_2.jpg",
           email: "faust@student.tgm.ac.at"
         },

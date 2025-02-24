@@ -9,7 +9,7 @@
               <p v-if="images.length===0">No Images to display.</p>
               <div class="grid">
                 <div class="grid-item " v-for="(img, index) in images" :key="index">
-                  <SinglePictureComponent :id="img.id" :url="img.url" :alt="img.alt" :title="img.title" :date="img.date" :hearted="img.hearted" :tags="img.tags" :cameraName="img.cameraName" :AIurl="img.url"  v-on:update_hearted="updateHearted"></SinglePictureComponent>
+                  <SinglePictureComponent :id="img.id" :url="img.original.url" :alt="img.alternativeText" :title="img.titel" :date="this.formatDate(img.createdAt)" :hearted="img.hearted" :tags="img.tags" :cameraName="img.cameraName" :AIurl="img.analyzed.url"  v-on:update_hearted="updateHearted"></SinglePictureComponent>
                 </div>
               </div>
               <div class="fab-container">
@@ -133,13 +133,24 @@ export default defineComponent({
       // The changes are already in the settings object.
     },
     getImages(){
+
+      /*
+      * var that = this
+      console.log("get cameras from api : "+this.serverIP + " : " + this.session)
+      // provide('session', this.session);
+      // get camera objects from API
+      axios.get(this.serverIP + '/api/wild-cameras'
+      ).catch(function (error) {
+        console.log(error);
+      }).then(function (response) {
+        console.log(response);
+        that.cameraObjects.push(...response.data.data);
+      });
+      * */
+
       var that = this
-      axios.post(this.serverIP+'/imageSearch',
-          {
-            session: this.session,
-            imageSearchSettings: this.settings,
-            page: this.page
-          }
+      console.log("get images from api : "+this.serverIP + " : " + this.session)
+      axios.get(this.serverIP+'/api/wild-cameras?populate[pictures][populate]=*'
       ).catch(function (error) {
         console.log(error);
       }).then(function (response) {
@@ -147,10 +158,18 @@ export default defineComponent({
         if(response){
           // clear images
           that.images = [];
-          that.images.push(...response.data);
+          const cameras = response.data.data
+          // each entry has an array `images`, add that to the images array
+          cameras.forEach(camera => {
+            that.images.push(...camera.pictures);
+          });
+
         }
 
       });
+    },
+    formatDate(date){
+      return new Date(date).toLocaleDateString();
     }
   },
   data(){
