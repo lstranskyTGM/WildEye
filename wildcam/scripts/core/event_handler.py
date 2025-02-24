@@ -11,6 +11,7 @@ class EventHandler:
 
     def __init__(self) -> None:
         """Initialize EventHandler with required modules."""
+        self._record_type: Literal["image", "video"] = "image"  # Temporary fixed value
         self.camera = CameraModule()
         self.pir_sensor = PIRSensor()
 
@@ -21,28 +22,27 @@ class EventHandler:
         else:
             self.pir_sensor.cleanup()
 
-    def handle_motion_event(self, channel: int, record_type: Literal["image", "video"]) -> None:
+    def handle_motion_event(self, channel: int) -> None:
         """
         Handle motion detection event and trigger media capture.
         
         Args:
             channel (int): The GPIO channel where the event occurred.
-            record_type (Literal["image", "video"]): Type of media to capture.
         """
         print("Motion detected! Capturing media...")
 
-        if record_type == "image":
+        if self._record_type == "image":
             file_path = self.camera.capture_image()
-        elif record_type == "video":
+        elif self._record_type == "video":
             file_path = self.camera.record_video(10)
         else:
-            print(f"Invalid record_type '{record_type}' passed to handle_motion_event.")
+            print(f"Invalid record_type '{self._record_type}' passed to handle_motion_event.")
             return
 
         if file_path:
-            print(f"{record_type.capitalize()} saved at {file_path}")
+            print(f"{self._record_type.capitalize()} saved at {file_path}")
         else:
-            print(f"Error: {record_type.capitalize()} capture failed.")
+            print(f"Error: {self._record_type.capitalize()} capture failed.")
 
     # TODO: Implement methods for update cycles and configuration mode activation
     # def handle_update_cycle(self):
