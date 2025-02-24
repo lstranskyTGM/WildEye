@@ -13,7 +13,7 @@ class EventHandler:
         """Initialize EventHandler with required modules."""
         self.camera = CameraModule()
         self.pir_sensor = PIRSensor()
-        
+
     def set_interrupts(self, state: bool) -> None:
         """Enable or disable motion detection interrupts."""
         if state:
@@ -21,11 +21,12 @@ class EventHandler:
         else:
             self.pir_sensor.cleanup()
 
-    def handle_motion_event(self, record_type: Literal["image", "video"]) -> None:
+    def handle_motion_event(self, channel: int, record_type: Literal["image", "video"]) -> None:
         """
         Handle motion detection event and trigger media capture.
         
         Args:
+            channel (int): The GPIO channel where the event occurred.
             record_type (Literal["image", "video"]): Type of media to capture.
         """
         print("Motion detected! Capturing media...")
