@@ -64,9 +64,9 @@
       <div class="col-11 ms-auto me-0 edge_color p-0" style="background-color: var(--md-sys-color-surface-container-high)">
         <div class="bg-white me-0 ms-0 pe-0 ps-0 w-100 h-100 rounded rounded-5" style="">
           <div class="px-3 h-100 w-100 rounded rounded-3" style="background-color: var(--md-sys-color-surface-container)">
-            <router-view v-on:login="this.opened2 = true" v-on:logout="resetData" />
+            <router-view v-on:login="this.opened3 = true"  />
           </div>
-          <md-dialog :open="this.opened2" v-on:close="this.opened2 = false">
+<!--          <md-dialog :open="this.opened2" v-on:close="this.opened2 = false">
             <div slot="headline">
               Login
             </div>
@@ -89,7 +89,7 @@
             <div slot="actions">
               <md-text-button form="form-id" @click="this.opened2 = false; completeLoginWithCameras(this.input_username, this.input_password)">Ok</md-text-button>
             </div>
-          </md-dialog>
+          </md-dialog>-->
           <md-dialog :open="this.opened3" v-on:close="this.opened3 = false">
             <div slot="headline">
               Welcome to WildEye!
@@ -233,7 +233,8 @@ export default {
       this.resetData();
       this.login(email, password).then((loginSuccess) => {
         if (loginSuccess) {
-          this.getCameraObjectsFromAPI();
+          location.reload();
+          // this.getCameraObjectsFromAPI();
         }
       });
     },
@@ -270,7 +271,8 @@ export default {
       this.resetData();
       this.registerFunc(email, password, username).then((loginSuccess) => {
         if (loginSuccess) {
-          this.getCameraObjectsFromAPI();
+          //this.getCameraObjectsFromAPI();
+          location.reload();
         }
       });
     },

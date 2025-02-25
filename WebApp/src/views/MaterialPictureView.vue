@@ -9,7 +9,7 @@
               <p v-if="images.length===0">No Images to display.</p>
               <div class="grid">
                 <div class="grid-item " v-for="(img, index) in images" :key="index">
-                  <SinglePictureComponent :id="img.id" :url="img.original.url" :alt="img.alternativeText" :title="img.titel" :date="this.formatDate(img.createdAt)" :hearted="img.hearted" :tags="img.tags" :cameraName="img.cameraName" :AIurl="img.analyzed.url"  v-on:update_hearted="updateHearted"></SinglePictureComponent>
+                  <SinglePictureComponent :id="img.id" :url="img.original.url" :alt="img.alternativeText" :title="img.titel" :date="this.formatDate(img.createdAt)" :hearted="img.hearted" :tags="img.tags" :cameraName="img.cameraName" :AIurl="img.analyzed.url"  v-on:update_hearted="updateHearted" :showAI="this.showAI"></SinglePictureComponent>
                 </div>
               </div>
               <div class="fab-container">
@@ -27,10 +27,20 @@
         </div>
         <div class="card-footer border border-0 d-flex justify-content-between m-2 overflow-x-auto text-nowrap" style="min-height: 50px; background-color: white; ">
           <p class="fs-2 text-center justify-content-start p-0 m-0">Page: {{this.page}}</p>
-          <md-elevated-button @click="openSettingsDialog">
-            Settings (Popup)
-            <i class="bi bi-search" slot="icon"></i>
-          </md-elevated-button>
+          <div>
+            <label class="pe-2 pt-2">
+              Show AI analysis
+              <md-switch :checked="this.showAI" @click="this.showAI = !this.showAI"></md-switch>
+
+            </label>
+
+            <md-elevated-button @click="openSettingsDialog">
+              Settings (Popup)
+              <i class="bi bi-search" slot="icon"></i>
+            </md-elevated-button>
+          </div>
+
+
           <md-dialog :open="this.opened" v-on:close="this.onCloseSettingsDialog" class="" style="min-width: 40%; max-height: 80%">
             <div slot="headline">
               Image search settings
@@ -81,7 +91,6 @@ import SinglePictureComponent from "@/components/SinglePictureComponent.vue";
 import AdvancedSettingsComponent from "@/components/AdvancedSettingsComponent.vue";
 import axios from "axios";
 import Cookies from "js-cookie";
-
 export default defineComponent({
   name: 'MaterialPictureView',
   inject: ['serverIP'],
@@ -181,7 +190,8 @@ export default defineComponent({
       endDate: "",
       images: [],
       page: 0,
-      session: Cookies.get('session') || "0"
+      session: Cookies.get('session') || "0",
+      showAI: true
     }
   },
   mounted(){

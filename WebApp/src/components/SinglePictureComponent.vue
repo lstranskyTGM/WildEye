@@ -2,25 +2,7 @@
   <div>
     <div class="card h-100 w-100 card-background shadow-sm p-0 m-0">
       <div class="position-relative">
-        <div class="carousel slide card-img-top" :id="`carousel${url}`">
-          <div class="carousel-inner " style="aspect-ratio: 16 / 9 !important;">
-            <div class="carousel-item active " style="aspect-ratio: 16 / 9 !important;">
-              <img class=" rounded rounded-bottom-3 d-block w-100" :src="`${serverIP}${url}`" :alt="alt" @click="this.opened = !this.opened">
-            </div>
-            <div class="carousel-item ratio-16x9" style="aspect-ratio: 16 / 9 !important;">
-              <img class=" rounded rounded-bottom-3 d-block w-100" :src="`${serverIP}${AIurl}`" :alt="alt" @click="this.opened = !this.opened">
-            </div>
-          </div>
-          <button class="carousel-control-prev" type="button" :data-bs-target="`#carousel${url}`" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" :data-bs-target="`#carousel${url}`" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-
-        </div>
+        <img class=" rounded rounded-bottom-3 d-block w-100" :src="`${serverIP}${showAI? AIurl : url}`" :alt="alt" @click="this.opened = !this.opened">
         <div @click="toggleHeart" class="heart-icon z-3">
           <i :class="{'bi bi-heart-fill text-danger': hearted, 'bi bi-heart': !hearted}" ></i>
         </div>
@@ -43,25 +25,7 @@
       </div>
       <md-dialog :open="this.opened" v-on:close="this.opened = false" style="width: 50%;">
         <div slot="headline" class="mb-0 pb-0" style="max-height: 60%!important;">
-          <div class="carousel slide w-100" :id="`carouselPopup${url}`">
-            <div class="carousel-inner overflow-scroll" style="max-height: 50vh !important;">
-              <div class="carousel-item active">
-                <img style="min-width: 100% !important;" class=" rounded rounded-bottom-3 d-block w-100 img-fluid" :src="`${serverIP}${url}`" :alt="alt"  >
-              </div>
-              <div class="carousel-item">
-                <img style="min-width: 100% !important;" class=" rounded rounded-bottom-3 d-block w-100 img-fluid" :src="`${serverIP}${AIurl}`" :alt="alt">
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" :data-bs-target="`#carouselPopup${url}`" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" :data-bs-target="`#carouselPopup${url}`"  data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-
-          </div>
+          <img style="min-width: 100% !important;" class=" rounded rounded-bottom-3 d-block w-100 img-fluid" :src="`${serverIP}${showAI? AIurl : url}`" :alt="alt"  >
         </div>
         <div slot="content" id="content" class="row mt-2 pt-0" style="max-height: 20vh">
           <div class="d-flex justify-content-between col-12 align-items-center">
@@ -104,7 +68,8 @@ export default {
     date: String,
     hearted: Boolean,
     cameraName: String,
-    tags: Array
+    tags: Array,
+    showAI: Boolean
   },
   setup() {
   },

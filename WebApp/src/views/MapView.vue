@@ -10,7 +10,7 @@
 
           ></l-tile-layer>
           <div v-for="camera in this.cameraPositions">
-            <l-marker :lat-lng="latLng(camera.lat, camera.lng)">
+            <l-marker :lat-lng="latLng(camera.lat ?? 0, camera.lng ?? 0)">
               <l-popup :options="popupOptions" class="custom-popup ratio ratio-16x9">
                 <MarkerPopupMaterialComponent :camera="camera" v-on:update_hearted="updateHearted"></MarkerPopupMaterialComponent>
               </l-popup>
@@ -25,7 +25,7 @@
             </l-marker>
           </div>
           <div v-for="i in this.POIs" v-show="notizen">
-            <l-circle-marker :lat-lng="latLng(i.lat, i.lng)" :radius="10" >
+            <l-circle-marker :lat-lng="latLng(i.lat ?? 0, i.lng ?? 0)" :radius="10" >
               <!--Also add a Popup for each custom POI-->
             </l-circle-marker>
           </div>
@@ -76,7 +76,8 @@ export default {
       name: 'MapView',
       cameraPositions: this.cameraObjects,
       map: null,
-      centerStart: [48.4262157636489, 16.61251026756385],
+      // sets default value if null
+      centerStart: [this.cameraObjects[0]?.lat ?? 0, this.cameraObjects[0]?.lng ?? 0],
       marker: [0,0],
       markerOptions: {opacity: 0, width:"1px", height:"1px"},
       zoom: 17,

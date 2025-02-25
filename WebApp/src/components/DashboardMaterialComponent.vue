@@ -2,14 +2,14 @@
   <div class="card h-25 rounded rounded-3" style="width: 97%">
     <div class="row g-0 h-100 container_color rounded rounded-3" style="min-height: 100%">
       <div class="container_color rounded rounded-3" style="min-height: 100%; width: 23%; height: 25%">
-        <l-map ref="map" class="l-map rounded rounded-3 container_color" v-model:zoom="zoom" :center="[camera.lat, camera.lng]" :options="mapOptions" @click="$router.push('/map')">
+        <l-map ref="map" class="l-map rounded rounded-3 container_color" v-model:zoom="zoom" :center="this.centerStart" :options="mapOptions" @click="$router.push('/map')">
           <l-tile-layer
               :url="'https://tile.openstreetmap.org/{z}/{x}/{y}.png'"
               layer-type="base"
               name="OpenStreetMap"
               class="container_color"
           ></l-tile-layer>
-          <l-marker :lat-lng="latLng(camera.lat, camera.lng)"></l-marker>
+          <l-marker :lat-lng="latLng(camera.lat ?? 0, camera.lng ?? 0)"></l-marker>
         </l-map>
       </div>
       <div class="h-100 position-relative" style="max-height: 100% !important; width: 77%;">
@@ -23,7 +23,7 @@
         </div>
         <div class="card-body row overflow-hidden" style="height: 70%">
           <div class="dashboard-grid overflow-y-auto" style="height: 100%">
-            <DashboardInfoComponent name="position" :value="`Lat: ${this.camera.lat}, Lng: ${this.camera.lng}`" icon="bi bi-pin-map" ></DashboardInfoComponent>
+            <DashboardInfoComponent name="position" :value="`Lat: ${this.camera.lat ?? 0}, Lng: ${this.camera.lng ?? 0}`" icon="bi bi-pin-map" ></DashboardInfoComponent>
             <DashboardInfoComponent name="Battery" :value="this.camera.battery" icon="bi bi-battery-half"></DashboardInfoComponent>
             <DashboardInfoComponent name="Last Synchronization" :value="formattedLastSync" icon="bi bi-cloud-upload"></DashboardInfoComponent>
             <DashboardInfoComponent name="Last Activity" :value="formattedLastPictureDate" icon="bi bi-clock"></DashboardInfoComponent>
@@ -72,8 +72,8 @@ export default {
   data() {
     return {
       map: null,
-      lat: 48.31561796122741,
-      lng: 16.58404319905392,
+      // sets default value if null
+      centerStart: [this.camera.lat ?? 0, this.camera.lng ?? 0],
       zoom: 17,
       mapOptions: {
         zoomControl: false,
@@ -93,6 +93,9 @@ export default {
     formattedLastSync(){
       return new Date(this.camera.lastSync).toLocaleString();
     }
+  },
+  mounted() {
+    console.log(this.centerStart)
   }
 }
 </script>

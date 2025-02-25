@@ -9,7 +9,7 @@
             <p class="position-absolute text-end pe-3 " style="top: 13%">Apply all changes</p>-->
 <!--            <md-elevated-button class="me-2" style="max-width: fit-content; max-height: 50%">Apply changes</md-elevated-button>-->
             <div style="max-height: 50%; width: fit-content">
-              <md-elevated-button @click="logout; $emit('logout')" class="mx-2" style="max-height: 50%; width: fit-content">
+              <md-elevated-button @click="logout" class="mx-2" style="max-height: 50%; width: fit-content">
                 Logout
                 <svg slot="icon" viewBox="0 0 48 48"><path d="M9 42q-1.2 0-2.1-.9Q6 40.2 6 39V9q0-1.2.9-2.1Q7.8 6 9 6h13.95v3H9v30h30V25.05h3V39q0 1.2-.9 2.1-.9.9-2.1.9Zm10.1-10.95L17 28.9 36.9 9H25.95V6H42v16.05h-3v-10.9Z"/></svg>
               </md-elevated-button>
@@ -25,8 +25,8 @@
           </div>
           <div class="card-body row m-0 p-0 pt-1" style="height: 70%; max-width: 100%">
             <div v-if="this.session!=='0'" class="dashboard-grid overflow-x-auto overflow-y-auto" style="height: 100%; max-width: 100%">
-              <SettingComponent name="Username" value="Snorlax0815" icon="bi bi-person-vcard" confirm_needed="false" popup="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
-              <SettingComponent name="E-Mail" value="Wil*****@gmail.com" icon="bi bi-envelope-at" confirm_needed="true" popup="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
+              <SettingComponent name="Username" :value="!accountData? `username`: accountData.username" icon="bi bi-person-vcard" confirm_needed="false" popup="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
+              <SettingComponent name="E-Mail" :value="!accountData? `email`: accountData.email" icon="bi bi-envelope-at" confirm_needed="true" popup="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
               <SettingComponent name="Password" value="************" icon="bi bi-asterisk" confirm_needed="true" popup="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
             </div>
 
@@ -71,6 +71,7 @@ export default{
     return{
       cameraComponentData: this.cameraObjects,
       session: Cookies.get('session'), // Access session from cookie
+      accountData: null
     }
   },
   methods: {
@@ -80,21 +81,35 @@ export default{
         console.log("No session to logout");
         return;
       }
-      axios.post(this.serverIP + '/logout', {
-        session: this.session
-      }).catch((error) => {
-        console.log(error);
-      }).then((response) => {
-        console.log(response);
-        Cookies.set('session', '0');
-        this.session = '0';
-        // :(((((((((((((((( no worky works
-        this.$router.push({ path: '/' });
-      });
+      Cookies.set('session', '0');
+      this.session = '0';
+      this.$router.push({name: 'dashboard'});
+      location.reload();
+    },
+    getAccountData(){
+      if (this.session == "0") {
+        console.log("No session available");
+        return;
+      }
+      axios.get(this.serverIP + '/api/users/me')
+          .then(response => {
+            if (response) {
+              console.log(response.data);
+              this.accountData = response.data;
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
     }
   },
   beforeMount() {
     document.adoptedStyleSheets = [typescaleStyles.styleSheet];
+  },
+  mounted() {
+    console.log("Account View mounted");
+    // get account data
+    this.getAccountData();
   },
   computed: {
 
