@@ -30,7 +30,7 @@ class CameraModule(BaseModule):
     def hardware_setup(self) -> None:
         """Sets up the camera module."""
         self.camera = Picamera2()
-        self._initialized = True
+        self._hardware_configured = True
 
     @requires_hardware_setup
     def configure_camera(self, mode: str) -> None:
@@ -124,4 +124,4 @@ class CameraModule(BaseModule):
         if self.camera:
             self.camera.close()
             self.camera = None
-        self._initialized = False
+        self._hardware_configured = False

@@ -25,7 +25,7 @@ class PIRSensor(BaseModule):
         """Sets up the PIR sensor."""
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        self._initialized = True
+        self._hardware_configured = True
         
     @requires_hardware_setup
     def set_interrupt(self, callback: Callable[[int], None], bouncetime: int = 300) -> None:
@@ -44,4 +44,4 @@ class PIRSensor(BaseModule):
         if GPIO.event_detected(self.pin):
             GPIO.remove_event_detect(self.pin)
         GPIO.cleanup(self.pin)
-        self._initialized = False
+        self._hardware_configured = False

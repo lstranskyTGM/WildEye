@@ -7,7 +7,7 @@ def requires_hardware_setup(method: Callable) -> Callable:
     """Decorator to ensure a module's hardware is set up before calling a method."""
     @functools.wraps(method)
     def wrapper(self, *args, **kwargs):
-        if not self._initialized:
+        if not self._hardware_configured:
             raise RuntimeError(f"{self.__class__.__name__} is not set up! Call hardware_setup() first.")
         return method(self, *args, **kwargs)
     return wrapper
@@ -16,23 +16,23 @@ def requires_hardware_setup(method: Callable) -> Callable:
 class BaseModule(ABC):
     """
     Abstract Base Class for all hardware modules.
-    Ensures consistent initialization and cleanup behavior.
+    Ensures consistent setup and cleanup procedures for all modules.
     
     Attributes:
-        _initialized (bool): Flag indicating if the module is initialized.
+        _hardware_configured (bool): Flag indicating whether hardware is set up.
         
     Methods:
-        hardware_setup(): Performs all necessary hardware initialization.
+        hardware_setup(): Performs all necessary hardware configurations.
         cleanup(): Releases resources and performs cleanup operations.
     """
 
     def __init__(self) -> None:
-        """Initializes base attributes but does not initialize hardware."""
-        self._initialized = False
+        """Initializes base attributes but does not configure hardware."""
+        self._hardware_configured = False
 
     @abstractmethod
     def hardware_setup(self) -> None:
-        """Perform all necessary hardware initialization."""
+        """Perform all necessary hardware configurations."""
         pass
 
     @abstractmethod
