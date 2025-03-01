@@ -191,7 +191,7 @@ export default defineComponent({
       images: [],
       page: 0,
       session: Cookies.get('session') || "0",
-      showAI: true
+      showAI: false
     }
   },
   mounted(){

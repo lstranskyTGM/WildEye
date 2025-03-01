@@ -38,7 +38,7 @@
       <div class="w-100 d-flex overflow-x-scroll ps-0 ms-0 pe-5">
         <div class="mx-0 ps-0" v-for="cam in this.cameraComponentData" style="width: max(45%, 400px) ; min-height: 330px; max-height: 100%;">
           <div class="h-100 w-100 pe-4" style="">
-            <CameraComponent :name="cam.name" :info="cam.info" :id="cam.id" class="w-100"></CameraComponent>
+            <CameraComponent :name="cam.name" :info="cam.info" :id="cam.id" :camera="cam" class="w-100"></CameraComponent>
           </div>
         </div>
       </div>

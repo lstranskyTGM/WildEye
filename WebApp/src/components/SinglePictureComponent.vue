@@ -24,8 +24,8 @@
 
       </div>
       <md-dialog :open="this.opened" v-on:close="this.opened = false" style="width: 50%;">
-        <div slot="headline" class="mb-0 pb-0" style="max-height: 60%!important;">
-          <img style="min-width: 100% !important;" class=" rounded rounded-bottom-3 d-block w-100 img-fluid" :src="`${serverIP}${showAI? AIurl : url}`" :alt="alt"  >
+        <div slot="headline" class="mb-0 pb-0" style="max-height: 50%!important;">
+          <img style="max-height: 50vh!important;" class=" rounded rounded-bottom-3 d-block img-fluid ms-auto me-auto" :src="`${serverIP}${showAI? AIurl : url}`" :alt="alt"  >
         </div>
         <div slot="content" id="content" class="row mt-2 pt-0" style="max-height: 20vh">
           <div class="d-flex justify-content-between col-12 align-items-center">

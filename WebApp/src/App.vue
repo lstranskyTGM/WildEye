@@ -92,7 +92,7 @@
           </md-dialog>-->
           <md-dialog :open="this.opened3" v-on:close="this.opened3 = false">
             <div slot="headline">
-              Welcome to WildEye!
+              Welcome to WildEye! {{this.input_email}} {{this.input_password}}
             </div>
             <form slot="content" id="form-id" method="dialog">
               You are not logged in, please log in or register to access the full functionality of WildEye.
@@ -106,7 +106,7 @@
               </md-outlined-text-field>
               <md-outlined-text-field
                   type="email"
-                  label="email"
+                  label="Email"
                   class="w-100 pb-3 pt-1"
                   v-model="input_email"
               >
@@ -142,6 +142,7 @@ import {styles as typescaleStyles} from '@material/web/typography/md-typescale-s
 import router from "@/router";
 import axios from "axios";
 import {provide} from "vue";
+import {ref} from "vue";
 
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
@@ -332,7 +333,13 @@ export default {
         console.log('session changed', val);
       },
       deep: true
-    }
+    },
+    input_email: {
+      handler: function (val) {
+        console.log('email changed', val);
+      },
+      deep: true
+    },
   }
 }
 

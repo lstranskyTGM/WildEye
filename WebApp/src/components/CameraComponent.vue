@@ -35,7 +35,7 @@
       </div>
     </div>
   </div>
-  <md-dialog :open="this.opened" v-on:close="this.onCloseSettingsDialog" style="min-height: 50px; background-color: white; ">
+  <md-dialog :open="this.opened" v-on:close="this.onCloseSettingsDialog" style="min-height: 50px; background-color: white; min-width: 50%">
     <div slot="headline">
       Settings for {{this.name}}
     </div>
@@ -76,42 +76,41 @@
       return{
         text:"kjdfghlskdjfgh",
         opened:false,
-        settings:null,
+        settings:this.camera.settings,
         session: Cookies.get('session')
       }
     },
     props: {
       name: String,
       info: String,
-      id: Number
+      id: Number,
+      camera: Object
     },
     methods: {
       openSettingsDialog(){
         this.opened = true;
-        if(this.settings === null){
-          this.getSettings();
-        }
         console.log(this.settings)
       },
-      getSettings(){
-        // eventually, make a request to the server to get the advanced settings.
-        axios.post(this.serverIP+'/advancedSettings', {session: this.session, id: this.id})
-            .then(response => {
-              this.settings = response.data;
-            })
-            .catch(error => {
-              console.log(error);
-            });
-      },
       updateSetting(updatedSetting) {
+        // das muss noch geändert werden, weil es gerade nicht nach den setings sucht, sondern nach den überschrifften...SCHLECHT!!!!!!
+
+        console.log("updateSetting", updatedSetting);
         const setting = this.settings.find(s => s.name === updatedSetting.name);
         if (setting) {
           setting.value = updatedSetting.value;
         }
+        console.log("settings:", this.settings)
       },
       onCloseSettingsDialog(){
         this.opened = false;
-        console.log(this.settings)
+        console.log("close", this.settings)
+        axios.put(this.serverIP + '/api/wild-cameras/' + this.id, {settings: this.settings})
+            .then(response => {
+              console.log(response.data);
+            })
+            .catch(error => {
+              console.log(error);
+            });
         // when connected to the server, send the updated settings to the server.
         // The changes are already in the settings object.
       }
