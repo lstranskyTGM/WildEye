@@ -92,7 +92,7 @@
           </md-dialog>-->
           <md-dialog :open="this.opened3" v-on:close="this.opened3 = false">
             <div slot="headline">
-              Welcome to WildEye! {{this.input_email}} {{this.input_password}}
+              Welcome to WildEye!
             </div>
             <form slot="content" id="form-id" method="dialog">
               You are not logged in, please log in or register to access the full functionality of WildEye.
@@ -331,12 +331,6 @@ export default {
     session_computed: {
       handler: function (val) {
         console.log('session changed', val);
-      },
-      deep: true
-    },
-    input_email: {
-      handler: function (val) {
-        console.log('email changed', val);
       },
       deep: true
     },
