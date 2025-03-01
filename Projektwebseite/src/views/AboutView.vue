@@ -39,7 +39,7 @@
               </div>
             </div>
             <div class="card-footer">
-              <small>last update: 2025-01-14</small>
+              <small>last update: 2025-02-28</small>
             </div>
           </div>
         </div>
@@ -59,8 +59,9 @@ export default {
   data() {
     return {
       updates: [
+        { image: require('@/assets/webapphost.png'), alt: "Web-App Beta gehostet!", title: "Web-App Beta gehostet! - 28.02.2025" },
         { image: require('@/assets/3dmodel.png'), alt: "3D Model für Wildkamera erstellt", title: "3D Model für Wildkamera erstellt! - 22.02.2025" },
-        { image: require('@/assets/pcb.png'), alt: "PCB für Massenproduktion erstellt", title: "Strapi API hinzugefügt und eingebunden! - 21.02.2025" },
+        { image: require('@/assets/pcb.png'), alt: "PCB für Massenproduktion erstellt", title: "PCB für Massenproduktion erstellt! - 21.02.2025" },
         { image: require('@/assets/API.png'), alt: "Strapi API hinzugefügt", title: "Strapi API hinzugefügt und eingebunden! - 20.02.2025" },
         { image: require('@/assets/ai2.jpg'), alt: "KI-Modell", title: "KI-Modell trainiert und ausführbar! - 11.02.2025" },
         { image: require('@/assets/hardware_prototyp_1.png'), alt: "Hardwareprototyp erstellt", title: "Erster Hardwareprototyp erstellt! - 14.01.2025" },
