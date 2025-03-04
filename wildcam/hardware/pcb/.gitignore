@@ -1,0 +1,27 @@
+# Backup and cache files
+*-bak
+*-cache*
+*.kicad_pcb-bak
+*.kicad_sch-bak
+*.prl-bak
+*.tmp
+*.lck
+
+# Auto-saved and temporary files
+_autosave*
+\#auto_saved_files\#
+*.000
+*.bck
+*~
+
+# Symbol cache (can be regenerated)
+fp-info-cache
+
+# Backup folders
+*-backups/
+
+# Exclude project-local settings file
+*.kicad_prl
+
+# Exclude drill-related map files (optional)
+*.map
