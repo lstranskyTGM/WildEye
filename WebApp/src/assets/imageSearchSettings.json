@@ -1,0 +1,67 @@
+[
+  {
+    "sectionName": "General Search",
+    "sectionSettings": [
+      {
+        "type": "string",
+        "name": "Search for Names or Tags",
+        "value": "",
+        "required": false
+      }
+    ]
+  },
+  {
+    "sectionName": "Cameras",
+    "sectionSettings": [
+
+    ]
+  },
+  {
+    "sectionName": "Sorting",
+    "sectionSettings": [
+      {
+        "type": "date",
+        "name": "Date From",
+        "value": "2025-02-01",
+        "required": false
+      },
+      {
+        "type": "date",
+        "name": "Date To",
+        "value": "2099-12-31",
+        "required": false
+      },
+      {
+        "type": "select",
+        "name": "Sort by",
+        "options": ["Date", "Name"],
+        "value": "Name",
+        "required": true
+      },
+      {
+        "type": "select",
+        "name": "Sort order",
+        "options": ["Ascending", "Descending"],
+        "value": "Ascending",
+        "required": true
+      }
+    ]
+  },
+  {
+    "sectionName": "Extras",
+    "sectionSettings": [
+      {
+        "type": "boolean",
+        "name": "Show only hearted",
+        "value": false,
+        "required": false
+      },
+      {
+        "type": "number",
+        "name": "page Limit",
+        "min": 1,
+        "max": 30
+      }
+    ]
+  }
+]

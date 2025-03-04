@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <div class="card h-100 w-100 card-background shadow-sm p-0 m-0">
       <div class="position-relative">
         <img class=" rounded rounded-bottom-3 d-block w-100" :src="`${serverIP}${showAI? AIurl : url}`" :alt="alt" @click="this.opened = !this.opened">
@@ -8,15 +8,15 @@
         </div>
       </div>
       <div class="card-body p-0 m-0" @dblclick="toggleHeart">
-        <div class="d-flex justify-content-between p-1 m-1">
+        <div class="d-flex justify-content-between p-1 m-1 overflow-x-hidden">
           <h5 class="card-title">{{ title }}</h5>
           <small class="small">{{ date }}</small>
         </div>
         <div class="w-100 h-100">
           <div class="d-flex overflow-x-auto px-2" style="max-height: 50px">
-            <div v-for="tag in tags" :key="tag" class="me-2 mb-2 p-0">
-              <md-assist-chip :label="tag" has-icon="true">
-                <md-icon slot="icon"><i :class="tag.icon"></i></md-icon>
+            <div v-for="set in taggedTags" :key="set.tag" class="me-2 mb-2 p-0">
+              <md-assist-chip :label="set.label" :has-icon="set.icon">
+                <md-icon slot="icon" v-if="set.icon"><i :class="set.icon"></i></md-icon>
               </md-assist-chip>
             </div>
           </div>
@@ -36,9 +36,9 @@
           </div>
           <div class="col-12 h-100 w-100 p-0 m-0">
             <div class="d-flex overflow-x-auto px-2" style="max-height: 50px">
-              <div v-for="tag in tags" :key="tag" class="me-2 mb-2 p-0">
-                <md-assist-chip :label="tag" has-icon="true">
-                  <md-icon slot="icon"><i :class="tag.icon"></i></md-icon>
+              <div v-for="set in taggedTags" :key="set.tag" class="me-2 mb-2 p-0">
+                <md-assist-chip :label="set.label" :has-icon="set.icon" >
+                  <md-icon slot="icon" v-if="set.icon"><i :class="set.icon"></i></md-icon>
                 </md-assist-chip>
               </div>
             </div>
@@ -80,19 +80,20 @@ export default {
         "person": {icon: "bi bi-person"},
         "camera": {icon: "bi bi-camera"},
         "lat": {icon: "bi bi-geo-alt"},
-        "Deer": {icon: "bi bi-deer"},
-        "Goat": {icon: "bi bi-goat"},
-        "Bird": {icon: "bi bi-bird"},
-        "Dog": {icon: "bi bi-dog"},
-        "Cat": {icon: "bi bi-cat"},
-        "Horse": {icon: "bi bi-horse"},
-        "Rabbit": {icon: "bi bi-rabbit"},
-        "Mouse": {icon: "bi bi-mouse"},
-        "Cow": {icon: "bi bi-cow"},
-        "Elephant": {icon: "bi bi-elephant"},
-        "Bear": {icon: "bi bi-bear"},
-        "Wild Boar": {icon: "bi bi-pig"},
-      }
+        "Deer": {icon: "bi bi-gitlab"},
+        "Goat": {icon: "bi bi-gitlab"},
+        "Bird": {icon: "bi bi-feather"},
+        "Dog": {icon: "bi bi-gitlab"},
+        "Cat": {icon: "bi bi-gitlab"},
+        "Horse": {icon: "bi bi-gitlab"},
+        "Rabbit": {icon: "bi bi-gitlab"},
+        "Mouse": {icon: "bi bi-gitlab"},
+        "Cow": {icon: "bi bi-gitlab"},
+        "Elephant": {icon: "bi bi-gitlab"},
+        "Bear": {icon: "bi bi-gitlab"},
+        "Wild Boar": {icon: "bi bi-gitlab"},
+      },
+      taggedTags: {}
     }
   },
   methods: {
@@ -106,6 +107,17 @@ export default {
   },
   beforeMount() {
     document.adoptedStyleSheets = [typescaleStyles.styleSheet];
+  },
+  mounted() {
+    // assign tag icons
+    // console.log("tags:",this.tags);
+    this.taggedTags = this.tags.map(tag => {
+      if (!this.tagMap[tag.toLowerCase()]) {
+        return {label: tag, icon: ""}
+      }
+      return {label: tag, icon: this.tagMap[tag.toLowerCase()].icon}
+    });
+    console.log(this.taggedTags);
   }
 }
 </script>

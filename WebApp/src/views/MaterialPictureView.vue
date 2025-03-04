@@ -8,8 +8,20 @@
 <!--              <p v-if="session === '0'">Log in to display Images for your account. {{session}}</p>-->
               <p v-if="images.length===0">No Images to display.</p>
               <div class="grid">
-                <div class="grid-item " v-for="(img, index) in images" :key="index">
-                  <SinglePictureComponent :id="img.id" :url="img.original.url" :alt="img.alternativeText" :title="img.titel" :date="this.formatDate(img.createdAt)" :hearted="img.hearted" :tags="img.tags" :cameraName="img.cameraName" :AIurl="img.analyzed.url"  v-on:update_hearted="updateHearted" :showAI="this.showAI"></SinglePictureComponent>
+                <div class="grid-item" v-for="(img, index) in images" :key="index">
+                  <SinglePictureComponent
+                      :id="img.id"
+                      :url="img.original.url"
+                      :alt="img.alternativeText"
+                      :title="img.title"
+                      :date="this.formatDate(img.createdAt)"
+                      :hearted="img.hearted"
+                      :tags="img.tags ? img.tags : []"
+                      :cameraName="img.cameraName"
+                      :AIurl="img.analyzed ? img.analyzed.url : img.original.url"
+                      v-on:update_hearted="updateHearted"
+                      :showAI="this.showAI">
+                  </SinglePictureComponent>
                 </div>
               </div>
               <div class="fab-container">
@@ -55,29 +67,14 @@
                 <div v-for="section in this.settings">
                   <p class="fs-2">{{section.sectionName}}</p>
                   <md-divider></md-divider>
-                  <AdvancedSettingsComponent v-for="setting in section.sectionSettings" :setting="setting" @update-setting="updateSetting" class="pb-3 pt-1"></AdvancedSettingsComponent>
+                  <AdvancedSettingsComponent v-for="setting in section.sectionSettings" :setting="setting" class="pb-3 pt-1"></AdvancedSettingsComponent>
                 </div>
               </div>
             </form>
             <div slot="actions">
               <md-text-button form="form-id" @click="this.opened = false; ">Ok</md-text-button>
-              <md-text-button form="form-id" @click="getSettings">Reset</md-text-button>
             </div>
           </md-dialog>
-<!--          <div>
-            <md-outlined-select class="pe-3" label="Specify Camera">
-              <md-select-option aria-label="All Cameras" value="all" selected>All Cameras</md-select-option>
-              <md-select-option v-for="camera in cameras" :key="camera.value" :value="camera.value">{{camera.headline}}</md-select-option>
-            </md-outlined-select>
-
-            <md-outlined-select class="pe-3" label="Sort By">
-              <md-select-option aria-label="DESC" value="desc" selected>Descending</md-select-option>
-              <md-select-option aria-label="ACS" value="acs" >Ascending</md-select-option>
-            </md-outlined-select>
-
-            <md-outlined-text-field label="Start Date" type="date" v-model="startDate" class="pe-3"></md-outlined-text-field>
-            <md-outlined-text-field label="End Date" type="date" v-model="endDate"></md-outlined-text-field>
-          </div>-->
         </div>
       </div>
     </div>
@@ -91,9 +88,12 @@ import SinglePictureComponent from "@/components/SinglePictureComponent.vue";
 import AdvancedSettingsComponent from "@/components/AdvancedSettingsComponent.vue";
 import axios from "axios";
 import Cookies from "js-cookie";
+
+import settingsFile from "../assets/imageSearchSettings.json";
+
 export default defineComponent({
   name: 'MaterialPictureView',
-  inject: ['serverIP'],
+  inject: ['serverIP', "cameraObjects"],
   components: {
     AdvancedSettingsComponent,
     SinglePictureComponent
@@ -102,7 +102,18 @@ export default defineComponent({
     updateHearted(payload) {
       console.log('updateHearted', payload);
       const index = this.images.findIndex(img => img.id === payload.id);
+      const documentId = this.images[index].documentId;
+      console.log(documentId);
+      axios.put(`${this.serverIP}/api/pictures/${documentId}`, {data:{hearted: payload.to}})
+          .catch(
+              err => console.error(err)
+          )
+          .then(res => {
+            console.log(res);
+          });
       this.images[index].hearted = payload.to;
+      //sort images by hearted
+      this.images.sort((a, b) => (a.hearted < b.hearted) ? 1 : -1)
     },
     openSettingsDialog(){
       this.opened = true;
@@ -112,7 +123,32 @@ export default defineComponent({
       console.log(this.settings)
     },
     getSettings(){
-      if(this.session === null){
+      console.log("get settings")
+      this.settings = settingsFile;
+      console.log("settings: ",this.settings)
+      console.log("cameras: ",this.computedCameraObjects)
+      if (!Array.isArray(this.computedCameraObjects)) {
+        console.log("No cameras available")
+        return;
+      }
+      const sectionIndex = this.settings.findIndex(s => s.sectionName === "Cameras");
+      console.log("sectionIndex: ",sectionIndex)
+      if (sectionIndex !== -1) {
+        var newSection = [];
+        this.computedCameraObjects.forEach(camera => {
+          console.log("camera: ",camera)
+          newSection.push({
+            name: camera.name,
+            value: true,
+            type: "boolean",
+            required: true
+          });
+        });
+        console.log("newSectionSettings: ",newSection)
+        this.settings[sectionIndex].sectionSettings = newSection;
+        console.log("settings: ",this.settings)
+      }
+      /*if(this.session === null){
         console.log("No session available")
         return;
       }
@@ -126,13 +162,7 @@ export default defineComponent({
           })
           .catch(error => {
             console.log(error);
-          });
-    },
-    updateSetting(updatedSetting) {
-      const setting = this.settings.find(s => s.name === updatedSetting.name);
-      if (setting) {
-        setting.value = updatedSetting.value;
-      }
+          });*/
     },
 
     onCloseSettingsDialog(){
@@ -159,20 +189,24 @@ export default defineComponent({
 
       var that = this
       console.log("get images from api : "+this.serverIP + " : " + this.session)
-      axios.get(this.serverIP+'/api/wild-cameras?populate[pictures][populate]=*'
+      axios.get(this.serverIP+'/api/pictures?populate=*&sort=hearted:desc'
       ).catch(function (error) {
         console.log(error);
       }).then(function (response) {
         console.log(response);
         if(response){
+          // remove all images that have the original tag set to undefined
+          var temp = []
+          response.data.data.forEach((item) => {
+            if (item.original !== null) {
+              temp.push(item);
+            }
+          })
+          console.log(temp)
           // clear images
           that.images = [];
-          const cameras = response.data.data
-          // each entry has an array `images`, add that to the images array
-          cameras.forEach(camera => {
-            that.images.push(...camera.pictures);
-          });
-
+          // set images
+          that.images = temp
         }
 
       });
@@ -199,8 +233,24 @@ export default defineComponent({
       console.log("No session to display images")
       return
     }
-    this.getSettings();
-    this.getImages();
+    this.getImages()
+  },
+  watch: {
+    cameraObjects: {
+      handler(newVal) {
+        console.log("cameraObjects changed: ", newVal)
+        if (newVal) {
+          //this.getSettings();
+          //this.getImages()
+        }
+      },
+      immediate: true
+    }
+  },
+  computed:{
+    computedCameraObjects() {
+      return this.cameraObjects;
+    }
   }
 })
 </script>

@@ -28,6 +28,8 @@
               <SettingComponent name="Username" :value="!accountData? `username`: accountData.username" icon="bi bi-person-vcard" confirm_needed="false" popup="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
               <SettingComponent name="E-Mail" :value="!accountData? `email`: accountData.email" icon="bi bi-envelope-at" confirm_needed="true" popup="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
               <SettingComponent name="Password" value="************" icon="bi bi-asterisk" confirm_needed="true" popup="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
+              <DashboardInfoComponent name="Created" value="today" icon="bi bi-clock"></DashboardInfoComponent>
+
             </div>
 
           </div>
@@ -62,9 +64,10 @@ import {ref} from "vue";
 import Cookies from "js-cookie";
 import {createRouter as $router} from "vue-router";
 import {routes} from "vue-router/auto-routes";
+import DashboardInfoComponent from "@/components/DashboardInfoComponent.vue";
 
 export default{
-  components: {CameraComponent, SettingComponent},
+  components: {DashboardInfoComponent, CameraComponent, SettingComponent},
   inject: ['cameraObjects', "serverIP"],
   name: 'AccountView',
   data(){

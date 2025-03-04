@@ -42,7 +42,7 @@
           :label="setting.name"
           class="w-100 h-100 py-2 px-1"
           :value="setting.value"
-          @input="updateSetting($event.target.value)"
+          @input="this.setting.value = $event.target.value"
       >
       </md-outlined-text-field>
     </div>
@@ -52,7 +52,7 @@
           :label="setting.name"
           class="w-100 h-100 py-2 px-1"
           :value="setting.value"
-          @input="updateSetting($event.target.value)"
+          @input="this.setting.value = $event.target.value"
       >
       </md-outlined-text-field>
     </div>
@@ -67,9 +67,6 @@ export default {
     setting: Object
   },
   methods: {
-    updateSetting(value) {
-      this.$emit('update-setting', { name: this.setting.name, value: this.setting.value });
-    }
   }
 }
 </script>
