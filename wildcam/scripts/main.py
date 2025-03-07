@@ -6,6 +6,7 @@ def main():
     Main function to initialize and start the WildCam system in the foreground.
     Cleans up resources properly on keyboard exit.
     """
+    wildcam = None
     try:
         wildcam = WildCam()
         print("Press CTRL+C to stop WildCam.")
