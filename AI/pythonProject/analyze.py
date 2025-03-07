@@ -2,19 +2,19 @@ from ultralytics import YOLO
 import os
 import cv2
 
-# Lade das trainierte Modell
-model = YOLO('best.pt')  # oder 'last.pt'
 
-# Erstelle den Ausgabeordner für Bilder mit Bounding Boxes
-output_dir = "labeled"
-os.makedirs(output_dir, exist_ok=True)
+def analyze_latest_image(input_dir: str, output_path: str):
+    # Lade das trainierte Modell
+    model = YOLO('best.pt')  # oder 'last.pt'
 
-# Verarbeite alle Bilder im Ordner "img"
-for file in os.listdir('img'):
-    if file.endswith('.jpeg') or file.endswith('.jpg'):
-        img_path = os.path.join('img', file)
+    # Finde das zuletzt hinzugefügte Bild im Eingabeverzeichnis
+    jpeg_files = [f for f in os.listdir(input_dir) if f.endswith(('.jpeg', '.jpg'))]
+    if jpeg_files:
+        latest_file = max(jpeg_files, key=lambda f: os.path.getctime(os.path.join(input_dir, f)))
+        img_path = os.path.join(input_dir, latest_file)
 
         # Vorhersage mit YOLO
+        print(f"Trying to analyze picture from {img_path}")
         results = model.predict(img_path)
 
         # Lade das Originalbild mit OpenCV
@@ -38,9 +38,14 @@ for file in os.listdir('img'):
             # Schreibe den Klassennamen auf das Bild
             text_size = cv2.getTextSize(class_name, cv2.FONT_HERSHEY_SIMPLEX, font_scale, thickness)[0]
             text_x, text_y = x1, max(y1 - 10, text_size[1] + 10)
-            cv2.rectangle(img, (text_x, text_y - text_size[1] - 5), (text_x + text_size[0] + 5, text_y + 5),(0, 255, 0), -1)
-            cv2.putText(img, class_name, (text_x, text_y), cv2.FONT_HERSHEY_SIMPLEX, font_scale, (0, 0, 0), thickness, cv2.LINE_AA)
+            cv2.rectangle(img, (text_x, text_y - text_size[1] - 5), (text_x + text_size[0] + 5, text_y + 5),
+                          (0, 255, 0), -1)
+            cv2.putText(img, class_name, (text_x, text_y), cv2.FONT_HERSHEY_SIMPLEX, font_scale, (0, 0, 0), thickness,
+                        cv2.LINE_AA)
 
         # Speicher das Bild mit Bounding Boxes
-        labeled_img_path = os.path.join(output_dir, f"labeled_{file}")
-        cv2.imwrite(labeled_img_path, img)
+        cv2.imwrite(output_path, img)
+
+input_directory = "img"
+output_file_path = "labeled/labeled_latest.jpg"
+analyze_latest_image(input_directory, output_file_path)
