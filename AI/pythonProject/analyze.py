@@ -1,11 +1,14 @@
 from ultralytics import YOLO
 import os
 import cv2
-
+import json
 
 def analyze_latest_image(input_dir: str, output_path: str):
     # Lade das trainierte Modell
     model = YOLO('best.pt')  # oder 'last.pt'
+
+    # the analyzed picture's filename
+    filename = "labeled_latest.jpg"
 
     # Finde das zuletzt hinzugefügte Bild im Eingabeverzeichnis
     jpeg_files = [f for f in os.listdir(input_dir) if f.endswith(('.jpeg', '.jpg'))]
@@ -21,11 +24,14 @@ def analyze_latest_image(input_dir: str, output_path: str):
     img = cv2.imread(img_path)
     img_height, img_width, _ = img.shape
 
+    detected_tags = set()
+
     for box in results[0].boxes:
         x1, y1, x2, y2 = map(int, box.xyxy[0])
         class_id = int(box.cls)
         class_name = results[0].names[class_id]
-        print(class_name)
+        print(f"Detected tag: {class_name}")
+        detected_tags.add(class_name)
 
         # Dynamische Skalierung von Textgröße und Linienstärke
         scale_factor = max(img_width, img_height) / 1000
@@ -44,5 +50,21 @@ def analyze_latest_image(input_dir: str, output_path: str):
                     cv2.LINE_AA)
 
     # Speicher das Bild mit Bounding Boxes und stelle sicher, dass nur ein Bild im Ausgabeordner existiert
-    labeled_img_path = os.path.join(output_dir, "labeled_latest.jpg")
+    labeled_img_path = os.path.join(output_path, filename)
     cv2.imwrite(labeled_img_path, img)
+
+    
+
+    if detected_tags:
+        detected_tags = list(detected_tags)
+        title = f"new {detected_tags[0]}"
+    else:
+        detected_tags = "[]"
+        title = None
+    data = {
+        'title': title,
+        'tags': detected_tags,
+        'filename': filename
+    }
+    return data
+

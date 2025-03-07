@@ -1,3 +1,5 @@
 ultralytics
 opencv-python
 requests
+numpy==1.26.4
+
