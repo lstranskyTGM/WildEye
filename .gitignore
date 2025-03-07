@@ -39,3 +39,7 @@ dist/
 
 # Bootstrap Distribution
 bootstrap-*/
+AI/pythonProject/api_key.txt
+AI/pythonProject/img/
+AI/pythonProject/labeled/
+env/
