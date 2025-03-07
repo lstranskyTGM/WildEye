@@ -10,7 +10,7 @@ class EventHandler:
     
     Attributes:
         _record_type (Literal["image", "video"]): The type of media to record (image or video).
-        camera (CameraModule): The camera module for capturing media.
+        camera_module (CameraModule): The camera module for capturing media.
         pir_sensor (PIRSensor): The PIR sensor module for motion detection.
     
     Methods:
@@ -23,7 +23,7 @@ class EventHandler:
     def __init__(self) -> None:
         """Initialize EventHandler with required modules."""
         self._record_type: Literal["image", "video"] = "image"  # Temporary fixed value
-        self.camera = CameraModule()
+        self.camera_module = CameraModule()
         self.pir_sensor = PIRSensor()
 
     def set_events(self, state: bool) -> None:
@@ -34,11 +34,11 @@ class EventHandler:
             state (bool): True to enable event interrupts, False to disable.
         """
         if state:
-            self.camera.hardware_setup()
+            self.camera_module.hardware_setup()
             self.pir_sensor.hardware_setup()
             self.pir_sensor.set_interrupt(self.handle_motion_event)
         else:
-            self.camera.cleanup()
+            self.camera_module.cleanup()
             self.pir_sensor.cleanup()
 
     def handle_motion_event(self, channel: int) -> None:
@@ -51,9 +51,9 @@ class EventHandler:
         print("Motion detected! Capturing media...")
 
         if self._record_type == "image":
-            file_path = self.camera.capture_image()
+            file_path = self.camera_module.capture_image()
         elif self._record_type == "video":
-            file_path = self.camera.record_video(10)
+            file_path = self.camera_module.record_video(10)
         else:
             print(f"Invalid record_type '{self._record_type}' passed to handle_motion_event.")
             return
