@@ -34,8 +34,11 @@ class EventHandler:
             state (bool): True to enable interrupts, False to disable.
         """
         if state:
+            self.camera.hardware_setup()
+            self.pir_sensor.hardware_setup()
             self.pir_sensor.set_interrupt(self.handle_motion_event)
         else:
+            self.camera.cleanup()
             self.pir_sensor.cleanup()
 
     def handle_motion_event(self, channel: int) -> None:
