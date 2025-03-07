@@ -25,10 +25,10 @@
                 </div>
               </div>
               <div class="fab-container">
-                <md-fab variant="primary" aria-label="left" v-on:click="this.page = Math.max(0, this.page-1); this.getImages(); console.log('page-1 '+ this.page)">
+                <md-fab variant="primary" aria-label="left" v-on:click="this.page = Math.max(1, this.page-1); this.onCloseSettingsDialog(); console.log('page: '+ this.page)">
                   <md-icon slot="icon"><i class="bi bi-arrow-left-circle"></i></md-icon>
                 </md-fab>
-                <md-fab variant="primary" aria-label="right" v-on:click="this.page = Math.max(0, this.page+1); this.getImages();console.log('page+1+ '+this.page)">
+                <md-fab variant="primary" aria-label="right" v-on:click="this.page = Math.max(1, this.page+1); this.onCloseSettingsDialog();console.log('page: '+this.page)">
                   <md-icon slot="icon"><i class="bi bi-arrow-right-circle"></i></md-icon>
                 </md-fab>
               </div>
@@ -167,26 +167,48 @@ export default defineComponent({
 
     onCloseSettingsDialog(){
       this.opened = false;
-      console.log(this.settings)
-      // when connected to the server, send the updated settings to the server.
-      // The changes are already in the settings object.
-    },
-    getImages(){
-
-      /*
-      * var that = this
-      console.log("get cameras from api : "+this.serverIP + " : " + this.session)
-      // provide('session', this.session);
-      // get camera objects from API
-      axios.get(this.serverIP + '/api/wild-cameras'
+      var that = this;
+      console.log("getting new images based on settings", this.settings)
+      var url = this.serverIP+'/api/pictures?populate=*&sort='+
+          this.settings[2].sectionSettings[2].value+':'+this.settings[2].sectionSettings[3].value+''+
+          (this.settings[3].sectionSettings[0].value? '&filters[hearted]=true':'')+''+
+          (this.settings[0].sectionSettings[0].value? '&filters[title]='+this.settings[0].sectionSettings[0].value:'')+''+
+          ('&filters[createdAt][$gte]='+this.settings[2].sectionSettings[0].value)+''+
+          ('&filters[createdAt][$lte]='+this.settings[2].sectionSettings[1].value)+''+
+          (this.settings[3].sectionSettings[1].value? '&pagination[pageSize]='+this.settings[3].sectionSettings[1].value : '')+''+
+          ('&pagination[page]='+this.page)
+      for(let i=0; i<=this.settings[1].sectionSettings.length-1; i++){
+        console.log("iterator",i)
+        console.log("setting",this.settings[1].sectionSettings[i])
+        const setting = this.settings[1].sectionSettings[i]
+        if(setting.value){
+          url += '&filters[$or]['+i+'][wild_camera][name][$eq]='+setting.name
+        }
+      }
+      axios.get(
+          url
       ).catch(function (error) {
         console.log(error);
       }).then(function (response) {
         console.log(response);
-        that.cameraObjects.push(...response.data.data);
-      });
-      * */
+        if(response){
+          // remove all images that have the original tag set to undefined
+          var temp = []
+          response.data.data.forEach((item) => {
+            if (item.original !== null) {
+              temp.push(item);
+            }
+          })
+          console.log(temp)
+          // clear images
+          that.images = [];
+          // set images
+          that.images = temp
+        }
 
+      });
+    },
+    getImages(){
       var that = this
       console.log("get images from api : "+this.serverIP + " : " + this.session)
       axios.get(this.serverIP+'/api/pictures?populate=*&sort=hearted:desc'
@@ -223,7 +245,7 @@ export default defineComponent({
       startDate: "",
       endDate: "",
       images: [],
-      page: 0,
+      page: 1,
       session: Cookies.get('session') || "0",
       showAI: false
     }

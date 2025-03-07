@@ -34,15 +34,15 @@
       {
         "type": "select",
         "name": "Sort by",
-        "options": ["Date", "Name"],
-        "value": "Name",
+        "options": ["id", "title", "hearted"],
+        "value": "hearted",
         "required": true
       },
       {
         "type": "select",
         "name": "Sort order",
-        "options": ["Ascending", "Descending"],
-        "value": "Ascending",
+        "options": ["asc", "desc"],
+        "value": "desc",
         "required": true
       }
     ]

@@ -103,16 +103,16 @@
       },
       onCloseSettingsDialog(){
         this.opened = false;
-        console.log("close", this.settings)
-        axios.put(this.serverIP + '/api/wild-cameras/' + this.id, {settings: this.settings})
+        console.log("close", this.settings, this.camera);
+        console.log("camera",this.camera)
+        axios.put(this.serverIP + '/api/wild-cameras/' + this.camera.documentId, {data:{settings: this.settings}})
             .then(response => {
               console.log(response.data);
             })
             .catch(error => {
               console.log(error);
             });
-        // when connected to the server, send the updated settings to the server.
-        // The changes are already in the settings object.
+
       }
     }
   }

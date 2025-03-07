@@ -111,12 +111,16 @@ export default {
   mounted() {
     // assign tag icons
     // console.log("tags:",this.tags);
-    this.taggedTags = this.tags.map(tag => {
-      if (!this.tagMap[tag.toLowerCase()]) {
-        return {label: tag, icon: ""}
-      }
-      return {label: tag, icon: this.tagMap[tag.toLowerCase()].icon}
-    });
+    console.log(this.tags)
+    if(Array.isArray(this.tags)) {
+      this.taggedTags = this.tags.map(tag => {
+        if (!this.tagMap[tag.toLowerCase()]) {
+          return {label: tag, icon: ""}
+        }
+        return {label: tag, icon: this.tagMap[tag.toLowerCase()].icon}
+      });
+    }
+
     console.log(this.taggedTags);
   }
 }
