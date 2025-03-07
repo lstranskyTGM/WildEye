@@ -14,7 +14,7 @@ class EventHandler:
         pir_sensor (PIRSensor): The PIR sensor module for motion detection.
     
     Methods:
-        set_interrupts(state): Enable or disable motion detection interrupts.
+        set_events(state): Enable or disable all event interrupts based on the state.
         handle_motion_event(): Handle motion detection event and trigger media capture.
         handle_update_cycle(): Handle the update cycle event.
         handle_config_mode(): Handle the configuration mode activation event
@@ -26,12 +26,12 @@ class EventHandler:
         self.camera = CameraModule()
         self.pir_sensor = PIRSensor()
 
-    def set_interrupts(self, state: bool) -> None:
+    def set_events(self, state: bool) -> None:
         """
-        Enable or disable motion detection interrupts.
+        Enable or disable all event interrupts based on the state.
         
         Args:
-            state (bool): True to enable interrupts, False to disable.
+            state (bool): True to enable event interrupts, False to disable.
         """
         if state:
             self.camera.hardware_setup()

@@ -13,7 +13,7 @@ class WildCam:
     def __init__(self) -> None:
         """Initializes the WildCam system and sets up the event handler."""
         self.event_handler = EventHandler()
-        self.event_handler.set_interrupts(True)
+        self.event_handler.set_events(True)
 
     def start_main_loop(self) -> None:
         """Starts the main event loop of the WildCam system and waits for interrupts."""
