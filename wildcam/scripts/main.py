@@ -18,8 +18,8 @@ def main():
     finally:
         if wildcam:
             print("Cleaning up resources before exiting...")
-            wildcam.event_handler.set_interrupts(False)
-            wildcam.event_handler.camera.cleanup()
+            wildcam.event_handler.set_events(False)
+            wildcam.event_handler.camera_module.cleanup()
             print("Shutdown complete. Exiting.")
 
 
