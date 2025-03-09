@@ -17,7 +17,7 @@ class CameraModule(BaseModule):
         hardware_setup(): Sets up the camera module.
         configure_camera(mode): Configures the camera for image or video capture.
         capture_image(): Captures an image and saves it with a timestamp.
-        record_video(duration): Records a video and saves it with a timestamp.
+        _record_video(duration): Records a video and saves it with a timestamp.
         generate_file_path(file_type, base_dir): Generates a file path based on the type.
         cleanup(): Releases camera resources when shutting down.
     """
@@ -63,7 +63,6 @@ class CameraModule(BaseModule):
             self.configure_camera("image")
             self.camera.start()
             file_path = self._generate_file_path("image")
-            os.makedirs(os.path.dirname(file_path), exist_ok=True)
             #time.sleep(2)
             self.camera.capture_file(file_path)
             self.camera.stop()
@@ -88,7 +87,6 @@ class CameraModule(BaseModule):
             self.configure_camera("video")
             self.camera.start()
             file_path = self._generate_file_path("video")
-            os.makedirs(os.path.dirname(file_path), exist_ok=True)
             #time.sleep(2)
             self.camera.start_recording(file_path)
             time.sleep(duration)
@@ -99,7 +97,7 @@ class CameraModule(BaseModule):
             print(f"Error recording video: {e}")
             return None
         
-    def _generate_file_path(self, file_type: str, base_dir: str = "../media/upload_queue") -> str:
+    def _generate_file_path(self, file_type: str, base_dir: str = "/media/upload_queue") -> str:
         """
         Generate a full file path for the specified file type.
         
@@ -113,12 +111,19 @@ class CameraModule(BaseModule):
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         
         if file_type == "image":
-            return os.path.join(base_dir, "images", f"image_{timestamp}.jpg")
+            file_path = os.path.join(base_dir, "images", f"image_{timestamp}.jpg")
         elif file_type == "video":
-            return os.path.join(base_dir, "videos", f"video_{timestamp}.h264")
+            file_path = os.path.join(base_dir, "videos", f"video_{timestamp}.h264")
         else:
             raise ValueError("Invalid file type. Choose 'image' or 'video'.")
         
+        directory = os.path.dirname(file_path)
+        if not os.path.exists(directory):
+            os.makedirs(directory, exist_ok=True)
+            print(f"Created directory: {directory}")
+            
+        return file_path
+
     def cleanup(self) -> None:
         """Release camera resources when shutting down."""
         if self.camera:
