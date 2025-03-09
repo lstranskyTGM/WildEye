@@ -65,11 +65,13 @@ class CameraModule(BaseModule):
             file_path = self._generate_file_path("image")
             #time.sleep(2)
             self.camera.capture_file(file_path)
-            self.camera.stop()
             return file_path
         except Exception as e:
             print(f"Error capturing image: {e}")
             return None
+        finally:
+            if self.camera:
+                self.camera.stop()
 
     @requires_hardware_setup
     def record_video(self, duration: int = 5) -> str | None:
@@ -91,11 +93,13 @@ class CameraModule(BaseModule):
             self.camera.start_recording(file_path)
             time.sleep(duration)
             self.camera.stop_recording()
-            self.camera.stop()
             return file_path
         except Exception as e:
             print(f"Error recording video: {e}")
             return None
+        finally:
+            if self.camera:
+                self.camera.stop()
         
     def _generate_file_path(self, file_type: str, base_dir: str = "/media/upload_queue") -> str:
         """
