@@ -12,6 +12,7 @@ class ApiClient:
     Methods:
         get(endpoint): Perform a GET request to the specified API endpoint.
         post(endpoint, data): Perform a POST request to the specified API endpoint with provided data.
+        upload_file(endpoint, data, files): Perform a multipart/form-data POST request for file uploads.
     """
 
     def __init__(self, base_url: str, auth_token: str = None) -> None:
@@ -37,7 +38,7 @@ class ApiClient:
             headers (dict, optional): Additional HTTP headers to include in the request
 
         Returns:
-            dict: Response data from the server as a dictionary.
+            dict | None: Response data from the server as a dictionary, or None on failure.
         """
         try:
             request_headers = headers or self.default_headers
@@ -58,7 +59,7 @@ class ApiClient:
             headers (dict, optional): Additional HTTP headers to include in the request.
 
         Returns:
-            dict: Response data from the server as a dictionary.
+            dict | None: Response data from the server as a dictionary, or None on failure.
         """
         try:
             request_headers = headers or self.default_headers
@@ -67,4 +68,32 @@ class ApiClient:
             return response.json()
         except requests.RequestException as e:
             print(f"Error during POST request: {e}")
+            return None
+
+    def upload_file(self, endpoint: str, data: dict, files: dict, headers: dict = None) -> dict | None:
+        """
+        Perform a multipart/form-data POST request to upload files to the specified API endpoint.
+
+        Args:
+            endpoint (str): API endpoint to send the multipart request to.
+            data (dict): Form data to include in the POST request.
+            files (dict): Dictionary of files to upload in the format {field_name: (filename, file_object, mime_type)}.
+            headers (dict, optional): Additional HTTP headers to include in the request.
+
+        Returns:
+            dict | None: Response data from the server as a dictionary, or None on failure.
+        """
+        try:
+            request_headers = headers or self.default_headers
+            response = requests.post(
+                f"{self.base_url}/{endpoint.lstrip('/')}", 
+                data=data, 
+                files=files, 
+                headers=request_headers, 
+                timeout=10
+            )
+            response.raise_for_status()
+            return response.json()
+        except requests.RequestException as e:
+            print(f"Error during file upload: {e}")
             return None
