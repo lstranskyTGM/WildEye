@@ -101,7 +101,7 @@ class CameraModule(BaseModule):
             if self.camera:
                 self.camera.stop()
         
-    def _generate_file_path(self, file_type: str, base_dir: str = "/media/upload_queue") -> str:
+    def _generate_file_path(self, file_type: str, base_dir: str = "media/upload_queue") -> str:
         """
         Generate a full file path for the specified file type.
         
