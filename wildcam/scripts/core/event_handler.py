@@ -1,5 +1,9 @@
+import os
+from dotenv import load_dotenv
 from hardware.camera_module import CameraModule
 from hardware.pir_sensor import PIRSensor
+from network.strapi_service import StrapiService
+from network.upload_manager import UploadManager
 from typing import Literal
 
 
@@ -12,6 +16,8 @@ class EventHandler:
         _record_type (Literal["image", "video"]): The type of media to record (image or video).
         camera_module (CameraModule): The camera module for capturing media.
         pir_sensor (PIRSensor): The PIR sensor module for motion detection.
+        strapi_service (StrapiService): Service for interacting with the Strapi API.
+        upload_manager (UploadManager): Manager for uploading files to the server.
     
     Methods:
         set_events(state): Enable or disable all event interrupts based on the state.
@@ -25,6 +31,18 @@ class EventHandler:
         self._record_type: Literal["image", "video"] = "image"  # Temporary fixed value
         self.camera_module = CameraModule()
         self.pir_sensor = PIRSensor()
+        
+        # Initialize network services
+        load_dotenv()
+        api_url = os.getenv("API_URL")
+        auth_token = os.getenv("AUTH_TOKEN")
+        camera_id = os.getenv("CAMERA_ID")
+        
+        if not all([api_url, auth_token, camera_id]):
+            print("Error: Missing required environment variables.")
+        
+        self.strapi_service = StrapiService(api_url, auth_token)
+        self.upload_manager = UploadManager(self.strapi_service, camera_id)
 
     def set_events(self, state: bool) -> None:
         """
@@ -63,11 +81,19 @@ class EventHandler:
         else:
             print(f"Error: {self._record_type.capitalize()} capture failed.")
 
-    # TODO: Implement the following methods
     def handle_update_cycle(self) -> None:
         """Handle the update cycle event."""
-        pass
+        print("Starting update cycle...")
+        
+        # Upload all pending files
+        success = self.upload_manager.upload_files()
+        
+        if success:
+            print("Update cycle completed successfully.")
+        else:
+            print("Update cycle completed with some failures.")
 
+    # TODO: Implement the following method
     def handle_config_mode(self) -> None:
         """Handle the configuration mode activation event."""
         pass
