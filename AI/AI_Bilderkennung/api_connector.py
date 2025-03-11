@@ -120,7 +120,9 @@ while True:
     os.remove(temp_img_path)
 
     #print(analysis)
-    response = upload_image(f"{path_for_analyzed_images}{analysis["filename"]}")
+    print(analysis)
+    response = upload_image(f"{path_for_analyzed_images}{analysis['filename']}")
+    print(response)
     uploaded_image_id = response[0]['id']
 
     if picture_title == "new image" and analysis["title"]:
