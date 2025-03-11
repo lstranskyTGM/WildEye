@@ -66,6 +66,10 @@ class UploadManager:
             if upload_response:
                 print(f"Upload successful: {file}")
                 
+                # If response is a list, get the first item
+                if isinstance(upload_response, list) and len(upload_response) > 0:
+                    upload_response = upload_response[0]
+                
                 # Create an image object in Strapis
                 image_id = upload_response.get("id")
                 if image_id:
