@@ -20,11 +20,12 @@
                       :cameraName="img.cameraName"
                       :AIurl="img.analyzed ? img.analyzed.url : img.original.url"
                       v-on:update_hearted="updateHearted"
+                      v-on:update_title="updateTitle"
                       :showAI="this.showAI">
                   </SinglePictureComponent>
                 </div>
               </div>
-              <div class="fab-container">
+              <div class="fab-container z-3">
                 <md-fab variant="primary" aria-label="left" v-on:click="this.page = Math.max(1, this.page-1); this.onCloseSettingsDialog(); console.log('page: '+ this.page)">
                   <md-icon slot="icon"><i class="bi bi-arrow-left-circle"></i></md-icon>
                 </md-fab>
@@ -115,6 +116,20 @@ export default defineComponent({
       //sort images by hearted
       this.images.sort((a, b) => (a.hearted < b.hearted) ? 1 : -1)
     },
+    updateTitle(payload) {
+      console.log('updateTitle', payload);
+      const index = this.images.findIndex(img => img.id === payload.id);
+      const documentId = this.images[index].documentId;
+      console.log(documentId);
+      axios.put(`${this.serverIP}/api/pictures/${documentId}`, {data:{title: payload.to}})
+          .catch(
+              err => console.error(err)
+          )
+          .then(res => {
+            console.log(res);
+          });
+      this.images[index].title = payload.to;
+    },
     openSettingsDialog(){
       this.opened = true;
       if(this.settings === null){
@@ -169,6 +184,7 @@ export default defineComponent({
       this.opened = false;
       var that = this;
       console.log("getting new images based on settings", this.settings)
+      // set the filters and pagination
       var url = this.serverIP+'/api/pictures?populate=*&sort='+
           this.settings[2].sectionSettings[2].value+':'+this.settings[2].sectionSettings[3].value+''+
           (this.settings[3].sectionSettings[0].value? '&filters[hearted]=true':'')+''+
@@ -177,6 +193,7 @@ export default defineComponent({
           ('&filters[createdAt][$lte]='+this.settings[2].sectionSettings[1].value)+''+
           (this.settings[3].sectionSettings[1].value? '&pagination[pageSize]='+this.settings[3].sectionSettings[1].value : '')+''+
           ('&pagination[page]='+this.page)
+      // set the cameras with an OR filter
       for(let i=0; i<=this.settings[1].sectionSettings.length-1; i++){
         console.log("iterator",i)
         console.log("setting",this.settings[1].sectionSettings[i])

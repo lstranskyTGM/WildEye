@@ -29,10 +29,16 @@
         </div>
         <div slot="content" id="content" class="row mt-2 pt-0" style="max-height: 20vh">
           <div class="d-flex justify-content-between col-12 align-items-center">
-            <h1>{{title}}</h1>
-            <div @click="toggleHeart" class="">
-              <i :class="{'bi bi-heart-fill fs-4 text-danger ': hearted, 'bi bi-heart fs-4 ': !hearted}" ></i>
+            <h1 style="max-width: 80%">{{title}}</h1>
+            <div class="d-inline-flex">
+              <div @click="this.opened2 = true" class="me-2">
+                <i class="bi bi-pencil-square fs-4 text-primary" ></i>
+              </div>
+              <div @click="toggleHeart" class="">
+                <i :class="{'bi bi-heart-fill fs-4 text-danger ': hearted, 'bi bi-heart fs-4 ': !hearted}" ></i>
+              </div>
             </div>
+
           </div>
           <div class="col-12 h-100 w-100 p-0 m-0">
             <div class="d-flex overflow-x-auto px-2" style="max-height: 50px">
@@ -46,6 +52,21 @@
         </div>
         <div slot="actions" style="max-height: 10vh">
           <md-text-button form="form-id" @click="this.opened = false">Close</md-text-button>
+        </div>
+      </md-dialog>
+      <!--Dialog for change of title-->
+      <md-dialog :open="this.opened2" v-on:close="onChangeTitle" style="--md-dialog-container-color: var(--md-sys-color-secondary-container); max-width: 75vh" >
+        <div slot="headline" class="overflow-x-hidden" >
+          Change Value of {{this.title}}
+        </div>
+        <form slot="content" id="form-id" method="dialog">
+          <md-outlined-text-field v-model="this.setTitle" label="Change to..." class="mt-1 color-bg roboto-font rounded-2" style="font-family: Roboto, sans-serif">
+            <md-icon slot="leading-icon"><i class="bi bi-pencil-square"></i></md-icon>
+          </md-outlined-text-field>
+        </form>
+        <div slot="actions">
+          <md-text-button form="form-id" @click="onChangeTitle">Save</md-text-button>
+          <md-text-button form="form-id" @click="this.opened2 = false;">Close</md-text-button>
         </div>
       </md-dialog>
     </div>
@@ -76,6 +97,8 @@ export default {
   data() {
     return {
       opened: false,
+      opened2: false,
+      setTitle: this.title,
       tagMap:{
         "person": {icon: "bi bi-person"},
         "camera": {icon: "bi bi-camera"},
@@ -100,6 +123,11 @@ export default {
     toggleHeart() {
       console.log('toggleHeart', this.id);
       this.$emit('update_hearted', {to: !this.hearted, id: this.id});
+    },
+    onChangeTitle() {
+      this.opened2 = false;
+      console.log('onChangeTitle', this.setTitle);
+      this.$emit('update_title', {to: this.setTitle, id: this.id});
     }
   },
   created() {
