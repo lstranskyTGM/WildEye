@@ -98,7 +98,7 @@ export default {
     return {
       opened: false,
       opened2: false,
-      setTitle: this.title,
+      setTitle: "",
       tagMap:{
         "person": {icon: "bi bi-person"},
         "camera": {icon: "bi bi-camera"},
@@ -126,8 +126,8 @@ export default {
     },
     onChangeTitle() {
       this.opened2 = false;
-      console.log('onChangeTitle', this.setTitle);
-      this.$emit('update_title', {to: this.setTitle, id: this.id});
+      console.log('onChangeTitle', this.setTitle? this.setTitle : this.title);
+      this.$emit('update_title', {to: this.setTitle? this.setTitle : this.title, id: this.id});
     }
   },
   created() {
@@ -136,20 +136,26 @@ export default {
   beforeMount() {
     document.adoptedStyleSheets = [typescaleStyles.styleSheet];
   },
-  mounted() {
-    // assign tag icons
-    // console.log("tags:",this.tags);
-    console.log(this.tags)
-    if(Array.isArray(this.tags)) {
-      this.taggedTags = this.tags.map(tag => {
-        if (!this.tagMap[tag.toLowerCase()]) {
-          return {label: tag, icon: ""}
-        }
-        return {label: tag, icon: this.tagMap[tag.toLowerCase()].icon}
-      });
+  computed: {
+    // Add computed property for taggedTags
+    taggedTags() {
+      if (Array.isArray(this.tags)) {
+        return this.tags.map(tag => {
+          if (!this.tagMap[tag.toLowerCase()]) {
+            return {label: tag, icon: ""}
+          }
+          return {label: tag, icon: this.tagMap[tag.toLowerCase()].icon}
+        });
+      }
+      return [];
     }
-
-    console.log(this.taggedTags);
+  },
+  mounted() {
+    document.adoptedStyleSheets = [typescaleStyles.styleSheet];
+    // Remove the tag processing code from here
+  },
+  afterMount() {
+    this.setTitle = this.title;
   }
 }
 </script>

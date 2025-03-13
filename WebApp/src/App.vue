@@ -46,13 +46,19 @@
                   </div>
                   <md-dialog :open="this.opened" v-on:close="this.opened = false">
                     <div slot="headline">
-                      Add new Camera to account
+                      Add a new Camera to your account
                     </div>
                     <form slot="content" id="form-id" method="dialog">
-                      enter the code here or not ok thank you
+                      <md-outlined-text-field
+                          type="text"
+                          label="Serial Number"
+                          class="w-100 pb-3 pt-1"
+                          v-model="codeInput"
+                      >
+                      </md-outlined-text-field>
                     </form>
                     <div slot="actions">
-                      <md-text-button form="form-id" @click="this.opened = false">Ok</md-text-button>
+                      <md-text-button form="form-id" @click="addCameraToAccount">Add</md-text-button>
                     </div>
                   </md-dialog>
                 </div>
@@ -168,7 +174,8 @@ export default {
       session: Cookies.get('session') || "0", // Get session from cookie or default to "0"
       opened2: false,
       opened3: false,
-      register: false
+      register: false,
+      codeInput:'',
     }
   },
   provide() {
@@ -281,6 +288,14 @@ export default {
       this.cameraObjects.splice(0, this.cameraObjects.length);
       this.session = "0";
       Cookies.set('session', this.session); // Save session as a cookie
+    },
+    addCameraToAccount(){
+      // add camera to account, use this.codeInput
+      console.log("Adding camera to account: ",this.codeInput);
+      // then api connection but that doenst exist.
+      // close dialog
+      this.codeInput = "";
+      this.opened = false;
     }
   },
   beforeMount() {

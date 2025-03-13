@@ -80,7 +80,7 @@ export default {
       centerStart: [this.cameraObjects[0]?.lat ?? 0, this.cameraObjects[0]?.lng ?? 0],
       marker: [0,0],
       markerOptions: {opacity: 0, width:"1px", height:"1px"},
-      zoom: 17,
+      zoom: 13,
       POI: true,
       POIsBearbeiten: false,
       latestCords: [0,0],

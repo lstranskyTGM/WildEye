@@ -28,8 +28,9 @@
               <SettingComponent name="Username" :value="!accountData? `username`: accountData.username" icon="bi bi-person-vcard" confirm_needed="false" popup="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
               <SettingComponent name="E-Mail" :value="!accountData? `email`: accountData.email" icon="bi bi-envelope-at" confirm_needed="true" popup="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
               <SettingComponent name="Password" value="************" icon="bi bi-asterisk" confirm_needed="true" popup="true" style="width: max(25%, 200px); max-height: 100%"></SettingComponent>
-              <DashboardInfoComponent name="Created" value="today" icon="bi bi-clock"></DashboardInfoComponent>
-
+              <DashboardInfoComponent name="Created" :value="makeDate(this.accountData.createdAt)" icon="bi bi-clock"></DashboardInfoComponent>
+              <DashboardInfoComponent name="# of cameras" :value="this.cameraObjects.length" icon="bi bi-clock"></DashboardInfoComponent>
+              <DashboardInfoComponent name="Pictures taken" :value="this.numPictures" icon="bi bi-clock"></DashboardInfoComponent>
             </div>
 
           </div>
@@ -74,7 +75,8 @@ export default{
     return{
       cameraComponentData: this.cameraObjects,
       session: Cookies.get('session'), // Access session from cookie
-      accountData: null
+      accountData: {},
+      numPictures: 0,
     }
   },
   methods: {
@@ -94,6 +96,7 @@ export default{
         console.log("No session available");
         return;
       }
+      // account data
       axios.get(this.serverIP + '/api/users/me')
           .then(response => {
             if (response) {
@@ -104,6 +107,20 @@ export default{
           .catch(error => {
             console.log(error);
           });
+      // camera count
+      // picture count
+      axios.get(this.serverIP+'/api/pictures?populate=*&sort=hearted:desc'
+      ).catch(function (error) {
+        console.log(error);
+      }).then(response => {
+        console.log(response);
+        if(response){
+          this.numPictures = response.data.data.length;
+        }
+      });
+    },
+    makeDate(date) {
+      return new Date(date).toLocaleString();
     }
   },
   beforeMount() {

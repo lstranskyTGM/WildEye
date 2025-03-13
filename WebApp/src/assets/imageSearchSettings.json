@@ -22,7 +22,7 @@
       {
         "type": "date",
         "name": "Date From",
-        "value": "2025-02-01",
+        "value": "2000-01-01",
         "required": false
       },
       {
@@ -60,7 +60,8 @@
         "type": "number",
         "name": "page Limit",
         "min": 1,
-        "max": 30
+        "max": 30,
+        "value": 50
       }
     ]
   }

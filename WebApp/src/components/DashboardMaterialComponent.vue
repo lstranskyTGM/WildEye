@@ -26,7 +26,11 @@
             <DashboardInfoComponent name="position" :value="`Lat: ${this.camera.lat ?? 0}, Lng: ${this.camera.lng ?? 0}`" icon="bi bi-pin-map" ></DashboardInfoComponent>
             <DashboardInfoComponent name="Battery" :value="this.camera.battery" icon="bi bi-battery-half"></DashboardInfoComponent>
             <DashboardInfoComponent name="Last Synchronization" :value="formattedLastSync" icon="bi bi-cloud-upload"></DashboardInfoComponent>
+<!--
             <DashboardInfoComponent name="Last Activity" :value="formattedLastPictureDate" icon="bi bi-clock"></DashboardInfoComponent>
+-->
+            <DashboardInfoComponent name="Temperature" :value="(this.camera.temperature? this.camera.temperature : 'unknown' )+ '°C'" icon="bi bi-clock"></DashboardInfoComponent>
+            <DashboardInfoComponent name="Moisture" :value="(this.camera.moisture? this.camera.moisture : 'unknown' )+ '%'" icon="bi bi-clock"></DashboardInfoComponent>
           </div>
         </div>
       </div>

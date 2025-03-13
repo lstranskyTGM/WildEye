@@ -188,11 +188,11 @@ export default defineComponent({
       var url = this.serverIP+'/api/pictures?populate=*&sort='+
           this.settings[2].sectionSettings[2].value+':'+this.settings[2].sectionSettings[3].value+''+
           (this.settings[3].sectionSettings[0].value? '&filters[hearted]=true':'')+''+
-          (this.settings[0].sectionSettings[0].value? '&filters[title]='+this.settings[0].sectionSettings[0].value:'')+''+
           ('&filters[createdAt][$gte]='+this.settings[2].sectionSettings[0].value)+''+
           ('&filters[createdAt][$lte]='+this.settings[2].sectionSettings[1].value)+''+
           (this.settings[3].sectionSettings[1].value? '&pagination[pageSize]='+this.settings[3].sectionSettings[1].value : '')+''+
-          ('&pagination[page]='+this.page)
+          ('&pagination[page]='+this.page)+''+
+          (this.settings[0].sectionSettings[0].value? '&filters[title][$contains]=' + this.settings[0].sectionSettings[0].value: '')
       // set the cameras with an OR filter
       for(let i=0; i<=this.settings[1].sectionSettings.length-1; i++){
         console.log("iterator",i)
