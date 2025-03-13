@@ -19,5 +19,17 @@ module.exports = {
       minimize: false
     }
   },
-  productionSourceMap: true
+  productionSourceMap: true,
+  pwa:{
+    name: 'WildEye',
+    themeColor: '#4DBA87',
+    msTileColor: '#000000',
+    appleMobileWebAppCapable: 'yes',
+    appleMobileWebAppStatusBarStyle: 'black',
+    workboxPluginMode: 'GenerateSW',
+    workboxOptions: {
+      skipWaiting: true,
+      clientsClaim: true,
+    }
+  }
 }
