@@ -30,6 +30,39 @@ module.exports = {
     workboxOptions: {
       skipWaiting: true,
       clientsClaim: true,
-    }
+    },
+      iconPaths:{
+          faviconSVG: 'favicon.svg',
+          favicon32: 'favicon-32x32.png',
+          favicon16: 'favicon-16x16.png',
+          appleTouchIcon: 'apple-touch-icon.png',
+          maskIcon: 'favicon.svg',
+          msTileImage: 'android-chrome-512x512.png'
+      },
+      icons:[
+          {
+              "src": "android-chrome-192x192.png",
+              "sizes": "192x192",
+              "type": "image/png"
+          },
+          {
+              "src": "android-chrome-512x512.png",
+              "sizes": "512x512",
+              "type": "image/png"
+          },
+          {
+              "src": "android-chrome-192x192.png",
+              "sizes": "192x192",
+              "type": "image/png",
+              "purpose": "maskable"
+          },
+          {
+              "src": "android-chrome-512x512.png",
+              "sizes": "512x512",
+              "type": "image/png",
+              "purpose": "maskable"
+          }
+      ]
+
   }
 }

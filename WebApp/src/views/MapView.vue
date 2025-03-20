@@ -1,8 +1,8 @@
 <template>
-  <div class="w-100 h-100 ps-2 py-3">
-    <div class="h-100 card col-xxl-12 col-xl-12 col-lg-12 col-md-11 col-sm-12 col-12 rounded-3">
-      <div class="card-img-top" style="height: 80vh;">
-        <l-map ref="map" class="l-map rounded rounded-3" v-model:zoom="zoom" :center="this.centerStart" :on-ready="addPOI" @click="addMarker">
+  <div class=" col-xxl-12 col-xl-12 col-lg-12 col-md-11 col-sm-10 col-10 ps-0 py-3 overflow-y-scroll" style="height: 100%">
+    <div class="card rounded-3    ps-0 py-0 w-100 h-100">
+      <div class="card-img-top" style="height: 80vh; min-width: 100%">
+        <l-map ref="map" class="l-map rounded rounded-3 w-100 h-100" v-model:zoom="zoom" :center="this.centerStart" :on-ready="addPOI" @click="addMarker">
           <l-tile-layer
               :url="tiles[currentTileName]"
               layer-type="base"
@@ -31,9 +31,8 @@
           </div>
         </l-map>
       </div>
-      <div class="card-footer border border-0 d-flex justify-content-end m-2 overflow-x-auto text-nowrap" style="min-height: 50px; background-color: white; ">
-        <md-outlined-text-field label="Zoom" type="Number" value="17" v-model="zoom" class="pe-3">
-        </md-outlined-text-field>
+      <div class="card-footer border-0 d-flex justify-content-end m-2 overflow-x-scroll text-nowrap" style="min-height: 50px; background-color: white; max-width: 100%">
+        <md-outlined-text-field label="Zoom" type="Number" value="17" v-model="zoom" class="pe-3"></md-outlined-text-field>
         <md-outlined-select class="pe-3" label="Choose Map">
           <md-select-option value="Default" @click="selectTile('OpenStreetMap')" selected>Default</md-select-option>
           <md-select-option v-for="(url, name) in tiles" :key="url" :value="name" @click="selectTile(name)">{{name}}</md-select-option>

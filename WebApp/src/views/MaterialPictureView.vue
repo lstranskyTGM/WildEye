@@ -1,11 +1,10 @@
 <template>
-  <div class=" col-xxl-12 col-xl-12 col-lg-12 col-md-11 col-sm-10 col-10" style="height: 100%; width: 100%">
+  <div class=" col-xxl-12 col-xl-12 col-lg-12 col-md-11 col-sm-10 col-10 ps-0 pb-3 pt-1 overflow-y-scroll" style="height: 99vh">
     <div class="ps-2 py-3 w-100 h-100">
-      <div class="card h-100 w-100 shadow-sm rounded-3">
+      <div class="card h-100 w-100 shadow-sm rounded-3" style="">
         <div class="card-body overflow-y-auto rounded rounded-3 card_background" style="height: 93%">
           <div class="row">
             <div class="col-12">
-<!--              <p v-if="session === '0'">Log in to display Images for your account. {{session}}</p>-->
               <p v-if="images.length===0">No Images to display.</p>
               <div class="grid">
                 <div class="grid-item" v-for="(img, index) in images" :key="index">
