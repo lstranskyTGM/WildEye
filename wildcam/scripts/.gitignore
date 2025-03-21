@@ -22,3 +22,7 @@ build/
 # IDE specific files
 .idea/
 .vscode/
+
+# Other
+archive/
+tests/manual/network/images
