@@ -6,7 +6,7 @@
           <div class="row-cols-1 ms-auto me-auto h-100">
             <nav class="mt-0 h-100 w-100 align-content-start d-flex flex-column">
               <div class="col d-flex justify-content-center align-content-center">
-                <img src="@/assets/LogoV4.png" class="card-img-top img-fluid" style="object-fit: contain; width: 70%;" alt="WildEye Logo">
+                <img src="@/assets/LogoV4.png" class="card-img-top img-fluid" style="object-fit: contain; width: 70%;" alt="WildEye Logo" @click="router.push('/'); setActiveRoute('/')">
               </div>
               <div class="overflow-y-auto h-100 flex-grow-1">
                 <div class="col mt-3">
@@ -42,7 +42,7 @@
       </div>
       <div class="col-11 ms-auto me-0 edge_color pe-0 ps-0">
         <div class="w-100 h-100 rounded-top-5 rounded-end-0 bg-white me-0 ms-0 pe-0 ps-0">
-          <div class="p-3 h-100 w-100">
+          <div class="p-3 h-100 me-auto ms-auto" style="max-width: 97%;">
             <router-view/>
           </div>
 
@@ -60,7 +60,8 @@ export default {
   name: 'App',
   data(){
     return{
-      activeRoute: '/'
+      activeRoute: '/',
+      router: this.$router
     }
   },
   methods: {

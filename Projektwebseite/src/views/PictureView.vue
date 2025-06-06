@@ -1,7 +1,7 @@
 <template>
-  <div class="w-100 h-100 d-flex align-items-center justify-content-center">
-    <div class="row align-self-center h-100 w-100">
-      <div class="row milestones h-100 w-100">
+  <div class="w-100 h-100 d-flex align-items-center justify-content-center ps-0 pe-3 pe-xxl-0" >
+    <div class="row align-self-center h-100 ps-0 w-100">
+      <div class="row milestones h-100 w-100 ps-0">
         <MilestoneComponent :entry = entry v-for="entry in milestones" :key="entry.title" class=""></MilestoneComponent>
       </div>
     </div>
@@ -45,11 +45,11 @@ export default {
           date: "27.01.2025"
         },
         {
-          title:"Testen fertig",
+          title:"Erste Version fertig",
           desc:"Der Prototyp der Wildkamera wurde auf Funktionalität getestet und ist bereit für den Einsatz.",
           pic: "milestone4.svg",
-          progress: "50%",
-          date: "02.03.2025"
+          progress: "100%",
+          date: "21.03.2025"
         }
       ]
     }

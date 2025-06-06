@@ -1,9 +1,9 @@
 <template>
-  <div class="h-100 container-fluid ms-0 ps-0 overflow-x-scroll" style="width: 100%">
-    <div class="row w-100 h-100">
+  <div class="h-100 container-fluid ms-0 ps-0 overflow-x-scroll ">
+    <div class="row w-100 h-100 w-100 pe-3 pe-md-0">
       <div class="col-xl-5 col-md-5 col-sm-12 col-12 h-100">
-        <div class="w-100 h-100">
-          <div class="card w-100 h-100 mh-100">
+        <div class="w-100 h-100 pb-2 pb-xxl-0 pb-md-0 ">
+          <div class="card w-100 h-100 mh-100 ">
             <div class="card-header">
               <h5 class="card-subtitle">Beschreibung</h5>
             </div>
@@ -39,7 +39,7 @@
               </div>
             </div>
             <div class="card-footer">
-              <small>last update: 2025-02-28</small>
+              <small>last update: 2025-04-25</small>
             </div>
           </div>
         </div>
@@ -59,7 +59,9 @@ export default {
   data() {
     return {
       updates: [
-        { image: require('@/assets/webapphost.png'), alt: "Web-App Beta gehostet!", title: "Web-App Beta gehostet! - 28.02.2025" },
+        { image: require('@/assets/abgabe diplomprojekjt.png'), alt: "Abgabe der Diplomarbeit!", title: "Abgabe der Diplomarbeit! - 25.04.2025" },
+        { image: require('@/assets/websitenew.png'), alt: "Web-App Beta gehostet!", title: "Web-App Beta gehostet! - 28.02.2025" },
+        { image: require('@/assets/wildcam_printed2.jpeg'), alt: "WildEye Hardware v1 fertig!", title: "WildEye Hardware v1 fertig! - 24.02.2025" },
         { image: require('@/assets/3dmodel.png'), alt: "3D Model für Wildkamera erstellt", title: "3D Model für Wildkamera erstellt! - 22.02.2025" },
         { image: require('@/assets/pcb.png'), alt: "PCB für Massenproduktion erstellt", title: "PCB für Massenproduktion erstellt! - 21.02.2025" },
         { image: require('@/assets/API.png'), alt: "Strapi API hinzugefügt", title: "Strapi API hinzugefügt und eingebunden! - 20.02.2025" },

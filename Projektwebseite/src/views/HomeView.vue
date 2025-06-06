@@ -1,7 +1,7 @@
 <template>
-  <div class="w-100 h-100 mh-100 d-flex align-items-center justify-content-center">
+  <div class=" h-100 mh-100 d-flex align-items-center justify-content-center w-100 pe-3 pe-xxl-0">
     <div class="row align-self-center team mh-100 h-100" >
-      <div class="row mh-100 ms-auto me-auto h-100">
+      <div class="row mh-100 me-auto h-100">
         <TeamComponent :entry = entry v-for="entry in entries" :key="entry.name" class="mh-100"></TeamComponent>
       </div>
 
@@ -57,16 +57,12 @@ export default {
 
 <style>
 .team{
-  width: 100%;
+  max-width: 97%;
   max-height: 100%;
   overflow-y: auto;
   height: 100%;
 }
 
-@media (max-width: 962px) {
-  .team {
-    width: 88%;
-  }
-}
+
 
 </style>
