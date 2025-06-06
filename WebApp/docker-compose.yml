@@ -4,7 +4,7 @@ services:
   vue-app:
     build: .
     ports:
-      - "8080:8080"
+      - "8090:8080"
     volumes:
       - .:/app
     environment:
