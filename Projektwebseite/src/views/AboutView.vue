@@ -62,7 +62,7 @@ export default {
         { image: require('@/assets/abgabe diplomprojekjt.png'), alt: "Abgabe der Diplomarbeit!", title: "Abgabe der Diplomarbeit! - 25.04.2025" },
         { image: require('@/assets/websitenew.png'), alt: "Web-App Beta gehostet!", title: "Web-App Beta gehostet! - 28.02.2025" },
         { image: require('@/assets/wildcam_printed2.jpeg'), alt: "WildEye Hardware v1 fertig!", title: "WildEye Hardware v1 fertig! - 24.02.2025" },
-        { image: require('@/assets/3dmodel.png'), alt: "3D Model für Wildkamera erstellt", title: "3D Model für Wildkamera erstellt! - 22.02.2025" },
+        { image: require('@/assets/wildeye-v1.0.png'), alt: "WildEye 3D-Modell v1 fertig!", title: "WildEye 3D-Modell v1 fertig! - 22.02.2025" },
         { image: require('@/assets/pcb.png'), alt: "PCB für Massenproduktion erstellt", title: "PCB für Massenproduktion erstellt! - 21.02.2025" },
         { image: require('@/assets/API.png'), alt: "Strapi API hinzugefügt", title: "Strapi API hinzugefügt und eingebunden! - 20.02.2025" },
         { image: require('@/assets/Logofinal.png'), alt: "Finales Logo erstellt!", title: "Finales Logo erstellt! - 18.02.2025" },
